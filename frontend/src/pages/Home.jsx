@@ -9,24 +9,26 @@ import chery from '../assets/brand/Chery-260x139.png'
 import hyundai from '../assets/brand/hyundai.png'
 import kia from '../assets/brand/kia.png'
 import mazda from '../assets/brand/mazda.png'
+import bmw from '../assets/brand/bmw.png'
+import changhe from '../assets/brand/changhe.png'
+import jetour from '../assets/brand/jetour-home.png'
+import fuso from '../assets/brand/fuso.png'
+import haima from '../assets/brand/haima.png'
+import jeep from '../assets/brand/jeep.png'
+import mini from '../assets/brand/mini.png'
+import peugeot from '../assets/brand/peugeot.png'
+import Lynk from '../assets/brand/Lynk.png'
+import volkswagen from '../assets/brand/volkswagen.png'
+import geely from '../assets/brand/Geely.png'
+import harley from '../assets/brand/HarleyDavidson.png'
+import bmw_motorrad from '../assets/brand/BMW_Motorrad.png'
+import vespa from '../assets/brand/Vespa.png'
+import triumph from '../assets/brand/triumph.png'
+import aprilia from '../assets/brand/a-m.png'
+import peugeot_motor from '../assets/brand/peugeot-motor.png'
+import cf_moto from '../assets/brand/cf-moto.png'
+import ape from '../assets/brand/piaggio.png'
 import Reveal from '../components/Reveal'
-
-/* =====================================================================
-   HOW TO ADD YOUR PHOTOS
-   1. Put the image in src/assets/ (for example src/assets/brands/bmw.png)
-   2. Import it here:      import bmw from '../assets/brands/bmw.png'
-   3. Replace `src: null`  with  `src: bmw`   in the data below
-   Any `src: null` shows a gray placeholder box with a label.
-   ===================================================================== */
-
-/* ---------- IMPORTS (uncomment as you add photos) ---------- */
-// import slide1 from '../assets/hero/slide-1.jpg'
-// import bmw from '../assets/brands/bmw.png'
-// import news1 from '../assets/news/news-1.jpg'
-// import offer1 from '../assets/offers/offer-1.jpg'
-// import videoThumb from '../assets/videos/video-1.jpg'
-// import carmix from '../assets/partners/carmix.png'
-// import dpoSeal from '../assets/dpo-seal.png'
 
 /* ---------- PHOTO PLACEHOLDER ---------- */
 function Photo({ src, alt = '', label = 'Photo', size, className = '', fit = 'cover', children }) {
@@ -67,16 +69,16 @@ const cars = [
   { name: 'Mitsubishi Motors', src: mitsubishi }, { name: 'Suzuki', src: suzuki }, { name: 'Chevrolet', src: chevrolet },
   { name: 'Ford', src: ford }, { name: 'Foton', src: foton },
   { name: 'Chery', src: chery }, { name: 'Hyundai', src: hyundai }, { name: 'Kia', src: kia },
-  { name: 'Mazda', src: mazda }, { name: 'BMW', src: null }, { name: 'Changhe', src: null },
-  { name: 'Jetour', src: null }, { name: 'Fuso', src: null }, { name: 'Haima', src: null },
-  { name: 'Jeep', src: null }, { name: 'MINI', src: null }, { name: 'Peugeot', src: null },
-  { name: 'Lynk & Co', src: null }, { name: 'Volkswagen', src: null }, { name: 'Geely', src: null },
+  { name: 'Mazda', src: mazda }, { name: 'BMW', src: bmw, dark: true }, { name: 'Changhe', src: changhe },
+  { name: 'Jetour', src: jetour }, { name: 'Fuso', src: fuso }, { name: 'Haima', src: haima },
+  { name: 'Jeep', src: jeep }, { name: 'MINI', src: mini }, { name: 'Peugeot', src: peugeot },
+  { name: 'Lynk & Co', src: Lynk }, { name: 'Volkswagen', src: volkswagen }, { name: 'Geely', src: geely },
 ]
 
 const bikes = [
-  { name: 'Harley-Davidson', src: null }, { name: 'BMW Motorrad', src: null }, { name: 'Vespa', src: null },
-  { name: 'Triumph', src: null }, { name: 'Aprilia / Moto Guzzi', src: null },
-  { name: 'Peugeot Motocycles', src: null }, { name: 'CFMOTO', src: null }, { name: 'Piaggio Ape', src: null },
+  { name: 'Harley-Davidson', src: harley }, { name: 'BMW Motorrad', src: bmw_motorrad }, { name: 'Vespa', src: vespa },
+  { name: 'Triumph', src: triumph }, { name: 'Aprilia / Moto Guzzi', src: aprilia },
+  { name: 'Peugeot Motocycles', src: peugeot_motor }, { name: 'CFMOTO', src: cf_moto }, { name: 'Piaggio Ape', src: ape },
 ]
 
 const news = [
@@ -183,18 +185,19 @@ function Hero() {
   )
 }
 
-/* ---------- BRANDS ---------- */
 function BrandGrid({ items, cols }) {
   return (
     <div className={`mx-auto mb-[70px] grid items-center justify-items-center gap-3 last:mb-0 max-md:mb-8 ${cols}`}>
       {items.map((b, idx) => (
         <Reveal key={b.name} direction="zoom" delay={idx * 70} className="flex w-full justify-center">
-        <a
-          href="#"
-          className="block h-[90px] w-full max-w-[150px] transition duration-300 hover:scale-110"
-        >
-          <Photo src={b.src} alt={b.name} label={`LOGO – ${b.name}`} fit="contain" />
-        </a>
+          <a
+            href="#"
+            className={`block h-[90px] transition duration-300 hover:scale-110 ${
+              b.dark ? 'w-[90px] rounded-full bg-black p-1' : 'w-full max-w-[150px]'
+            }`}
+          >
+            <Photo src={b.src} alt={b.name} label={`LOGO – ${b.name}`} fit="contain" />
+          </a>
         </Reveal>
       ))}
     </div>
