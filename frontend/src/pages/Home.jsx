@@ -33,6 +33,20 @@ import ape from '../assets/brand/piaggio.png'
 import carmix from '../assets/partners/carmix.png'
 import cg_partners from '../assets/partners/cg-partners.jpg'
 import las_partners from '../assets/partners/las-partners.png'
+import bg_partners from '../assets/partners/cw-service-auto-partners-bg-1.jpg'
+
+import banner1 from '../assets/banners/45thAnniversary_Banner1902x609_1-min.jpg'
+import banner2 from '../assets/banners/CW_Banner.jpg'
+import banner3 from '../assets/banners/Geely.jpg'
+import banner4 from '../assets/banners/MAZDA.jpg'
+import banner5 from '../assets/banners/LAUSFORD.jpg'
+import banner6 from '../assets/banners/JETOUR.jpg'
+import banner7 from '../assets/banners/chev.jpg'
+import banner8 from '../assets/banners/1-Suzuki.jpg'
+import banner9 from '../assets/banners/carworld.jpg'
+import banner10 from '../assets/banners/MOTORRAD_WEBSITE_BANNER.jpg'
+import banner11 from '../assets/banners/Harley-D.jpg'
+import banner12 from '../assets/banners/Triumph-Banner.jpg'
 import Reveal from '../components/Reveal'
 import DpoCarousel from '../components/DpoCarousel'
 
@@ -63,12 +77,10 @@ function Photo({ src, alt = '', label = 'Photo', size, className = '', fit = 'co
   )
 }
 
-/* ---------- DATA ---------- */
-const slides = [
-  { brand: 'BMW', left: 'PAMPANGA PREMIER MOTORRAD', title: 'THE HOME OF LEGENDS AND ADVENTURERS', sub: 'OPENING SOON PAMPANGA PREMIER MOTORRAD', right: 'MAKE LIFE A RIDE', src: null },
-  { brand: 'Ford', left: 'FORD PAMPANGA', title: 'NEXT-GEN REVEAL', sub: 'TOUGHER THAN IT SEEMS', right: 'BUILT TOUGH', src: null },
-  { brand: 'Mitsubishi', left: 'MITSUBISHI CARWORLD', title: 'LIFE MADE BETTER', sub: 'ALL-IN DOWN PAYMENT', right: 'DRIVE YOUR DREAMS', src: null },
-  { brand: 'Suzuki', left: 'SUZUKI', title: 'BUILD YOUR WAY UP', sub: 'DRIVE SUZUKI ALL THE WAY', right: 'WAY OF LIFE', src: null },
+/* ---------- BANNERS: the carousel shows them in this order ---------- */
+const banners = [
+  banner1, banner2, banner3, banner4, banner5, banner6,
+  banner7, banner8, banner9, banner10, banner11, banner12,
 ]
 
 const cars = [
@@ -95,7 +107,7 @@ const news = [
 
 const offerImage = null // e.g. offer1
 const videoImage = null // e.g. videoThumb
-const partnersBackground = null // e.g. a garage photo
+const partnersBackground = bg_partners // e.g. a garage photo
 
 const partners = [
   { name: 'Carmix', src: carmix, text: 'Check out affordable pre-owned vehicles', cta: 'VISIT CARMIX' },
@@ -105,87 +117,243 @@ const partners = [
 
 const container = 'mx-auto w-[92%] max-w-[1180px]'
 
-/* ---------- HERO ---------- */
+/* ---------- HERO / BANNER CAROUSEL ----------
+   - Slides move side by side (true carousel, infinite loop)
+   - Autoplay every 5s, pauses on hover / while dragging / when tab is hidden
+   - Swipe or mouse-drag to change slides
+   - Arrow keys work when the carousel is focused
+   - Arrows, thumbnails (md+) and dots (mobile)
+   - Respects "reduce motion"
+*/
+const AUTOPLAY_MS = 5000
+const SLIDE_MS = 700
+
 function Hero() {
-  const [i, setI] = useState(0)
-  const [offset, setOffset] = useState(0)
+  const total = banners.length
 
-  // parallax: hero content moves slower than the page
-  useEffect(() => {
-    const onScroll = () => setOffset(Math.min(window.scrollY, 600))
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  // track has a clone of the last slide in front and the first slide at the end
+  // so wrapping around slides smoothly instead of rewinding.
+  // position 1 = first real slide.
+  const [pos, setPos] = useState(1)
+  const [animate, setAnimate] = useState(true)
+  const [paused, setPaused] = useState(false)
+  const [dragX, setDragX] = useState(0)
+  const [dragging, setDragging] = useState(false)
 
+  const startX = useRef(0)
+  const width = useRef(1)
+  const wrapRef = useRef(null)
+  const locked = useRef(false)
+
+  const slides = [banners[total - 1], ...banners, banners[0]]
+  const active = (pos - 1 + total) % total // real index 0..total-1
+
+  const reduceMotion =
+    typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  const duration = reduceMotion ? 0 : SLIDE_MS
+
+  const move = (d) => {
+    if (locked.current) return
+    locked.current = true
+    setAnimate(true)
+    setPos((p) => p + d)
+    setTimeout(() => (locked.current = false), duration || 0)
+  }
+
+  const goTo = (idx) => {
+    if (locked.current || idx === active) return
+    locked.current = true
+    setAnimate(true)
+    setPos(idx + 1)
+    setTimeout(() => (locked.current = false), duration || 0)
+  }
+
+  // after sliding onto a clone, jump (without animation) to the real slide
+  const onTransitionEnd = () => {
+    if (pos === 0) {
+      setAnimate(false)
+      setPos(total)
+    } else if (pos === total + 1) {
+      setAnimate(false)
+      setPos(1)
+    }
+  }
+
+  // re-enable animation right after an instant jump
   useEffect(() => {
-    const t = setInterval(() => setI((p) => (p + 1) % slides.length), 5000)
+    if (animate) return
+    const id = requestAnimationFrame(() => requestAnimationFrame(() => setAnimate(true)))
+    return () => cancelAnimationFrame(id)
+  }, [animate])
+
+  // reduced motion has no transitionend, so handle the jump directly
+  useEffect(() => {
+    if (duration === 0) onTransitionEnd()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pos])
+
+  // autoplay
+  useEffect(() => {
+    if (paused || dragging || total < 2) return
+    const t = setInterval(() => move(1), AUTOPLAY_MS)
     return () => clearInterval(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paused, dragging, total])
+
+  // pause when the browser tab is hidden
+  useEffect(() => {
+    const onVis = () => setPaused(document.hidden)
+    document.addEventListener('visibilitychange', onVis)
+    return () => document.removeEventListener('visibilitychange', onVis)
   }, [])
 
-  const s = slides[i]
+  /* ----- swipe / drag ----- */
+  const onPointerDown = (e) => {
+    if (e.target.closest('button')) return
+    startX.current = e.clientX
+    width.current = wrapRef.current?.offsetWidth || 1
+    setDragging(true)
+    e.currentTarget.setPointerCapture?.(e.pointerId)
+  }
+  const onPointerMove = (e) => {
+    if (!dragging) return
+    setDragX(e.clientX - startX.current)
+  }
+  const endDrag = () => {
+    if (!dragging) return
+    const threshold = width.current * 0.15
+    const dx = dragX
+    setDragging(false)
+    setDragX(0)
+    if (dx > threshold) move(-1)
+    else if (dx < -threshold) move(1)
+  }
+
+  const onKeyDown = (e) => {
+    if (e.key === 'ArrowLeft') move(-1)
+    if (e.key === 'ArrowRight') move(1)
+  }
+
+  const dragPercent = dragging ? (dragX / width.current) * 100 : 0
 
   return (
-    <section className="relative h-[360px] overflow-hidden bg-white lg:h-[433px]">
+    <section
+      ref={wrapRef}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Featured banners"
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      className="relative aspect-[1351/433] max-h-[520px] w-full touch-pan-y overflow-hidden bg-neutral-200 select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-lag-red"
+    >
+      {/* sliding track */}
       <div
-        key={i}
-        style={{ transform: `translateY(${offset * 0.25}px)` }}
-        className="grid h-full animate-slide-in grid-cols-2 will-change-transform lg:grid-cols-[20%_33%_23%_24%]"
+        onTransitionEnd={onTransitionEnd}
+        className={`flex h-full ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        style={{
+          transform: `translateX(calc(${-pos * 100}% + ${dragPercent}%))`,
+          transition: animate && !dragging && duration ? `transform ${duration}ms cubic-bezier(.65,0,.35,1)` : 'none',
+        }}
       >
-        {/* left text */}
-        <div className="hidden items-center gap-3.5 pl-2.5 text-neutral-900 lg:flex">
-          <div className="grid h-[70px] w-[70px] flex-none place-items-center overflow-hidden rounded-full border-[3px] border-neutral-900 text-center text-[11px] font-bold">
-            {s.brand}
-          </div>
-          <h3 className="text-2xl leading-[1.05] font-extrabold">{s.left}</h3>
-        </div>
-
-        {/* center photo */}
-        <div className="lg:-ml-[4%] lg:w-[108%] lg:[clip-path:polygon(0_0,100%_0,96%_100%,0_100%)]">
-          <Photo src={s.src} label={`HERO PHOTO – ${s.brand} (main)`} size="1200 x 433 px" />
-        </div>
-
-        {/* middle text */}
-        <div className="hidden flex-col justify-center pr-5 pl-8 text-neutral-900 lg:flex">
-          <h2 className="text-2xl leading-[1.1] font-extrabold">{s.title}</h2>
-          <h4 className="mt-4 text-lg leading-[1.15] font-extrabold">{s.sub}</h4>
-        </div>
-
-        {/* right photo + text */}
-        <div className="relative flex items-center lg:-ml-[6%] lg:[clip-path:polygon(6%_0,100%_0,100%_100%,0_100%)]">
-          <div className="absolute inset-0">
-            <Photo src={s.src} label={`HERO PHOTO – ${s.brand} (side)`} size="600 x 433 px" />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/35" />
-          <h1 className="relative pl-6 text-4xl leading-[0.95] font-black text-neutral-800 lg:pl-[18%] lg:text-[44px]">
-            {s.right}
-          </h1>
-        </div>
+        {slides.map((src, idx) => {
+          const realIdx = (idx - 1 + total) % total
+          const isClone = idx === 0 || idx === slides.length - 1
+          return (
+            <div
+              key={`${idx}-${src}`}
+              className="h-full w-full shrink-0 grow-0 basis-full"
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${realIdx + 1} of ${total}`}
+              aria-hidden={isClone || realIdx !== active}
+            >
+              <img
+                src={src}
+                alt={isClone ? '' : `Banner ${realIdx + 1}`}
+                loading={realIdx === 0 && !isClone ? 'eager' : 'lazy'}
+                draggable="false"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )
+        })}
       </div>
 
-      {/* arrow */}
-      <button
-        onClick={() => setI((i + 1) % slides.length)}
-        aria-label="Next"
-        className="absolute top-1/2 right-12 -translate-y-1/2 cursor-pointer text-3xl text-white transition hover:scale-125"
-      >
-        ❯
-      </button>
-
-      {/* thumbnails */}
-      <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 gap-1 lg:-translate-x-[70%]">
-        {slides.map((sl, idx) => (
+      {/* arrows */}
+      {total > 1 && (
+        <>
           <button
-            key={idx}
-            onClick={() => setI(idx)}
-            aria-label={`Slide ${idx + 1}`}
-            className={`h-12 w-[46px] cursor-pointer overflow-hidden border-2 transition hover:-translate-y-1 hover:opacity-100 ${
-              idx === i ? '-translate-y-1 border-white opacity-100' : 'border-neutral-500 opacity-70'
+            onClick={() => move(-1)}
+            aria-label="Previous banner"
+            className="absolute top-1/2 left-3 z-10 grid h-10 w-10 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-black/30 text-xl text-white backdrop-blur-sm transition hover:scale-110 hover:bg-lag-red"
+          >
+            ❮
+          </button>
+          <button
+            onClick={() => move(1)}
+            aria-label="Next banner"
+            className="absolute top-1/2 right-3 z-10 grid h-10 w-10 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-black/30 text-xl text-white backdrop-blur-sm transition hover:scale-110 hover:bg-lag-red"
+          >
+            ❯
+          </button>
+        </>
+      )}
+
+      {/* thumbnails (tablet and desktop) */}
+      <div className="absolute bottom-0 left-1/2 z-10 hidden -translate-x-1/2 gap-1 md:flex">
+        {banners.map((src, idx) => (
+          <button
+            key={src}
+            onClick={() => goTo(idx)}
+            aria-label={`Go to banner ${idx + 1}`}
+            aria-current={idx === active}
+            className={`h-12 w-[52px] cursor-pointer overflow-hidden border-2 transition duration-200 hover:-translate-y-1 hover:opacity-100 ${
+              idx === active ? '-translate-y-1 border-white opacity-100' : 'border-neutral-500 opacity-70'
             }`}
           >
-            <Photo src={sl.src} label={`${idx + 1}`} className="border-0" />
+            <img src={src} alt="" draggable="false" className="h-full w-full object-cover" />
           </button>
         ))}
       </div>
+
+      {/* dots (mobile) */}
+      <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 md:hidden">
+        {banners.map((src, idx) => (
+          <button
+            key={src}
+            onClick={() => goTo(idx)}
+            aria-label={`Go to banner ${idx + 1}`}
+            aria-current={idx === active}
+            className={`h-1.5 rounded-full transition-all duration-300 ${idx === active ? 'w-5 bg-lag-red' : 'w-1.5 bg-white/70'}`}
+          />
+        ))}
+      </div>
+
+      {/* progress bar for the autoplay timer */}
+      {total > 1 && !reduceMotion && (
+        <div className="absolute top-0 left-0 z-10 h-[3px] w-full bg-black/10">
+          <div
+            key={`${pos}-${paused}`}
+            className="h-full bg-lag-red"
+            style={{
+              width: paused ? '0%' : '100%',
+              transition: paused ? 'none' : `width ${AUTOPLAY_MS}ms linear`,
+              animation: paused ? 'none' : undefined,
+            }}
+            ref={(el) => {
+              if (!el || paused) return
+              el.style.width = '0%'
+              requestAnimationFrame(() => requestAnimationFrame(() => (el.style.width = '100%')))
+            }}
+          />
+        </div>
+      )}
     </section>
   )
 }
@@ -308,10 +476,10 @@ function Partners() {
             ))}
           </div>
 
-      <button className="group relative mt-12 cursor-pointer overflow-hidden bg-neutral-200 px-[34px] py-3.5 text-sm text-neutral-600 transition-colors duration-300 hover:text-white">
-        <span className="absolute inset-0 -translate-x-full bg-lag-red transition-transform duration-500 ease-out group-hover:translate-x-0" />
-        <span className="relative">VIEW MORE</span>
-      </button>
+          <button className="group relative mt-12 cursor-pointer overflow-hidden bg-neutral-200 px-[34px] py-3.5 text-sm text-neutral-600 transition-colors duration-300 hover:text-white">
+            <span className="absolute inset-0 -translate-x-full bg-lag-red transition-transform duration-500 ease-out group-hover:translate-x-0" />
+            <span className="relative">VIEW MORE</span>
+          </button>
 
           {!partnersBackground && (
             <p className="mt-6 text-xs text-white/50">[ Section background photo goes here: garage / service center ]</p>
