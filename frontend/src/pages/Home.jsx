@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import logo from '../assets/logo/LAG_WhiteRed_Logo.png'
+import logoColor from '../assets/logo/LAG_Color_Logo.png'
 import mitsubishi from '../assets/brand/mitsubishi.png'
 import suzuki from '../assets/brand/suzuki.png'
 import chevrolet from '../assets/brand/chevrolet.png'
@@ -28,7 +29,12 @@ import aprilia from '../assets/brand/a-m.png'
 import peugeot_motor from '../assets/brand/peugeot-motor.png'
 import cf_moto from '../assets/brand/cf-moto.png'
 import ape from '../assets/brand/piaggio.png'
+
+import carmix from '../assets/partners/carmix.png'
+import cg_partners from '../assets/partners/cg-partners.jpg'
+import las_partners from '../assets/partners/las-partners.png'
 import Reveal from '../components/Reveal'
+import DpoCarousel from '../components/DpoCarousel'
 
 /* ---------- PHOTO PLACEHOLDER ---------- */
 function Photo({ src, alt = '', label = 'Photo', size, className = '', fit = 'cover', children }) {
@@ -90,12 +96,11 @@ const news = [
 const offerImage = null // e.g. offer1
 const videoImage = null // e.g. videoThumb
 const partnersBackground = null // e.g. a garage photo
-const dpoImage = null // e.g. dpoSeal
 
 const partners = [
-  { name: 'Carmix', src: null, text: 'Check out affordable pre-owned vehicles', cta: 'VISIT CARMIX' },
-  { name: 'Corporate Guarantee', src: null, text: 'Provides non-life insurance such as motor, fire, personal accident, casualty, marine and bond requirements', cta: 'VISIT CGIC' },
-  { name: 'Laus Auto Services', src: null, text: 'We offer quality parts and comprehensive service for your satisfaction.', cta: 'VISIT LausAutoServices' },
+  { name: 'Carmix', src: carmix, text: 'Check out affordable pre-owned vehicles', cta: 'VISIT CARMIX' },
+  { name: 'Corporate Guarantee', src: cg_partners, text: 'Provides non-life insurance such as motor, fire, personal accident, casualty, marine and bond requirements', cta: 'VISIT CGIC' },
+  { name: 'Laus Auto Services', src: las_partners, text: 'We offer quality parts and comprehensive service for your satisfaction.', cta: 'VISIT LausAutoServices' },
 ]
 
 const container = 'mx-auto w-[92%] max-w-[1180px]'
@@ -187,13 +192,15 @@ function Hero() {
 
 function BrandGrid({ items, cols }) {
   return (
-    <div className={`mx-auto mb-[70px] grid items-center justify-items-center gap-3 last:mb-0 max-md:mb-8 ${cols}`}>
+    <div className={`mx-auto mb-[50px] grid items-center justify-items-center gap-4 last:mb-0 max-md:mb-8 ${cols}`}>
       {items.map((b, idx) => (
         <Reveal key={b.name} direction="zoom" delay={idx * 70} className="flex w-full justify-center">
           <a
             href="#"
-            className={`block h-[90px] transition duration-300 hover:scale-110 ${
-              b.dark ? 'w-[90px] rounded-full bg-black p-1' : 'w-full max-w-[150px]'
+            className={`block transition duration-300 hover:scale-110 ${
+              b.dark
+                ? 'h-[110px] w-[110px] rounded-full bg-black p-1.5 md:h-[125px] md:w-[125px]'
+                : 'h-[90px] w-full max-w-[160px] md:h-[120px] md:max-w-[200px]'
             }`}
           >
             <Photo src={b.src} alt={b.name} label={`LOGO – ${b.name}`} fit="contain" />
@@ -301,9 +308,10 @@ function Partners() {
             ))}
           </div>
 
-          <button className="mt-12 cursor-pointer bg-neutral-200 px-[34px] py-3.5 text-sm text-neutral-600 transition hover:bg-lag-red hover:text-white">
-            VIEW MORE
-          </button>
+      <button className="group relative mt-12 cursor-pointer overflow-hidden bg-neutral-200 px-[34px] py-3.5 text-sm text-neutral-600 transition-colors duration-300 hover:text-white">
+        <span className="absolute inset-0 -translate-x-full bg-lag-red transition-transform duration-500 ease-out group-hover:translate-x-0" />
+        <span className="relative">VIEW MORE</span>
+      </button>
 
           {!partnersBackground && (
             <p className="mt-6 text-xs text-white/50">[ Section background photo goes here: garage / service center ]</p>
@@ -314,44 +322,131 @@ function Partners() {
   )
 }
 
-/* ---------- ABOUT + DPO ---------- */
-function About() {
+/* number that counts up the first time it scrolls into view */
+function CountUp({ to, suffix = '', duration = 1600 }) {
+  const ref = useRef(null)
+  const [n, setN] = useState(0)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        observer.disconnect()
+        const start = performance.now()
+        const tick = (now) => {
+          const p = Math.min((now - start) / duration, 1)
+          setN(Math.round(to * (1 - Math.pow(1 - p, 3))))
+          if (p < 1) requestAnimationFrame(tick)
+        }
+        requestAnimationFrame(tick)
+      },
+      { threshold: 0.5 }
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [to, duration])
+
   return (
-    <section className={`${container} grid gap-10 pt-[60px] pb-[90px] lg:grid-cols-[1.7fr_1fr_0.8fr]`}>
-      <Reveal direction="right">
-        <h2 className="mb-3.5 text-[32px] font-normal text-black">The LausAutoGroup</h2>
-        <p className="text-sm leading-[1.8] [&>a]:text-lag-red">
-          The largest and fastest growing multi-brand automotive network in the country today.<br />
-          We are a highly respected name in providing customer care and satisfaction. We have established this
-          strong reputation in the last 38 years by doing business that gives first-class sales and after-sales
-          service to customers.<br />
-          Our 40 dealerships offer the widest selection of vehicles that suits your needs; be it for personal,
-          family or business use.<br />
-          Choose what suits you, because at LausAutoGroup,<br />
-          we have the right car for you! <a href="#">Read More…</a>
-        </p>
-      </Reveal>
+    <span ref={ref}>
+      {n}
+      {suffix}
+    </span>
+  )
+}
 
-      <Reveal direction="up" delay={150}>
-        <h3 className="mb-3.5 text-2xl font-normal text-black">DPO/DPS</h3>
-        <p className="text-sm leading-[1.8]">DATA PROTECTION OFFICER AND DATA PROCESSING SYSTEM</p>
-        <div className="relative mt-[30px] h-[275px] bg-white">
-          <Photo src={dpoImage} label="DPO / DPS SEAL" size="275 x 275 px" fit="contain" />
-          <span className="absolute top-1/2 left-2.5 -translate-y-1/2 cursor-pointer text-pink-400">❮</span>
-          <span className="absolute top-1/2 right-2.5 -translate-y-1/2 cursor-pointer text-pink-400">❯</span>
-        </div>
-      </Reveal>
+function About() {
+  const stats = [
+    { to: 38, suffix: '+', label: 'Years of service' },
+    { to: 40, suffix: '', label: 'Dealerships' },
+    { to: cars.length + bikes.length, suffix: '', label: 'Auto brands' },
+  ]
 
-      <Reveal direction="left" delay={300}>
-        <img src={logo} alt="LausAutoGroup" className="w-full invert-[.55]" />
-      </Reveal>
+  return (
+    <section className="relative overflow-hidden">
+      {/* background decoration */}
+      <div aria-hidden className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-lag-red/10 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-32 -left-24 h-72 w-72 rounded-full bg-neutral-300/40 blur-3xl" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(#d4d4d4_1px,transparent_1px)] [background-size:22px_22px]"
+      />
+
+      <div className={`${container} relative grid grid-cols-1 gap-10 pt-[70px] pb-[90px] lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_minmax(0,0.8fr)]`}>
+        {/* ---------- COLUMN 1: text + stats ---------- */}
+        <Reveal direction="right" className="group min-w-0">
+
+          <h2 className="relative mb-7 block w-fit text-[34px] leading-tight font-normal text-black">
+            The LausAutoGroup
+            <span className="absolute -bottom-2 left-0 h-[3px] w-full origin-left scale-x-[.25] bg-lag-red transition-transform duration-500 group-hover:scale-x-100" />
+          </h2>
+
+          <p className="mb-4 text-lg leading-snug font-medium text-neutral-800">
+            The largest and fastest growing multi-brand automotive network in the country today.
+          </p>
+
+          <div className="space-y-2.5 border-l-2 border-lag-red/60 pl-4 text-sm leading-[1.9] text-neutral-600">
+            <p>
+              We are a highly respected name in providing customer care and satisfaction. We have established this
+              strong reputation in the last 38 years by doing business that gives first-class sales and after-sales
+              service to customers.
+            </p>
+            <p>
+              Our 40 dealerships offer the widest selection of vehicles that suits your needs; be it for personal,
+              family or business use.
+            </p>
+            <p>
+              Choose what suits you, because at LausAutoGroup,
+              <br />
+              we have the right car for you!
+            </p>
+          </div>
+
+          <a
+            href="#"
+            className="group/btn relative mt-6 inline-flex overflow-hidden border border-lag-red px-7 py-3 text-sm font-semibold tracking-wide text-lag-red transition-colors duration-300 hover:text-white"
+          >
+            <span className="absolute inset-0 -translate-x-full bg-lag-red transition-transform duration-500 ease-out group-hover/btn:translate-x-0" />
+            <span className="relative">READ MORE</span>
+          </a>
+        </Reveal>
+
+        {/* ---------- COLUMN 2: DPO/DPS card ---------- */}
+        <Reveal direction="up" delay={150} className="min-w-0">
+          <div className="border-t-4 border-lag-red bg-white p-5 shadow-lg shadow-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <h3 className="mb-1.5 text-2xl font-normal text-black">DPO/DPS</h3>
+            <p className="mb-4 text-[13px] leading-relaxed text-neutral-500">
+              DATA PROTECTION OFFICER AND DATA PROCESSING SYSTEM
+            </p>
+            <DpoCarousel />
+          </div>
+        </Reveal>
+
+        {/* ---------- COLUMN 3: hoverable logo ---------- */}
+        <Reveal direction="left" delay={300} className="flex min-w-0 flex-col items-center gap-8">
+          <a href="#" className="group/logo relative mx-auto block w-full max-w-[300px]">
+            {/* red glow that fades in on hover */}
+            <span aria-hidden className="absolute inset-4 rounded-full bg-lag-red/30 opacity-0 blur-2xl transition-opacity duration-500 group-hover/logo:opacity-100" />
+            <img
+              src={logoColor}
+              alt="LausAutoGroup"
+              className="relative w-full drop-shadow-md transition duration-500 ease-out group-hover/logo:-translate-y-2 group-hover/logo:scale-110 group-hover/logo:-rotate-2 group-hover/logo:drop-shadow-2xl"
+            />
+            {/* shadow underneath that shrinks as the logo lifts */}
+            <span aria-hidden className="mx-auto mt-3 block h-3 w-3/4 rounded-full bg-black/10 blur-md transition-all duration-500 group-hover/logo:w-1/2 group-hover/logo:opacity-60" />
+          </a>
+        </Reveal>
+      </div>
     </section>
   )
 }
 
 export default function Home() {
   return (
-    <main>
+    <main className="overflow-x-clip">
       <Hero />
       <Brands />
       <Highlights />
