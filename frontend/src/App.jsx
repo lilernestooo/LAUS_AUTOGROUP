@@ -3,8 +3,10 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import BackToTop from './components/BackToTop'
+import PageLoader from './components/PageLoader'
 import Home from './pages/Home'
 import AboutUs from './pages/AboutUs'
+import Awards from './pages/Awards'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -39,6 +41,7 @@ export default function App() {
 
   return (
     <>
+      <PageLoader />
       <ScrollToTop />
 
       {/* scroll progress bar */}
@@ -52,6 +55,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/awards" element={<Awards />} />
       </Routes>
 
       <Footer />
