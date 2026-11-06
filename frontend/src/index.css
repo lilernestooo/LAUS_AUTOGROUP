@@ -10,7 +10,25 @@
   --animate-slide-in: slide-in 0.8s ease;
   @keyframes slide-in {
     from { opacity: 0; transform: scale(1.02); }
-    to   { opacity: 1; transform: none; }
+    to { opacity: 1; transform: none; }
+  }
+
+  --animate-float: float 4s ease-in-out infinite;
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* page loader */
+  --animate-spin-y: spin-y 1.6s linear infinite;
+  @keyframes spin-y {
+    to { transform: rotateY(360deg); }
+  }
+
+  --animate-loader-bar: loader-bar 1.2s ease-in-out infinite;
+  @keyframes loader-bar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(300%); }
   }
 }
 

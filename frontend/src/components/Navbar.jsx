@@ -7,7 +7,7 @@ import logo from '../assets/logo/LAG_WhiteRed_Logo.png'
    sub items can be a string, { label, to }, or { label, children: [...] } for a nested group */
 const links = [
   { label: 'Home', to: '/' },
-  { label: 'About Us', to: '/about', sub: ['Awards & Recognitions'] },
+  { label: 'About Us', to: '/about', sub: [{ label: 'Awards & Recognitions', to: '/awards' }] },
   {
     label: 'Auto Brand',
     sub: [
@@ -151,7 +151,9 @@ export default function Navbar() {
         >
           <ul className="flex flex-col py-2 lg:flex-row lg:items-center lg:gap-0.5 lg:py-0">
             {links.map((l, idx) => {
-              const isActive = l.to === pathname
+              const isActive =
+              l.to === pathname ||
+              l.sub?.some((s) => typeof s !== 'string' && s.to === pathname)
               return (
                 <li key={l.label} className="group relative">
                   <A
