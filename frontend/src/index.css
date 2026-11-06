@@ -32,5 +32,5 @@
   }
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 body { font-family: Arial, Helvetica, sans-serif; color: #666; background: #fcfcfc; }

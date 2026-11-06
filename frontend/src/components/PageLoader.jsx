@@ -52,13 +52,11 @@ export default function PageLoader() {
     }
   }, [run])
 
-  // after the fade-out, remove the loader and unlock scrolling
+  // the fade-out starts: unlock scrolling right away, remove the loader after the fade
   useEffect(() => {
     if (phase !== 'leaving') return
-    const t = setTimeout(() => {
-      document.body.style.overflow = ''
-      setPhase('gone')
-    }, LEAVE_TIME)
+    document.body.style.overflow = ''
+    const t = setTimeout(() => setPhase('gone'), LEAVE_TIME)
     return () => clearTimeout(t)
   }, [phase])
 
