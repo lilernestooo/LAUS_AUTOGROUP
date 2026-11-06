@@ -1,8 +1,28 @@
 import { useEffect, useState } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import BackToTop from './components/BackToTop'
 import Home from './pages/Home'
+import AboutUs from './pages/AboutUs'
+
+// Jumps to the top on page change, or to the section if the link has a #hash
+function ScrollToTop() {
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      // wait a tick so the new page has rendered
+      const t = setTimeout(() => {
+        document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' })
+      }, 50)
+      return () => clearTimeout(t)
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [pathname, hash])
+
+  return null
+}
 
 export default function App() {
   const [progress, setProgress] = useState(0)
@@ -19,6 +39,8 @@ export default function App() {
 
   return (
     <>
+      <ScrollToTop />
+
       {/* scroll progress bar */}
       <div
         className="fixed top-0 left-0 z-[60] h-[3px] bg-lag-red"
@@ -26,7 +48,12 @@ export default function App() {
       />
 
       <Navbar />
-      <Home />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutUs />} />
+      </Routes>
+
       <Footer />
       <BackToTop />
     </>

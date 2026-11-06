@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import logo from '../assets/logo/LAG_WhiteRed_Logo.png'
 
 /* ---------- MENU DATA ----------
-   sub items can be a string, or { label, children: [...] } for a nested group */
+   `to` starts with "/" for real pages. Anything without it stays a "#" placeholder.
+   sub items can be a string, { label, to }, or { label, children: [...] } for a nested group */
 const links = [
-  { label: 'Home', active: true },
-  { label: 'About Us', sub: ['Awards & Recognitions'] },
+  { label: 'Home', to: '/' },
+  { label: 'About Us', to: '/about', sub: ['Awards & Recognitions'] },
   {
     label: 'Auto Brand',
     sub: [
@@ -28,6 +30,19 @@ const scrollbar =
 const itemClass =
   'block border-b border-l-2 border-b-neutral-800 border-l-transparent px-4 py-2.5 text-sm text-neutral-200 transition-all duration-200 hover:border-l-lag-red hover:bg-neutral-800 hover:pl-5 hover:text-white'
 
+/* Real page -> <Link>, placeholder -> plain <a href="#"> */
+function A({ to = '#', children, ...props }) {
+  return to.startsWith('/') ? (
+    <Link to={to} {...props}>
+      {children}
+    </Link>
+  ) : (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  )
+}
+
 /* ---------- ONE DROPDOWN ITEM (with optional nested group) ---------- */
 function DropItem({ item, onNavigate }) {
   const [expanded, setExpanded] = useState(false)
@@ -36,9 +51,9 @@ function DropItem({ item, onNavigate }) {
   if (!data.children) {
     return (
       <li>
-        <a href="#" onClick={onNavigate} className={itemClass}>
+        <A to={data.to} onClick={onNavigate} className={itemClass}>
           {data.label}
-        </a>
+        </A>
       </li>
     )
   }
@@ -78,6 +93,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false) // mobile menu
   const [openIdx, setOpenIdx] = useState(null) // mobile accordion
   const [scrolled, setScrolled] = useState(false)
+  const { pathname } = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -96,7 +112,9 @@ export default function Navbar() {
     if (l.sub && window.innerWidth < 1024) {
       e.preventDefault()
       setOpenIdx(openIdx === idx ? null : idx)
+      return
     }
+    closeMenu()
   }
 
   return (
@@ -107,13 +125,13 @@ export default function Navbar() {
     >
       <div className="mx-auto flex h-full w-[94%] max-w-[1280px] items-center justify-between">
         {/* logo */}
-        <a href="#" onClick={closeMenu}>
+        <Link to="/" onClick={closeMenu}>
           <img
             src={logo}
             alt="LausAutoGroup"
             className={`block transition-all duration-300 ${scrolled ? 'h-10' : 'h-14'}`}
           />
-        </a>
+        </Link>
 
         {/* burger (mobile) */}
         <button
@@ -132,42 +150,53 @@ export default function Navbar() {
           }`}
         >
           <ul className="flex flex-col py-2 lg:flex-row lg:items-center lg:gap-0.5 lg:py-0">
-            {links.map((l, idx) => (
-              <li key={l.label} className="group relative">
-                <a
-                  href="#"
-                  onClick={(e) => onTabClick(e, l, idx)}
-                  className={`flex h-10 w-full items-center justify-between gap-2 px-3.5 text-[15px] text-white transition-colors duration-200 lg:w-auto ${
-                    l.active || openIdx === idx
-                      ? 'bg-lag-red'
-                      : 'hover:bg-lag-red lg:group-hover:bg-lag-red lg:group-focus-within:bg-lag-red'
-                  }`}
-                >
-                  {l.label}
-                  {l.sub && (
-                    <span
-                      className={`text-[10px] transition-transform duration-200 lg:group-hover:rotate-180 ${
-                        openIdx === idx ? 'rotate-180' : ''
-                      }`}
-                    >
-                      ▾
-                    </span>
-                  )}
-                </a>
-
-                {l.sub && (
-                  <ul
-                    className={`max-h-[260px] overflow-y-auto bg-neutral-900 ${scrollbar} ${
-                      openIdx === idx ? 'block' : 'hidden'
-                    } lg:invisible lg:absolute lg:top-full lg:left-0 lg:block lg:max-h-[320px] lg:min-w-[210px] lg:translate-y-2 lg:border-t-2 lg:border-lag-red lg:opacity-0 lg:shadow-xl lg:shadow-black/60 lg:transition-all lg:duration-200 lg:group-focus-within:visible lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100 lg:group-hover:visible lg:group-hover:translate-y-0 lg:group-hover:opacity-100`}
+            {links.map((l, idx) => {
+              const isActive = l.to === pathname
+              return (
+                <li key={l.label} className="group relative">
+                  <A
+                    to={l.to}
+                    onClick={(e) => onTabClick(e, l, idx)}
+                    className={`flex h-10 w-full items-center justify-between gap-2 px-3.5 text-[15px] text-white transition-colors duration-200 lg:w-auto ${
+                      isActive || openIdx === idx
+                        ? 'bg-lag-red'
+                        : 'hover:bg-lag-red lg:group-hover:bg-lag-red lg:group-focus-within:bg-lag-red'
+                    }`}
                   >
-                    {l.sub.map((s) => (
-                      <DropItem key={typeof s === 'string' ? s : s.label} item={s} onNavigate={closeMenu} />
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
+                    {l.label}
+                    {l.sub && (
+                      <span
+                        className={`text-[10px] transition-transform duration-200 lg:group-hover:rotate-180 ${
+                          openIdx === idx ? 'rotate-180' : ''
+                        }`}
+                      >
+                        ▾
+                      </span>
+                    )}
+                  </A>
+
+                  {l.sub && (
+                    <ul
+                      className={`max-h-[260px] overflow-y-auto bg-neutral-900 ${scrollbar} ${
+                        openIdx === idx ? 'block' : 'hidden'
+                      } lg:invisible lg:absolute lg:top-full lg:left-0 lg:block lg:max-h-[320px] lg:min-w-[210px] lg:translate-y-2 lg:border-t-2 lg:border-lag-red lg:opacity-0 lg:shadow-xl lg:shadow-black/60 lg:transition-all lg:duration-200 lg:group-focus-within:visible lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100 lg:group-hover:visible lg:group-hover:translate-y-0 lg:group-hover:opacity-100`}
+                    >
+                      {/* mobile only: the tab itself opens the dropdown, so give a way to open the page */}
+                      {l.to && (
+                        <li className="lg:hidden">
+                          <A to={l.to} onClick={closeMenu} className={itemClass}>
+                            Overview
+                          </A>
+                        </li>
+                      )}
+                      {l.sub.map((s) => (
+                        <DropItem key={typeof s === 'string' ? s : s.label} item={s} onNavigate={closeMenu} />
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              )
+            })}
 
             {/* search */}
             <li className="px-4 py-3 lg:ml-6 lg:p-0">
