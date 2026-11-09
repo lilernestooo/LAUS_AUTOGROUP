@@ -19,6 +19,11 @@
     50% { transform: translateY(-8px); }
   }
 
+  @keyframes shadow-pulse {
+    0%, 100% { transform: scaleX(1); opacity: 1; }
+    50% { transform: scaleX(0.7); opacity: 0.5; }
+  }
+
   /* page loader */
   --animate-spin-y: spin-y 1.6s linear infinite;
   @keyframes spin-y {
