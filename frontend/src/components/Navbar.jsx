@@ -13,12 +13,12 @@ const links = [
     sub: [
       'BMW', 'Carmix', 'Changhe', 'Chevrolet', 'Chery', 'Ford', 'Foton', 'FUSO',
       'Geely', 'Haima',
-      { label: 'Hyundai', children: ['Hyundai Cars', 'Hyundai Commercial'] }, // edit these
+      { label: 'Hyundai', children: ['Passenger Cars', 'Trucks and Buses'] }, // edit these
       'Jeep', 'Kia', 'Mazda', 'MINI', 'Mitsubishi', 'Peugeot',
       'Piaggio APE', 'Suzuki', 'Volkswagen',
     ],
   },
-  { label: 'Auto Partners' },
+  { label: 'Auto Partners', to: '/auto-partners' },
   { label: 'News and Events', sub: ['Latest News', 'Special Offers'] },
   { label: 'Contact Us', sub: ['Find a Dealer', 'Careers'] },
 ]
