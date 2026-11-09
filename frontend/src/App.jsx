@@ -7,6 +7,7 @@ import PageLoader from './components/PageLoader'
 import Home from './pages/Home'
 import AboutUs from './pages/AboutUs'
 import Awards from './pages/Awards'
+import AutoPartners from './pages/AutoPartners'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -56,6 +57,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/awards" element={<Awards />} />
+        <Route path="/auto-partners" element={<AutoPartners />} />
       </Routes>
 
       <Footer />
