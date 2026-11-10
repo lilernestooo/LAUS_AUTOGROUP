@@ -1,0 +1,80 @@
+export default {
+  brandName: 'Changhe',
+  backTo: '/brands/changhe',
+  name: 'Changhe Freedom',
+  images: ['CHANGHE-FREEDOM-model.png'],
+  brochure: '#', // replace with the real brochure PDF link
+  overviewSpecs: [
+    {
+      name: 'Changhe Freedom',
+      rows: [
+        ['Engine (L)', '1.4'],
+        ['Bore x Stroke (mm)', '73 x 82'],
+        ['Max. Power (Hp/rpm)', '94/6000'],
+        ['Max. Torque (N-m/rpm)', '114/3200'],
+        ['Max. Speed (N-m/rpm)', '130'],
+        ['Transmission Type', 'Synchromesh'],
+      ],
+    },
+  ],
+  specs: [
+    {
+      name: 'Single Cabin STD',
+      rows: [
+        ['Overall', '(Length) 4400 mm, (Width) 1528 mm, (Height) 1832 mm'],
+        ['Curb Weight (kg)', '920'],
+        ['Seating', '2'],
+        ['Engine (L)', '1.4'],
+        ['Bore x Stroke (mm)', '73 x 82'],
+        ['Max. Power (Hp/rpm)', '94/6000'],
+        ['Max. Torque (N-m/rpm)', '114/3200'],
+        ['Max. Speed (N-m/rpm)', '130'],
+        ['Transmission Type', 'Synchromesh'],
+      ],
+    },
+  ],
+  variants: [
+    {
+      name: 'Single Cabin DLX',
+      rows: [
+        ['Overall', '(Length) 4400 mm, (Width) 1528 mm, (Height) 1832 mm'],
+        ['Curb Weight (kg)', '920'],
+        ['Seating', '2'],
+        ['Engine (L)', '1.4'],
+        ['Bore x Stroke (mm)', '73 x 82'],
+        ['Max. Power (Hp/rpm)', '94/6000'],
+        ['Max. Torque (N-m/rpm)', '114/3200'],
+        ['Max. Speed (N-m/rpm)', '130'],
+        ['Transmission Type', 'Synchromesh'],
+      ],
+    },
+    {
+      name: 'Double Cabin STD',
+      rows: [
+        ['Overall', '(Length) 4565 mm, (Width) 1528 mm, (Height) 1845 mm'],
+        ['Curb Weight (kg)', '980'],
+        ['Seating', '5'],
+        ['Engine (L)', '1.4'],
+        ['Bore x Stroke (mm)', '73 x 82'],
+        ['Max. Power (Hp/rpm)', '94/6000'],
+        ['Max. Torque (N-m/rpm)', '114/3200'],
+        ['Max. Speed (N-m/rpm)', '130'],
+        ['Transmission Type', 'Synchromesh'],
+      ],
+    },
+    {
+      name: 'Double Cabin DLX',
+      rows: [
+        ['Overall', '(Length) 4565 mm, (Width) 1528 mm, (Height) 1845 mm'],
+        ['Curb Weight (kg)', '980'],
+        ['Seating', '5'],
+        ['Engine (L)', '1.4'],
+        ['Bore x Stroke (mm)', '73 x 82'],
+        ['Max. Power (Hp/rpm)', '94/6000'],
+        ['Max. Torque (N-m/rpm)', '114/3200'],
+        ['Max. Speed (N-m/rpm)', '130'],
+        ['Transmission Type', 'Synchromesh'],
+      ],
+    },
+  ],
+}

@@ -87,7 +87,7 @@ const cars = [
   { name: 'Mitsubishi Motors', src: mitsubishi }, { name: 'Suzuki', src: suzuki }, { name: 'Chevrolet', src: chevrolet },
   { name: 'Ford', src: ford }, { name: 'Foton', src: foton },
   { name: 'Chery', src: chery }, { name: 'Hyundai', src: hyundai }, { name: 'Kia', src: kia },
-  { name: 'Mazda', src: mazda }, { name: 'BMW', src: bmw, dark: true }, { name: 'Changhe', src: changhe },
+  { name: 'Mazda', src: mazda }, { name: 'BMW', src: bmw }, { name: 'Changhe', src: changhe },
   { name: 'Jetour', src: jetour }, { name: 'Fuso', src: fuso }, { name: 'Haima', src: haima },
   { name: 'Jeep', src: jeep }, { name: 'MINI', src: mini }, { name: 'Peugeot', src: peugeot },
   { name: 'Lynk & Co', src: Lynk }, { name: 'Volkswagen', src: volkswagen }, { name: 'Geely', src: geely },
