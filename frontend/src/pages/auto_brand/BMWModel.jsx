@@ -40,7 +40,27 @@ const TABS = [
 ]
 
 /* ---------- CAR VIEWER: fixed photo + shadow ---------- */
-function CarViewer({ src, alt }) {
+function CarViewer({ src, alt, scene }) {
+  // scene photo (car on a street): show it as a framed picture, no glow or ground shadow
+  if (scene) {
+    return (
+      <div className="mx-auto max-w-4xl">
+        {src ? (
+          <img
+            src={src}
+            alt={alt}
+            draggable={false}
+            className="w-full rounded-xl shadow-[0_24px_50px_-18px_rgba(0,0,0,0.45)] ring-1 ring-black/10"
+          />
+        ) : (
+          <div className="flex aspect-[16/9] items-center justify-center rounded bg-neutral-200 text-neutral-500">
+            Car image missing
+          </div>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="relative">
       <div className="relative mx-auto flex h-72 max-w-5xl items-center justify-center md:h-[34rem]">
@@ -96,7 +116,7 @@ function Popup({ eyebrow, title, onClose, children }) {
         <div className="relative flex items-start justify-between gap-4 bg-[#23252e] px-6 py-5">
           <span className="absolute inset-x-0 bottom-0 h-1 bg-lag-red" />
           <div>
-            <p className="text-[11px] font-bold tracking-[0.3em] text-lag-red uppercase">
+            <p className="text-[11px] font-bold tracking-[0.3em] text-white uppercase">
               {eyebrow}
             </p>
             <h3 className="mt-1 text-xl font-semibold text-white md:text-2xl">{title}</h3>
@@ -129,49 +149,55 @@ function Popup({ eyebrow, title, onClose, children }) {
   )
 }
 
-/* ---------- POP-UP CONTENT: SPECIFICATIONS (used by specs and variants) ---------- */
 function SpecsContent({ specs }) {
   return (
     <div className="space-y-8">
-      {specs.map((variant) => (
-        <section key={variant.name}>
-          {/* variant label */}
-          <div className="mb-5 flex items-center gap-3">
-            <span className="rounded-sm bg-lag-dark px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase">
-              Model
-            </span>
-            <h4 className="text-lg font-semibold text-lag-dark">{variant.name}</h4>
-            <span className="h-px flex-1 bg-neutral-300" />
-          </div>
+      {specs.map((variant) => {
+        // X1 style has "rows", the other cars have "groups": both become the same table
+        const sections = variant.groups || [{ title: null, rows: variant.rows }]
 
-          {/* every group, labeled: nothing to choose */}
-          <div className="gap-5 md:columns-2">
-            {variant.groups.map((g) => (
-              <div key={g.title} className="mb-5 break-inside-avoid">
-                <div className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5">
-                  <h5 className="flex items-center gap-2 border-b border-neutral-200 bg-neutral-100 px-4 py-2.5 text-xs font-bold tracking-[0.15em] text-lag-dark uppercase">
-                    <span className="h-3.5 w-1 rounded bg-lag-red" />
-                    {g.title}
-                  </h5>
+        return (
+          <section key={variant.name || 'specs'}>
+            {/* variant label (skipped when the car has no model name) */}
+            {variant.name && (
+              <div className="mb-5 flex items-center gap-3">
+                <span className="rounded-sm bg-lag-dark px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase">
+                  Model
+                </span>
+                <h4 className="text-lg font-semibold text-lag-dark">{variant.name}</h4>
+                <span className="h-px flex-1 bg-neutral-300" />
+              </div>
+            )}
+
+            {/* one table for everything */}
+            <div className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5">
+              {sections.map((g) => (
+                <div key={g.title || 'rows'}>
+                  {g.title && (
+                    <h5 className="flex items-center gap-2 border-y border-neutral-200 bg-neutral-100 px-4 py-2 text-xs font-bold tracking-[0.15em] text-lag-dark uppercase first:border-t-0">
+                      <span className="h-3.5 w-1 rounded bg-lag-red" />
+                      {g.title}
+                    </h5>
+                  )}
                   <dl>
                     {g.rows.map(([label, value], ri) => (
                       <div
-                        key={label}
-                        className={`flex items-start justify-between gap-4 px-4 py-2.5 text-[13px] transition-colors hover:bg-neutral-100 ${
+                        key={`${label}-${ri}`}
+                        className={`flex flex-col gap-1 px-4 py-3 text-[13px] transition-colors hover:bg-neutral-100 sm:grid sm:grid-cols-[15rem_1fr] sm:gap-6 ${
                           ri % 2 ? 'bg-[#fafafa]' : 'bg-white'
                         }`}
                       >
                         <dt className="text-[#777]">{label}</dt>
-                        <dd className="shrink-0 text-right font-semibold text-[#222]">{value}</dd>
+                        <dd className="min-w-0 font-semibold text-[#222] sm:text-right">{value}</dd>
                       </div>
                     ))}
                   </dl>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      ))}
+              ))}
+            </div>
+          </section>
+        )
+      })}
     </div>
   )
 }
@@ -233,8 +259,8 @@ function ModelPage({ data }) {
 
           {/* car */}
           <Reveal direction="zoom" delay={100}>
-            <div className="-mt-6 md:-mt-20">
-              <CarViewer src={src} alt={data.name} />
+            <div className={data.scene ? 'mt-8' : '-mt-6 md:-mt-20'}>
+              <CarViewer src={src} alt={data.name} scene={data.scene} />
             </div>
           </Reveal>
 
