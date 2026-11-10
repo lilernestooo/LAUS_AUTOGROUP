@@ -19,6 +19,16 @@ const logoImages = import.meta.glob('../../assets/brand/*.{jpg,jpeg,png,webp}', 
 })
 const getLogo = (name) => logoImages[`../../assets/brand/${name}`]
 
+/* big dealer logo: lives in assets/banners (found by file name only) */
+const bannerImages = import.meta.glob('../../assets/banners/*.{jpg,jpeg,png,webp}', {
+  eager: true,
+  import: 'default',
+})
+const bannerByFile = Object.fromEntries(
+  Object.entries(bannerImages).map(([path, url]) => [path.split('/').pop().toLowerCase(), url])
+)
+const getBanner = (name) => bannerByFile[name.toLowerCase()]
+
 /* ---------- DATA ----------
    One block per brand. The key is the address: /brands/bmw
    Model photos live in src/assets/models/<brand>/ and the image value starts with that folder.
@@ -26,8 +36,8 @@ const getLogo = (name) => logoImages[`../../assets/brand/${name}`]
 const brands = {
   bmw: {
     name: 'BMW',
-    logo: 'bmw.png',
-    logoDark: true, // black circle behind the logo, because the ring is white
+    logo: 'BMW.png',
+    fbLogo: 'FB-BMW.jpg', // small square logo for the Facebook card
     dealer: 'Premier Cars BMW – Pampanga',
     address: [
       'Ground Floor, CGIC Bldg. Jose Abad Santos Avenue,',
@@ -56,16 +66,16 @@ const brands = {
     models: [
       { name: 'BMW 5 Series Sedan', category: 'Sedan', slug: '5-series-sedan', image: 'BMW-5-Series-Sedan.jpg' },
       { name: 'BMW 3 Series Sedan', category: 'Sedan', slug: '3-series-sedan', image: 'BMW-3-Series-Sedan_Thumbnail-260x146.jpg' },
-            { name: 'BMW 4 Series Gran Coupe', category: 'Gran Coupé', slug: '4-series-gran-coupe', image: 'BMW-4-series-gran-coupe_Thumbnail-260x146.jpg' },
-      { name: 'BMW X1', category: 'Sports Activity Vehicle', image: 'BMW-X1_Thumbnail.jpg' },
-      { name: 'BMW X5', category: 'Sports Activity Vehicle', image: 'BMW-X5-XDrive40i_Thumbnail-260x146.jpg' },
-      { name: 'BMW 7 Series Sedan', category: 'Sedan', image: 'BMW-7-Series-Sedan_Thumbnail-260x146.jpg' },
-      { name: 'BMW X6', category: 'Sports Activity Coupé', image: 'BMW-X6_Thumbnail-260x146.jpg' },
-      { name: 'BMW M2 Coupe', category: 'Coupé', image: 'BMW-M2-Coupe_Thumbnail-260x146.jpg' },
-      { name: 'BMW X3', category: 'Sports Activity Vehicle', image: 'BMW-X3_Thumbnail-260x146.jpg' },
-      { name: 'BMW M4 Coupe', category: 'Coupé', image: 'BMW-M4-Coupe_Thumbnail-260x146.jpg' },
-      { name: 'BMW M3 Sedan', category: 'Sedan', image: 'BMW-M3-Sedan_Thumbnail-260x146.jpg' },
-      { name: 'BMW X5m', category: 'Sports Activity Vehicle', image: 'BMW-51_Thumbnail-260x146.jpg' },
+      { name: 'BMW 4 Series Gran Coupe', category: 'Gran Coupé', slug: '4-series-gran-coupe', image: 'BMW-4-series-gran-coupe_Thumbnail-260x146.jpg' },
+      { name: 'BMW X1', category: 'Sports Activity Vehicle', slug: 'x1', image: 'BMW-X1_Thumbnail.jpg' },
+      { name: 'BMW X5', category: 'Sports Activity Vehicle', slug: 'x5', image: 'BMW-X5-XDrive40i_Thumbnail-260x146.jpg' },
+      { name: 'BMW 7 Series Sedan', category: 'Sedan', slug: '7-series-sedan', image: 'BMW-7-Series-Sedan_Thumbnail-260x146.jpg' },
+      { name: 'BMW X6', category: 'Sports Activity Coupé', slug: 'x6', image: 'BMW-X6_Thumbnail-260x146.jpg' },
+      { name: 'BMW M2 Coupe', category: 'Coupé', slug: 'm2-coupe', image: 'BMW-M2-Coupe_Thumbnail-260x146.jpg' },
+      { name: 'BMW X3', category: 'Sports Activity Vehicle', slug: 'x3', image: 'BMW-X3_Thumbnail-260x146.jpg' },
+      { name: 'BMW M4 Coupe', category: 'Coupé', slug: 'm4-coupe', image: 'BMW-M4-Coupe_Thumbnail-260x146.jpg' },
+      { name: 'BMW M3 Sedan', category: 'Sedan', slug: 'm3-sedan', image: 'BMW-M3-Sedan_Thumbnail-260x146.jpg' },
+      { name: 'BMW X5m', category: 'Sports Activity Vehicle', slug: 'x5m', image: 'BMW-51_Thumbnail-260x146.jpg'},
     ],
   },
 }
@@ -112,7 +122,10 @@ function ModelCard({ model, to }) {
 /* ---------- THE PAGE FOR ONE BRAND ---------- */
 function BrandPage({ brand, slug }) {
   const [active, setActive] = useState(ALL)
-  const logo = getLogo(brand.logo)
+  const logo = getBanner(brand.logo) || getLogo(brand.logo)
+  const fbLogo =
+  
+  getLogo(brand.fbLogo || brand.logo) || getBanner(brand.fbLogo || brand.logo)
 
   const shown = active === ALL ? brand.models : brand.models.filter((m) => m.category === active)
   const countOf = (c) =>
@@ -130,29 +143,16 @@ function BrandPage({ brand, slug }) {
           <div className="min-w-0 lg:col-span-9 lg:pr-10">
             {/* brand logo: floats, with a shadow */}
             <Reveal direction="zoom">
-              <div className="group flex h-48 flex-col items-center justify-center md:h-64">
+              <div className="flex h-44 items-center justify-center border-2 border-neutral-300 bg-[#fcfcfc] md:h-56">
                 {logo ? (
-                  <div
-                    className={`animate-float transition-transform duration-500 group-hover:scale-110 ${
-                      brand.logoDark
-                        ? 'rounded-full bg-black p-1.5 shadow-[0_18px_35px_-8px_rgba(0,0,0,0.55)]'
-                        : ''
-                    }`}
-                  >
-                    <img
-                      src={logo}
-                      alt={brand.name}
-                      className={`h-24 w-24 object-contain md:h-36 md:w-36 ${
-                        brand.logoDark ? '' : 'drop-shadow-[0_14px_16px_rgba(0,0,0,0.3)]'
-                      }`}
-                    />
-                  </div>
+                  <img
+                    src={logo}
+                    alt={brand.name}
+                    className="w-64 max-w-full object-contain md:w-[26rem]"
+                  />
                 ) : (
                   <span className="text-4xl font-bold text-lag-dark">{brand.name}</span>
                 )}
-
-                {/* shadow on the ground: shrinks while the logo floats up */}
-                <div className="mt-5 h-4 w-24 animate-[shadow-pulse_4s_ease-in-out_infinite] rounded-full bg-black/30 blur-md md:w-32" />
               </div>
             </Reveal>
 
@@ -311,11 +311,11 @@ function BrandPage({ brand, slug }) {
               <Reveal direction="up" delay={150}>
                 <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5 transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.3)]">
                   <div className="flex items-center gap-3 p-3">
-                    {logo && (
+                    {fbLogo && (
                       <img
-                        src={logo}
+                        src={fbLogo}
                         alt=""
-                        className="h-12 w-12 shrink-0 rounded bg-black object-contain p-1"
+                        className="h-12 w-12 shrink-0 rounded object-cover"
                       />
                     )}
                     <div className="min-w-0">
