@@ -10,6 +10,9 @@ import Awards from './pages/Awards'
 import AutoPartners from './pages/AutoPartners'
 import Brand from './pages/auto_brand/BMW'
 import BMWModel from './pages/auto_brand/BMWModel'
+import Carmix from './pages/auto_brand/Carmix'
+import Changhe from './pages/auto_brand/Changhe'
+import ChangheModel from './pages/auto_brand/ChangheModel'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -60,6 +63,9 @@ export default function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/awards" element={<Awards />} />
         <Route path="/auto-partners" element={<AutoPartners />} />
+        <Route path="/brands/carmix" element={<Carmix />} />
+        <Route path="/brands/changhe" element={<Changhe />} />
+        <Route path="/brands/changhe/:model" element={<ChangheModel />} />
         <Route path="/brands/:slug" element={<Brand />} />
         <Route path="/brands/:slug/:model" element={<BMWModel />} />
       </Routes>

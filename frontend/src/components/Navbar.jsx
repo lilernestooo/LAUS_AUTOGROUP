@@ -11,7 +11,7 @@ const links = [
   {
     label: 'Auto Brand',
     sub: [
-      { label: 'BMW', to: '/brands/bmw' }, 'Carmix', 'Changhe', 'Chevrolet', 'Chery', 'Ford', 'Foton', 'FUSO',
+      { label: 'BMW', to: '/brands/bmw' }, { label: 'Carmix', to: '/brands/carmix' }, { label: 'Changhe', to: '/brands/changhe' }, 'Chevrolet', 'Chery', 'Ford', 'Foton', 'FUSO',
       'Geely', 'Haima',
       { label: 'Hyundai', children: ['Passenger Cars', 'Trucks and Buses'] }, // edit these
       'Jeep', 'Kia', 'Mazda', 'MINI', 'Mitsubishi', 'Peugeot',
