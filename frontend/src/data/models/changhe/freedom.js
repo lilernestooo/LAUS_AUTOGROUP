@@ -3,7 +3,7 @@ export default {
   backTo: '/brands/changhe',
   name: 'Changhe Freedom',
   images: ['CHANGHE-FREEDOM-model.png'],
-  brochure: '#', // replace with the real brochure PDF link
+  brochure: '#', 
   overviewSpecs: [
     {
       name: 'Changhe Freedom',
