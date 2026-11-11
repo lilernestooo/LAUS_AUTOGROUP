@@ -15,6 +15,7 @@ import Changhe from './pages/auto_brand/Changhe'
 import ChangheModel from './pages/auto_brand/ChangheModel'
 import Chevrolet from './pages/auto_brand/Chevrolet'
 import ChevroletModel from './pages/auto_brand/ChevroletModel'
+import Chery from './pages/auto_brand/Chery'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -70,6 +71,7 @@ export default function App() {
         <Route path="/brands/changhe/:model" element={<ChangheModel />} />
         <Route path="/brands/chevrolet" element={<Chevrolet />} />
         <Route path="/brands/chevrolet/:model" element={<ChevroletModel />} />
+        <Route path="/brands/chery" element={<Chery />} />
         <Route path="/brands/:slug" element={<Brand />} />
         <Route path="/brands/:slug/:model" element={<BMWModel />} />
       </Routes>
