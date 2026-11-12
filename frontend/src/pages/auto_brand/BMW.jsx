@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Reveal from '../../components/Reveal'
+import FacebookPage from '../../components/FacebookPage'
 
 /* Loads images. A missing file never breaks the build. */
 const modelImages = import.meta.glob(
@@ -49,7 +50,7 @@ const brands = {
     facebook: {
       name: 'Premier Cars BMW',
       followers: '7,539',
-      href: 'https://www.facebook.com/401168446670079?ref=embed_pagez',
+      href: 'https://www.facebook.com/PampangaPremierCars/?ref=embed_page#',
     },
     website: { label: 'bethefirst.bmw.com.ph', href: 'https://bethefirst.bmw.com.ph' },
     privacyHref: '#', // replace with the real Data Privacy Notice link
@@ -123,9 +124,6 @@ function ModelCard({ model, to }) {
 function BrandPage({ brand, slug }) {
   const [active, setActive] = useState(ALL)
   const logo = getBanner(brand.logo) || getLogo(brand.logo)
-  const fbLogo =
-  
-  getLogo(brand.fbLogo || brand.logo) || getBanner(brand.fbLogo || brand.logo)
 
   const shown = active === ALL ? brand.models : brand.models.filter((m) => m.category === active)
   const countOf = (c) =>
@@ -307,44 +305,9 @@ function BrandPage({ brand, slug }) {
                 </div>
               </Reveal>
 
-              {/* facebook card */}
               <Reveal direction="up" delay={150}>
-                <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5 transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.3)]">
-                  <div className="flex items-center gap-3 p-3">
-                    {fbLogo && (
-                      <img
-                        src={fbLogo}
-                        alt=""
-                        className="h-12 w-12 shrink-0 rounded object-cover"
-                      />
-                    )}
-                    <div className="min-w-0">
-                      <p className="truncate text-base leading-5 font-medium text-[#365899]">
-                        {brand.facebook.name}
-                      </p>
-                      <p className="text-xs text-[#555]">{brand.facebook.followers} followers</p>
-                    </div>
-                  </div>
-                  <div className="border-t border-neutral-200 bg-[#f2f3f5] px-3 py-3">
-                    <a
-                      href={brand.facebook.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group/fb inline-flex items-center gap-2 rounded border border-neutral-300 bg-white px-3 py-1.5 text-xs font-semibold text-[#333] transition duration-300 hover:border-[#1877f2] hover:bg-[#1877f2] hover:text-white"
-                    >
-                      <span className="flex h-5 w-5 items-center justify-center rounded bg-[#1877f2] transition-colors duration-300 group-hover/fb:bg-white">
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          className="fill-white transition-colors duration-300 group-hover/fb:fill-[#1877f2]"
-                        >
-                          <path d="M13.5 21v-7.5h2.5l.5-3h-3V8.7c0-.9.3-1.5 1.6-1.5h1.5V4.5c-.3 0-1.2-.1-2.2-.1-2.3 0-3.9 1.4-3.9 4v2.1H8v3h2.5V21h3z" />
-                        </svg>
-                      </span>
-                      Follow Page
-                    </a>
-                  </div>
+                <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
+                  <FacebookPage href={brand.facebook.href} title={brand.facebook.name} />
                 </div>
               </Reveal>
             </div>
