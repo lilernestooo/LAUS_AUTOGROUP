@@ -39,10 +39,10 @@ const brand = {
   privacyHref: '#', // replace with the real Data Privacy Notice link
   // add slug: 't2pro' to a model once its detail page and data file exist
   models: [
-    { name: 'T2Pro', image: 'CHERY-T2Pro-thumbnail.jpg' },
-    { name: 'T5x ProHybrid', image: 'CHERY-T5x-ProHybrid-thumbnail.jpg' },
-    { name: 'T7 Pro', image: 'CHERY-T7-Pro-thumbnail.jpg' },
-    { name: 'TIAGGO 8 Pro e+', image: 'CHERY-TIAGGO-8-Pro-e-thumbnail.jpg' },
+    { name: 'T2Pro', slug: 't2pro', image: 'T2Pro-Thumbnail.jpg' },
+    { name: 'T5x ProHybrid', slug: 't5x-prohybrid', image: 'T5xProHybrid-Thumbnail.jpg' },
+    { name: 'T7 Pro', slug: 't7-pro', image: 'C_T7pro-MHEV-Thumbnail.jpg' },
+    { name: 'TIAGGO 8 Pro e+', slug: 'tiaggo-8-pro-e', image: 'TIGGO-8-Pro-e-Thumbnail.jpg' },
   ],
   dealer: {
     name: 'Chery Pampanga',

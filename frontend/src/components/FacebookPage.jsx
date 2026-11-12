@@ -1,4 +1,4 @@
-export default function FacebookPage({ href, title, height = 500 }) {
+export default function FacebookPage({ href, title, height = 190 }) {
   // remove ?ref=embed_page and similar, the plugin wants the clean page address
   const page = href.split('?')[0]
 
