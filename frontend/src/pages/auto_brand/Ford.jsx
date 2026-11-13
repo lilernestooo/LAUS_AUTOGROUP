@@ -46,8 +46,8 @@ const brand = {
     { name: 'Ford Ranger', slug: 'ranger', category: 'Pick-up', image: 'Ford_NextGen-Ranger_Thumbnail.jpg' },
     { name: 'Ford Expedition', slug: 'expedition', category: 'Full size SUV', image: 'Ford_Expedition_Thumbnail.jpg' },
     { name: 'Ford NextGen Everest', slug: 'nextgen-everest', category: 'Midsize SUV', image: 'Ford_NextGen-Everest_Thumbnail.jpg' },
-    { name: 'Ford Transit', category: 'Full size SUV', image: 'Ford_Transit_Thumbnail.jpg' },
-    { name: 'Ford Explorer', category: 'Midsize SUV', image: 'Ford_Explorer_Thumbnail.jpg' },
+    { name: 'Ford Transit', slug: 'transit', category: 'Full size SUV', image: 'Ford_Transit_Thumbnail.jpg' },
+    { name: 'Ford Explorer', slug: 'explorer', category: 'Midsize SUV', image: 'Ford_Explorer_Thumbnail.jpg' },
   ],
   /* facebook: live Facebook page URL and exact rendered height (130px for classic header, 330px for full card) */
   dealers: [

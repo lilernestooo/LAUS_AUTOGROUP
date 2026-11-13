@@ -3,6 +3,7 @@ export default {
     backTo: '/brands/ford',
     name: 'Ford Expedition',
     images: ['FORD-Expedition.png'],
+    noShadow: true,
     brochure: '#',
     overview: `The new Expedition is restyled to comfort your near and dear. Heated and Cooled 1st-row, leather trimmed seats are found in the Platinum edition, while split-folding 2ndrow seats with a center-slide feature (to keep your kids close yet secured in a child-safety seat) come standard.`,
     specs: [
