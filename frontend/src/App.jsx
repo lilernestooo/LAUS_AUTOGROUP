@@ -19,6 +19,8 @@ import Chery from './pages/auto_brand/Chery'
 import CheryModel from './pages/auto_brand/CheryModel'
 import Ford from './pages/auto_brand/Ford'
 import FordModel from './pages/auto_brand/FordModel'
+import Foton from './pages/auto_brand/Foton'
+import FotonModel from './pages/auto_brand/FotonModel'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -78,6 +80,8 @@ export default function App() {
         <Route path="/brands/chery/:model" element={<CheryModel />} />
         <Route path="/brands/ford" element={<Ford />} />
         <Route path="/brands/ford/:model" element={<FordModel />} />
+        <Route path="/brands/foton" element={<Foton />} />
+        <Route path="/brands/foton/:model" element={<FotonModel />} />
         <Route path="/brands/:slug" element={<Brand />} />
         <Route path="/brands/:slug/:model" element={<BMWModel />} />
       </Routes>

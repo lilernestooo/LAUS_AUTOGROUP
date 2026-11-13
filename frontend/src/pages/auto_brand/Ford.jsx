@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Reveal from '../../components/Reveal'
+import FacebookPage from '../../components/FacebookPage'
 
 /* Ford photos: put them in src/assets/ford/ (found by file name only, capital letters don't matter) */
 const fordImages = import.meta.glob('../../assets/ford/*.{jpg,jpeg,png,webp}', {
@@ -60,7 +61,7 @@ const brand = {
         { label: 'Service:', numbers: ['+63 918 854 2986'] },
       ],
       facebook: 'https://www.facebook.com/fordcabanatuanofficial/',
-      fbHeight: 130,
+      fbHeight: 190,
     },
     {
       name: 'Ford Clark',
@@ -99,7 +100,7 @@ const brand = {
         { label: 'Service:', numbers: ['+63 918 854 2398'] },
       ],
       facebook: 'https://www.facebook.com/FordIsabelaPage/',
-      fbHeight: 130,
+      fbHeight: 190,
     },
     {
       name: 'Ford Libis',
@@ -111,7 +112,7 @@ const brand = {
         { label: 'Parts:', numbers: ['+63 918 8542 239'] },
       ],
       facebook: 'https://www.facebook.com/OfficialFordLibisPage/',
-      fbHeight: 130,
+      fbHeight: 190,
     },
     {
       name: 'Ford Metro Baguio',
@@ -123,7 +124,7 @@ const brand = {
         { label: 'Service:', numbers: ['+63 918 854 2213'] },
       ],
       facebook: 'https://www.facebook.com/fordmetrobaguio/',
-      fbHeight: 130,
+      fbHeight: 190,
     },
     {
       name: 'Ford Pampanga',
@@ -134,7 +135,7 @@ const brand = {
         { label: 'Service:', numbers: ['0918 854 2947', '0918 854 2402', '0918 854 2767'] },
       ],
       facebook: 'https://www.facebook.com/fordpampangalausgroup/',
-      fbHeight: 130,
+      fbHeight: 190,
     },
     {
       name: 'Ford Subic',
@@ -145,7 +146,7 @@ const brand = {
         { label: 'Service:', numbers: ['+63 918 854 2271', '+63 998 587 8211'] },
       ],
       facebook: 'https://www.facebook.com/FordSubicPage/',
-      fbHeight: 130,
+      fbHeight: 190,
     },
     {
       name: 'Ford Tarlac',
@@ -163,53 +164,6 @@ const brand = {
 
 const ALL = 'All Models'
 const telHref = (n) => `tel:${n.replace(/[^+\d]/g, '')}`
-
-/* ---------- REAL LIVE FACEBOOK PAGE EMBED (Direct from Facebook, live follower updates) ---------- */
-const fbEmbedSrc = (pageUrl, width, height) =>
-  `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(pageUrl.split('?')[0])}` +
-  `&tabs=&width=${width}&height=${height}&small_header=false&adapt_container_width=true` +
-  '&hide_cover=false&show_facepile=false'
-
-function FacebookEmbed({ name, href, height = 130 }) {
-  const boxRef = useRef(null)
-  const [width, setWidth] = useState(0)
-
-  // measure the sidebar so the iframe is never wider than its container
-  useEffect(() => {
-    const el = boxRef.current
-    if (!el) return
-    const update = () => {
-      const w = Math.floor(el.clientWidth / 10) * 10 // snap to 10px so it doesn't reload constantly
-      setWidth(Math.min(500, Math.max(180, w))) // Facebook allows 180–500
-    }
-    update()
-    const ro = new ResizeObserver(update)
-    ro.observe(el)
-    return () => ro.disconnect()
-  }, [])
-
-  return (
-    <div
-      ref={boxRef}
-      style={{ height }}
-      className="overflow-hidden rounded-xl bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5 transition duration-500 hover:-translate-y-1.5 hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.35)] hover:ring-lag-red/40"
-    >
-      {width > 0 && (
-        <iframe
-          title={`${name} Facebook Page`}
-          src={fbEmbedSrc(href, width, height)}
-          loading="lazy"
-          scrolling="no"
-          frameBorder="0"
-          allowFullScreen
-          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          className="block w-full border-0"
-          style={{ border: 'none', overflow: 'hidden', height, width: '100%' }}
-        />
-      )}
-    </div>
-  )
-}
 
 /* ---------- MODEL CARD ---------- */
 function ModelCard({ model, to }) {
@@ -286,11 +240,12 @@ function DealerBlock({ dealer, first }) {
 
       {/* real live facebook page embed */}
       <Reveal direction="up" delay={150}>
-        <div className="mt-5">
-          <FacebookEmbed
-            name={dealer.name}
+        <div className="mt-5 overflow-hidden rounded-xl bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5 transition duration-500 hover:-translate-y-1.5 hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.35)] hover:ring-lag-red/40">
+          <FacebookPage
             href={dealer.facebook}
-            height={dealer.fbHeight || 130}
+            title={`${dealer.name} Facebook Page`}
+            height={dealer.fbHeight || 190}
+            hideCover={dealer.hideCover}
           />
         </div>
       </Reveal>

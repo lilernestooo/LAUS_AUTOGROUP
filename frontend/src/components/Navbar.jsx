@@ -11,7 +11,7 @@ const links = [
   {
     label: 'Auto Brand',
     sub: [
-      { label: 'BMW', to: '/brands/bmw' }, { label: 'Carmix', to: '/brands/carmix' }, { label: 'Changhe', to: '/brands/changhe' }, { label: 'Chevrolet', to: '/brands/chevrolet' }, { label: 'Chery', to: '/brands/chery' }, { label: 'Ford', to: '/brands/ford' }, 'Foton', 'FUSO',
+      { label: 'BMW', to: '/brands/bmw' }, { label: 'Carmix', to: '/brands/carmix' }, { label: 'Changhe', to: '/brands/changhe' }, { label: 'Chevrolet', to: '/brands/chevrolet' }, { label: 'Chery', to: '/brands/chery' }, { label: 'Ford', to: '/brands/ford' }, { label: 'Foton', to: '/brands/foton' }, 'FUSO',
       'Geely', 'Haima',
       { label: 'Hyundai', children: ['Passenger Cars', 'Trucks and Buses'] }, // edit these
       'Jeep', 'Kia', 'Mazda', 'MINI', 'Mitsubishi', 'Peugeot',
@@ -119,9 +119,8 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 bg-black transition-all duration-300 ${
-        scrolled ? 'h-[64px] shadow-lg shadow-black/40' : 'h-[86px]'
-      }`}
+      className={`sticky top-0 z-50 bg-black transition-all duration-300 ${scrolled ? 'h-[64px] shadow-lg shadow-black/40' : 'h-[86px]'
+        }`}
     >
       <div className="mx-auto flex h-full w-[94%] max-w-[1280px] items-center justify-between">
         {/* logo */}
@@ -145,32 +144,29 @@ export default function Navbar() {
 
         {/* menu */}
         <nav
-          className={`absolute top-full right-0 left-0 max-h-[calc(100vh-64px)] overflow-y-auto bg-black lg:static lg:block lg:max-h-none lg:overflow-visible ${
-            open ? 'block' : 'hidden'
-          }`}
+          className={`absolute top-full right-0 left-0 max-h-[calc(100vh-64px)] overflow-y-auto bg-black lg:static lg:block lg:max-h-none lg:overflow-visible ${open ? 'block' : 'hidden'
+            }`}
         >
           <ul className="flex flex-col py-2 lg:flex-row lg:items-center lg:gap-0.5 lg:py-0">
             {links.map((l, idx) => {
               const isActive =
-              l.to === pathname ||
-              l.sub?.some((s) => typeof s !== 'string' && s.to === pathname)
+                l.to === pathname ||
+                l.sub?.some((s) => typeof s !== 'string' && s.to === pathname)
               return (
                 <li key={l.label} className="group relative">
                   <A
                     to={l.to}
                     onClick={(e) => onTabClick(e, l, idx)}
-                    className={`flex h-10 w-full items-center justify-between gap-2 px-3.5 text-[15px] text-white transition-colors duration-200 lg:w-auto ${
-                      isActive || openIdx === idx
+                    className={`flex h-10 w-full items-center justify-between gap-2 px-3.5 text-[15px] text-white transition-colors duration-200 lg:w-auto ${isActive || openIdx === idx
                         ? 'bg-lag-red'
                         : 'hover:bg-lag-red lg:group-hover:bg-lag-red lg:group-focus-within:bg-lag-red'
-                    }`}
+                      }`}
                   >
                     {l.label}
                     {l.sub && (
                       <span
-                        className={`text-[10px] transition-transform duration-200 lg:group-hover:rotate-180 ${
-                          openIdx === idx ? 'rotate-180' : ''
-                        }`}
+                        className={`text-[10px] transition-transform duration-200 lg:group-hover:rotate-180 ${openIdx === idx ? 'rotate-180' : ''
+                          }`}
                       >
                         ▾
                       </span>
@@ -179,9 +175,8 @@ export default function Navbar() {
 
                   {l.sub && (
                     <ul
-                      className={`max-h-[260px] overflow-y-auto bg-neutral-900 ${scrollbar} ${
-                        openIdx === idx ? 'block' : 'hidden'
-                      } lg:invisible lg:absolute lg:top-full lg:left-0 lg:block lg:max-h-[320px] lg:min-w-[210px] lg:translate-y-2 lg:border-t-2 lg:border-lag-red lg:opacity-0 lg:shadow-xl lg:shadow-black/60 lg:transition-all lg:duration-200 lg:group-focus-within:visible lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100 lg:group-hover:visible lg:group-hover:translate-y-0 lg:group-hover:opacity-100`}
+                      className={`max-h-[260px] overflow-y-auto bg-neutral-900 ${scrollbar} ${openIdx === idx ? 'block' : 'hidden'
+                        } lg:invisible lg:absolute lg:top-full lg:left-0 lg:block lg:max-h-[320px] lg:min-w-[210px] lg:translate-y-2 lg:border-t-2 lg:border-lag-red lg:opacity-0 lg:shadow-xl lg:shadow-black/60 lg:transition-all lg:duration-200 lg:group-focus-within:visible lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100 lg:group-hover:visible lg:group-hover:translate-y-0 lg:group-hover:opacity-100`}
                     >
                       {/* mobile only: the tab itself opens the dropdown, so give a way to open the page */}
                       {l.to && (
