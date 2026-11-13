@@ -13,9 +13,6 @@ const modelByFile = Object.fromEntries(
 )
 const getImg = (name) => modelByFile[name.split('/').pop().toLowerCase()]
 
-/* ---------- DATA ----------
-   Every file in src/data/models/ford/<slug>.js is loaded automatically.
-   The file name is the slug: ranger.js opens /brands/ford/ranger */
 const modelData = import.meta.glob('../../data/models/ford/*.js', {
     eager: true,
     import: 'default',
@@ -39,8 +36,7 @@ const TABS = [
     },
 ]
 
-/* ---------- CAR VIEWER: fixed photo + shadow ---------- */
-function CarViewer({ src, alt, scene, shadowBottom, shadowWidth, carScale, noShadow }) {
+function CarViewer({ src, alt, scene, shadowBottom, shadowWidth, shadowShift, shadowRotate, carScale, noShadow, noBlend }) {
     // scene photo (car on a street): show it as a framed picture, no glow or ground shadow
     if (scene) {
         return (
@@ -76,7 +72,11 @@ function CarViewer({ src, alt, scene, shadowBottom, shadowWidth, carScale, noSha
                     {!noShadow && (
                         <div
                             className={`pointer-events-none absolute left-1/2 -translate-x-1/2 ${shadowBottom || 'bottom-[6%]'}`}
-                            style={{ width: shadowWidth || '88%' }}
+                            style={{
+                                width: shadowWidth || '88%',
+                                marginLeft: shadowShift,
+                                rotate: shadowRotate,
+                            }}
                         >
                             {/* wide soft shadow */}
                             <div className="mx-auto h-6 w-full rounded-[50%] bg-black/60 blur-md" />
@@ -89,9 +89,8 @@ function CarViewer({ src, alt, scene, shadowBottom, shadowWidth, carScale, noSha
                             src={src}
                             alt={alt}
                             draggable={false}
-                            className={`relative w-full ${noShadow ? '' : 'mix-blend-multiply'} ${
-                                noShadow ? '' : /\.jpe?g/i.test(src) ? '' : 'drop-shadow-[0_6px_8px_rgba(0,0,0,0.15)]'
-                            }`}
+                            className={`relative w-full ${noShadow || noBlend ? '' : 'mix-blend-multiply'} ${noShadow ? '' : /\.jpe?g/i.test(src) ? '' : 'drop-shadow-[0_6px_8px_rgba(0,0,0,0.15)]'
+                                }`}
                         />
                     ) : (
                         <div className="flex aspect-[16/9] items-center justify-center rounded bg-neutral-200 text-neutral-500">
@@ -302,13 +301,16 @@ function ModelPage({ data }) {
 
                     {/* car */}
                     <Reveal direction="zoom" delay={100}>
-                        <div className={data.scene ? 'mt-8' : data.carTop || '-mt-2 md:-mt-10'}>
+                        <div className={`${data.scene ? 'mt-8' : data.carTop || '-mt-2 md:-mt-10'} ${data.carBottom || ''}`}>
                             <CarViewer
                                 src={src}
                                 alt={data.name}
                                 scene={data.scene}
                                 shadowBottom={data.shadowBottom}
                                 shadowWidth={data.shadowWidth}
+                                shadowShift={data.shadowShift}
+                                shadowRotate={data.shadowRotate}
+                                noBlend={data.noBlend}
                                 carScale={data.carScale}
                                 noShadow={data.noShadow}
                             />

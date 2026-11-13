@@ -3,6 +3,11 @@ export default {
     backTo: '/brands/ford',
     name: 'Ford Mustang',
     images: ['FORD-Mustang.png'],
+    carScale: 1.5,
+    carTop: 'mt-4 md:mt-8',
+    carBottom: '-mb-12 md:-mb-28',
+    shadowBottom: 'bottom-[10%]',
+    shadowWidth: '78%',
     brochure: '#',
     overview: `New class design\n\nThere’s a certain feeling you get when you start the engine and hear Mustang’s iconic growl for the first time. Mustang’s design is just as thrilling.`,
     specs: [
