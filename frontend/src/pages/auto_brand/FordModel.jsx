@@ -36,7 +36,7 @@ const TABS = [
     },
 ]
 
-function CarViewer({ src, alt, scene, shadowBottom, shadowWidth, shadowShift, shadowRotate, carScale, noShadow, noBlend }) {
+function CarViewer({ src, alt, scene, shadowBottom, shadowWidth, shadowHeight, shadowShift, shadowRotate, carScale, noShadow, noBlend }) {
     // scene photo (car on a street): show it as a framed picture, no glow or ground shadow
     if (scene) {
         return (
@@ -68,20 +68,33 @@ function CarViewer({ src, alt, scene, shadowBottom, shadowWidth, shadowShift, sh
                     className="relative z-10 w-full max-w-3xl"
                     style={carScale ? { transform: `scale(${carScale})`, transformOrigin: 'bottom center' } : undefined}
                 >
-                    {/* shadow on the ground: only when the photo has no natural shadow */}
                     {!noShadow && (
                         <div
-                            className={`pointer-events-none absolute left-1/2 -translate-x-1/2 ${shadowBottom || 'bottom-[6%]'}`}
+                            className={`pointer-events-none absolute left-1/2 -translate-x-1/2 ${shadowBottom || 'bottom-[9%]'}`}
                             style={{
-                                width: shadowWidth || '88%',
+                                width: shadowWidth || '60%',
+                                height: shadowHeight || '5rem',
                                 marginLeft: shadowShift,
                                 rotate: shadowRotate,
                             }}
                         >
-                            {/* wide soft shadow */}
-                            <div className="mx-auto h-6 w-full rounded-[50%] bg-black/60 blur-md" />
-                            {/* tight dark shadow right under the tires */}
-                            <div className="absolute inset-x-[6%] top-1/2 h-2.5 -translate-y-1/2 rounded-[50%] bg-black/90 blur-[3px]" />
+                            {/* soft cast shadow that fades out smoothly (no hard edge) */}
+                            <div
+                                className="absolute inset-0"
+                                style={{
+                                    background:
+                                        'radial-gradient(ellipse at center, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 72%)',
+                                    filter: 'blur(6px)',
+                                }}
+                            />
+                            {/* darker contact area under the tires */}
+                            <div
+                                className="absolute inset-x-[12%] top-[35%] h-[32%]"
+                                style={{
+                                    background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 70%)',
+                                    filter: 'blur(4px)',
+                                }}
+                            />
                         </div>
                     )}
                     {src ? (
@@ -308,6 +321,7 @@ function ModelPage({ data }) {
                                 scene={data.scene}
                                 shadowBottom={data.shadowBottom}
                                 shadowWidth={data.shadowWidth}
+                                shadowHeight={data.shadowHeight}
                                 shadowShift={data.shadowShift}
                                 shadowRotate={data.shadowRotate}
                                 noBlend={data.noBlend}
