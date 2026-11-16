@@ -13,6 +13,15 @@ const fotonByFile = Object.fromEntries(
 )
 const getFotonImg = (name) => (name ? fotonByFile[name.toLowerCase()] : undefined)
 
+const logoImages = import.meta.glob('../../assets/foton/*.{jpg,jpeg,png,webp}', {
+    eager: true,
+    import: 'default',
+})
+const logoByFile = Object.fromEntries(
+    Object.entries(logoImages).map(([path, url]) => [path.split('/').pop().toLowerCase(), url])
+)
+const getLogo = (name) => (name ? logoByFile[name.toLowerCase()] : undefined)
+
 const bannerImages = import.meta.glob('../../assets/banners/*.{jpg,jpeg,png,webp}', {
     eager: true,
     import: 'default',
@@ -179,7 +188,7 @@ function DealerBlock({ dealer, first }) {
 /* ---------- THE PAGE ---------- */
 export default function Foton() {
     const [active, setActive] = useState(ALL)
-    const logo = getBanner(brand.logo) || getBrandLogo(brand.logo)
+    const logo = getLogo(brand.logo)
 
     const shown = active === ALL ? brand.models : brand.models.filter((m) => m.category === active)
     const countOf = (c) =>

@@ -7,7 +7,7 @@ export default {
     carTop: 'mt-12 md:mt-24',
     carBottom: '-mb-8 md:-mb-16',
     shadowBottom: 'bottom-[8%]',
-    shadowWidth: '72%',
+    shadowWidth: '67%',
     shadowShift: '7%',
     shadowRotate: '-7deg',
     shadowHeight: '6rem',
