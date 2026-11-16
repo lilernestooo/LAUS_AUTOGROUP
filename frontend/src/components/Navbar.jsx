@@ -11,7 +11,7 @@ const links = [
   {
     label: 'Auto Brand',
     sub: [
-      { label: 'BMW', to: '/brands/bmw' }, { label: 'Carmix', to: '/brands/carmix' }, { label: 'Changhe', to: '/brands/changhe' }, { label: 'Chevrolet', to: '/brands/chevrolet' }, { label: 'Chery', to: '/brands/chery' }, { label: 'Ford', to: '/brands/ford' }, { label: 'Foton', to: '/brands/foton' }, 'FUSO',
+      { label: 'BMW', to: '/brands/bmw' }, { label: 'Carmix', to: '/brands/carmix' }, { label: 'Changhe', to: '/brands/changhe' }, { label: 'Chevrolet', to: '/brands/chevrolet' }, { label: 'Chery', to: '/brands/chery' }, { label: 'Ford', to: '/brands/ford' }, { label: 'Foton', to: '/brands/foton' }, { label: 'FUSO', to: '/brands/fuso' },
       'Geely', 'Haima',
       { label: 'Hyundai', children: ['Passenger Cars', 'Trucks and Buses'] }, // edit these
       'Jeep', 'Kia', 'Mazda', 'MINI', 'Mitsubishi', 'Peugeot',
@@ -158,8 +158,8 @@ export default function Navbar() {
                     to={l.to}
                     onClick={(e) => onTabClick(e, l, idx)}
                     className={`flex h-10 w-full items-center justify-between gap-2 px-3.5 text-[15px] text-white transition-colors duration-200 lg:w-auto ${isActive || openIdx === idx
-                        ? 'bg-lag-red'
-                        : 'hover:bg-lag-red lg:group-hover:bg-lag-red lg:group-focus-within:bg-lag-red'
+                      ? 'bg-lag-red'
+                      : 'hover:bg-lag-red lg:group-hover:bg-lag-red lg:group-focus-within:bg-lag-red'
                       }`}
                   >
                     {l.label}
