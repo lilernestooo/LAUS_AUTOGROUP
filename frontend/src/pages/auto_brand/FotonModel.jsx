@@ -85,7 +85,7 @@ function CarViewer({
                     style={carScale ? { transform: `scale(${carScale})`, transformOrigin: 'bottom center' } : undefined}
                 >
                     {/* shadow on the ground: only when the photo has no natural shadow */}
-                    {!noShadow && (
+                    {false && !noShadow && (  /* shadow disabled: remove "false &&" to bring it back */
                         <div
                             className={`pointer-events-none absolute left-1/2 -translate-x-1/2 ${shadowBottom || 'bottom-[6%]'}`}
                             style={{
@@ -111,8 +111,8 @@ function CarViewer({
                             src={src}
                             alt={alt}
                             draggable={false}
-                            className={`relative w-full ${noShadow || noBlend ? '' : 'mix-blend-multiply'} ${noShadow ? '' : /\.jpe?g/i.test(src) ? '' : 'drop-shadow-[0_6px_8px_rgba(0,0,0,0.15)]'
-                                }`}
+                            className={`relative w-full ${noShadow || noBlend ? '' : 'mix-blend-multiply'}`}
+                        /* drop-shadow removed. original added: ${noShadow ? '' : /\.jpe?g/i.test(src) ? '' : 'drop-shadow-[0_6px_8px_rgba(0,0,0,0.15)]'} */
                         />
                     ) : (
                         <div className="flex aspect-[16/9] items-center justify-center rounded bg-neutral-200 text-neutral-500">

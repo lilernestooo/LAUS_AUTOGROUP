@@ -43,14 +43,14 @@ const brand = {
   models: [
     { name: 'Ford Shelby Mustang', slug: 'shelby-mustang', category: 'Sports Coupe', image: 'Ford_Shelby_Thumbnail.jpg' },
     { name: 'Ford Mustang', slug: 'mustang', category: 'Sports Coupe', image: 'Ford_Mustang_Thumbnail.jpg' },
-    { name: 'Ford Territory', slug: 'territory', category: 'Compact SUV', image: 'Ford_Territory_Thumbnail.jpg' },
+    { name: 'Ford Territory', slug: 'territory', category: 'Compact SUV', image: 'Territory Hyrbid.jpg' },
     { name: 'Ford Ranger', slug: 'ranger', category: 'Pick-up', image: 'Ford_NextGen-Ranger_Thumbnail.jpg' },
     { name: 'Ford Expedition', slug: 'expedition', category: 'Full size SUV', image: 'Ford_Expedition_Thumbnail.jpg' },
     { name: 'Ford NextGen Everest', slug: 'nextgen-everest', category: 'Midsize SUV', image: 'Ford_NextGen-Everest_Thumbnail.jpg' },
     { name: 'Ford Transit', slug: 'transit', category: 'Full size SUV', image: 'Ford_Transit_Thumbnail.jpg' },
     { name: 'Ford Explorer', slug: 'explorer', category: 'Midsize SUV', image: 'Ford_Explorer_Thumbnail.jpg' },
   ],
-  /* facebook: live Facebook page URL and exact rendered height (130px for classic header, 330px for full card) */
+
   dealers: [
     {
       name: 'Ford Cabanatuan',
