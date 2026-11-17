@@ -1,0 +1,48 @@
+export default {
+    brandName: 'FUSO',
+    backTo: '/brands/fuso',
+    name: 'FI 1217R',
+    images: ['FUSO-FI-1217R.jpg'],
+    carScale: 1.3,
+    carTop: 'mt-0',
+    carBottom: 'mb-0',
+    noShadow: true,
+    brochure: '#',
+    overview: `Designed for Moving. Engineered to Last.`,
+    specs: [
+        {
+            name: 'FI 1217R',
+            rows: [
+                ['Model', '4D37'],
+                ['Type', '4-Stroke, Turbocharged Direct Injection Diesel'],
+                ['No. of Cylinders', 'In-line 4'],
+                ['Displacement (cc)', '3,908'],
+                ['Bore x Stroke (mm)', '104 x 115'],
+                ['Max. Output (PS/rpm)', '170 / 2,500'],
+                ['Max. Torque (N-m/rpm)', '520 / 1,500'],
+                ['Fuel Tank (L)', '200'],
+                ['AdBlue Tank (L)', '32.2'],
+                ['Transmission', '6 Forward & 1 Reverse M/T'],
+                ['Transmission Type', 'Synchromesh'],
+            ],
+        },
+    ],
+    variants: [
+        {
+            name: 'FJ 1823R',
+            rows: [
+                ['Model', '6S20'],
+                ['Type', '4-Stroke, Turbocharged Direct Injection Diesel'],
+                ['No. of Cylinders', 'In-line 6'],
+                ['Displacement (cc)', '6,374'],
+                ['Bore x Stroke (mm)', '102 x 130'],
+                ['Max. Output (PS/rpm)', '238 / 2,200'],
+                ['Max. Torque (N-m/rpm)', '850 / 1,200 – 1,600'],
+                ['Fuel Tank (L)', '260'],
+                ['AdBlue Tank (L)', '60'],
+                ['Transmission', '6 Forward & 1 Reverse M/T'],
+                ['Transmission Type', 'Synchromesh'],
+            ],
+        },
+    ],
+}

@@ -65,8 +65,8 @@ function CarViewer({ src, alt, scene, shadowBottom, shadowWidth, shadowHeight, s
 
                 {/* car */}
                 <div
-                    className="relative z-10 w-full max-w-3xl"
-                    style={carScale ? { transform: `scale(${carScale})`, transformOrigin: 'bottom center' } : undefined}
+                    className="relative w-full max-w-3xl"
+                    style={carScale ? { zoom: carScale } : undefined}
                 >
                     {!noShadow && (
                         <div
@@ -102,7 +102,7 @@ function CarViewer({ src, alt, scene, shadowBottom, shadowWidth, shadowHeight, s
                             src={src}
                             alt={alt}
                             draggable={false}
-                            className={`relative w-full ${noShadow || noBlend ? '' : 'mix-blend-multiply'} ${noShadow ? '' : /\.jpe?g/i.test(src) ? '' : 'drop-shadow-[0_6px_8px_rgba(0,0,0,0.15)]'
+                            className={`relative w-full ${noBlend ? '' : 'mix-blend-multiply'} ${noShadow ? '' : /\.jpe?g/i.test(src) ? '' : 'drop-shadow-[0_6px_8px_rgba(0,0,0,0.15)]'
                                 }`}
                         />
                     ) : (
@@ -300,17 +300,19 @@ function ModelPage({ data }) {
                     </div>
 
                     {/* title */}
-                    <Reveal direction="down">
-                        <div className="relative z-20 mt-8 text-center">
-                            <span className="text-xs font-bold tracking-[0.3em] text-lag-red uppercase">
-                                {data.brandName}
-                            </span>
-                            {data.name && (
-                                <h1 className="mt-2 text-3xl font-normal text-[#222] md:text-5xl">{data.name}</h1>
-                            )}
-                            <div className="mx-auto mt-4 h-1 w-16 rounded bg-lag-red" />
-                        </div>
-                    </Reveal>
+                    <div className="relative z-20">
+                        <Reveal direction="down">
+                            <div className="mt-8 text-center">
+                                <span className="text-xs font-bold tracking-[0.3em] text-lag-red uppercase">
+                                    {data.brandName}
+                                </span>
+                                {data.name && (
+                                    <h1 className="mt-2 text-3xl font-normal text-[#222] md:text-5xl">{data.name}</h1>
+                                )}
+                                <div className="mx-auto mt-4 h-1 w-16 rounded bg-lag-red" />
+                            </div>
+                        </Reveal>
+                    </div>
 
                     {/* car */}
                     <Reveal direction="zoom" delay={100}>

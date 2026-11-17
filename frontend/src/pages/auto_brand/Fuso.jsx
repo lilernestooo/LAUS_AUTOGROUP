@@ -23,15 +23,15 @@ const brand = {
     categories: ['Heavy Duty', 'Medium Duty', 'Light Duty', 'Light Duty Bus'],
     // add slug: 'fj-2528c' to a model once its detail page and data file exist
     models: [
-        { name: 'FJ 2528C', category: 'Heavy Duty', image: 'Fuso_FJ-2528C_Thumbnail.jpg' },
-        { name: 'FM', category: 'Heavy Duty', image: 'Fuso_FM_Thumbnail.jpg' },
-        { name: 'FV', category: 'Heavy Duty', image: 'Fuso_FV_Thumbnail.jpg' },
-        { name: 'FJ 2528R', category: 'Heavy Duty', image: 'Fuso_FJ-2528R_Thumbnail.jpg' },
-        { name: 'Canter FE71', category: 'Light Duty', image: 'Fuso_Canter-FE71_Thumbnail.jpg' },
-        { name: 'Rosa', category: 'Light Duty Bus', image: 'Fuso_Rosa_Thumbnail-229x146.jpg' },
-        { name: 'FJ 1823R', category: 'Medium Duty', image: 'Fuso_FJ-1823R_Thumbnail.jpg' },
-        { name: 'Canter FE84', category: 'Light Duty', image: 'Fuso_Canter-FE84_Thumbnail.jpg' },
-        { name: 'FI 1217R', category: 'Medium Duty', image: 'Fuso_FI-1217R_Thumbnail.jpg' },
+        { name: 'FJ 2528C', slug: 'fj-2528c', category: 'Heavy Duty', image: 'Fuso_FJ-2528C_Thumbnail.jpg' },
+        { name: 'FM', slug: 'fm657h', category: 'Heavy Duty', image: 'Fuso_FM_Thumbnail.jpg' },
+        { name: 'FV', slug: 'fv517p-cargo-truck', category: 'Heavy Duty', image: 'Fuso_FV_Thumbnail.jpg' },
+        { name: 'FJ 2528R', slug: 'fj-2528r', category: 'Heavy Duty', image: 'Fuso_FJ-2528R_Thumbnail.jpg' },
+        { name: 'Canter FE71', slug: 'canter-fe71', category: 'Light Duty', image: 'Fuso_Canter-FE71_Thumbnail.jpg' },
+        { name: 'Rosa', slug: 'rosa-bus', category: 'Light Duty Bus', image: 'Fuso_Rosa_Thumbnail-229x146.jpg' },
+        { name: 'FJ 1823R', slug: 'fj-1823r', category: 'Medium Duty', image: 'Fuso_FJ-1823R_Thumbnail.jpg' },
+        { name: 'Canter FE84', slug: 'canter-fe71-4-wheeler', category: 'Light Duty', image: 'Fuso_Canter-FE84_Thumbnail.jpg' },
+        { name: 'FI 1217R', slug: 'fi-1217r', category: 'Medium Duty', image: 'Fuso_FI-1217R_Thumbnail.jpg' },
     ],
     /* facebook: live Facebook page URL and rendered height (330 = full card with cover) */
     dealers: [
@@ -89,7 +89,6 @@ function ModelCard({ model, to }) {
     )
 }
 
-/* ---------- ONE DEALER IN THE SIDEBAR ---------- */
 function DealerBlock({ dealer, first }) {
     return (
         <div className={first ? '' : 'mt-8 border-t border-neutral-200 pt-8'}>
