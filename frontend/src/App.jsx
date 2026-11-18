@@ -25,6 +25,8 @@ import Fuso from './pages/auto_brand/Fuso'
 import FusoModel from './pages/auto_brand/FusoModel'
 import Geely from './pages/auto_brand/Geely'
 import GeelyModel from './pages/auto_brand/GeelyModel'
+import Haima from './pages/auto_brand/Haima'
+import HaimaModel from './pages/auto_brand/HaimaModel'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -90,6 +92,8 @@ export default function App() {
         <Route path="/brands/fuso/:model" element={<FusoModel />} />
         <Route path="/brands/geely" element={<Geely />} />
         <Route path="/brands/geely/:model" element={<GeelyModel />} />
+        <Route path="/brands/haima" element={<Haima />} />
+        <Route path="/brands/haima/:model" element={<HaimaModel />} />
         <Route path="/brands/:slug" element={<Brand />} />
         <Route path="/brands/:slug/:model" element={<BMWModel />} />
       </Routes>

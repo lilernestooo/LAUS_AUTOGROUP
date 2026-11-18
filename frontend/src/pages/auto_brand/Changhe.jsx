@@ -43,6 +43,7 @@ const changhe = {
         followers: '1,086',
         logo: 'fb-changhe.jpg', // small square logo
         href: 'https://www.facebook.com/ChangheAutomobileLaUnion/',
+        height: 360,
       },
     },
     {
@@ -173,17 +174,15 @@ export default function Changhe() {
                           type="button"
                           onClick={() => setActive(c)}
                           aria-pressed={active === c}
-                          className={`flex w-full cursor-pointer items-center justify-between gap-3 border-b border-l-4 border-b-white/20 px-5 py-4 text-left text-sm whitespace-nowrap transition-all duration-300 md:whitespace-normal ${
-                            active === c
-                              ? 'border-l-lag-red bg-lag-red text-white'
-                              : 'border-l-transparent bg-[#2b2b2b] text-white hover:border-l-lag-red hover:bg-neutral-700 hover:pl-7'
-                          }`}
+                          className={`flex w-full cursor-pointer items-center justify-between gap-3 border-b border-l-4 border-b-white/20 px-5 py-4 text-left text-sm whitespace-nowrap transition-all duration-300 md:whitespace-normal ${active === c
+                            ? 'border-l-lag-red bg-lag-red text-white'
+                            : 'border-l-transparent bg-[#2b2b2b] text-white hover:border-l-lag-red hover:bg-neutral-700 hover:pl-7'
+                            }`}
                         >
                           <span>{c}</span>
                           <span
-                            className={`rounded-full px-2 py-0.5 text-[11px] ${
-                              active === c ? 'bg-white/25' : 'bg-white/10 text-neutral-300'
-                            }`}
+                            className={`rounded-full px-2 py-0.5 text-[11px] ${active === c ? 'bg-white/25' : 'bg-white/10 text-neutral-300'
+                              }`}
                           >
                             {countOf(c)}
                           </span>
@@ -267,13 +266,17 @@ export default function Changhe() {
                     </div>
                   </Reveal>
 
-                    {d.facebook && (
-                      <Reveal direction="up" delay={150}>
-                        <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
-                          <FacebookPage href={d.facebook.href} title={d.facebook.name} />
-                        </div>
-                      </Reveal>
-                    )}
+                  {d.facebook && (
+                    <Reveal direction="up" delay={150}>
+                      <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
+                        <FacebookPage
+                          href={d.facebook.href}
+                          title={d.facebook.name}
+                          height={d.facebook.height || 340}
+                        />
+                      </div>
+                    </Reveal>
+                  )}
                 </div>
               ))}
             </div>

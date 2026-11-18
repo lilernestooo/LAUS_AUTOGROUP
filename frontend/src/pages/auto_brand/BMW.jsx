@@ -51,6 +51,7 @@ const brands = {
       name: 'Premier Cars BMW',
       followers: '7,539',
       href: 'https://www.facebook.com/PampangaPremierCars/?ref=embed_page#',
+      height: 360,
     },
     website: { label: 'bethefirst.bmw.com.ph', href: 'https://bethefirst.bmw.com.ph' },
     privacyHref: '#', // replace with the real Data Privacy Notice link
@@ -76,7 +77,7 @@ const brands = {
       { name: 'BMW X3', category: 'Sports Activity Vehicle', slug: 'x3', image: 'BMW-X3_Thumbnail-260x146.jpg' },
       { name: 'BMW M4 Coupe', category: 'Coupé', slug: 'm4-coupe', image: 'BMW-M4-Coupe_Thumbnail-260x146.jpg' },
       { name: 'BMW M3 Sedan', category: 'Sedan', slug: 'm3-sedan', image: 'BMW-M3-Sedan_Thumbnail-260x146.jpg' },
-      { name: 'BMW X5m', category: 'Sports Activity Vehicle', slug: 'x5m', image: 'BMW-51_Thumbnail-260x146.jpg'},
+      { name: 'BMW X5m', category: 'Sports Activity Vehicle', slug: 'x5m', image: 'BMW-51_Thumbnail-260x146.jpg' },
     ],
   },
 }
@@ -136,7 +137,7 @@ function BrandPage({ brand, slug }) {
         <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-lag-red/5 blur-3xl" />
         <div className="pointer-events-none absolute top-1/2 -left-24 h-72 w-72 rounded-full bg-lag-dark/5 blur-3xl" />
 
-       <div className="relative mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-12 lg:gap-0">
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-12 lg:gap-0">
           {/* ================= MAIN COLUMN ================= */}
           <div className="min-w-0 lg:col-span-9 lg:pr-10">
             {/* brand logo: floats, with a shadow */}
@@ -199,17 +200,15 @@ function BrandPage({ brand, slug }) {
                           type="button"
                           onClick={() => setActive(c)}
                           aria-pressed={active === c}
-                          className={`flex w-full cursor-pointer items-center justify-between gap-3 border-b border-l-4 border-b-white/20 px-5 py-4 text-left text-sm whitespace-nowrap transition-all duration-300 md:whitespace-normal ${
-                            active === c
-                              ? 'border-l-lag-red bg-lag-red text-white'
-                              : 'border-l-transparent bg-[#2b2b2b] text-white hover:border-l-lag-red hover:bg-neutral-700 hover:pl-7'
-                          }`}
+                          className={`flex w-full cursor-pointer items-center justify-between gap-3 border-b border-l-4 border-b-white/20 px-5 py-4 text-left text-sm whitespace-nowrap transition-all duration-300 md:whitespace-normal ${active === c
+                            ? 'border-l-lag-red bg-lag-red text-white'
+                            : 'border-l-transparent bg-[#2b2b2b] text-white hover:border-l-lag-red hover:bg-neutral-700 hover:pl-7'
+                            }`}
                         >
                           <span>{c}</span>
                           <span
-                            className={`rounded-full px-2 py-0.5 text-[11px] ${
-                              active === c ? 'bg-white/25' : 'bg-white/10 text-neutral-300'
-                            }`}
+                            className={`rounded-full px-2 py-0.5 text-[11px] ${active === c ? 'bg-white/25' : 'bg-white/10 text-neutral-300'
+                              }`}
                           >
                             {countOf(c)}
                           </span>
@@ -307,7 +306,11 @@ function BrandPage({ brand, slug }) {
 
               <Reveal direction="up" delay={150}>
                 <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
-                  <FacebookPage href={brand.facebook.href} title={brand.facebook.name} />
+                  <FacebookPage
+                    href={brand.facebook.href}
+                    title={brand.facebook.name}
+                    height={brand.facebook.height || 340}
+                  />
                 </div>
               </Reveal>
             </div>
