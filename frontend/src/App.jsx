@@ -23,6 +23,8 @@ import Foton from './pages/auto_brand/Foton'
 import FotonModel from './pages/auto_brand/FotonModel'
 import Fuso from './pages/auto_brand/Fuso'
 import FusoModel from './pages/auto_brand/FusoModel'
+import Geely from './pages/auto_brand/Geely'
+import GeelyModel from './pages/auto_brand/GeelyModel'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -86,6 +88,8 @@ export default function App() {
         <Route path="/brands/foton/:model" element={<FotonModel />} />
         <Route path="/brands/fuso" element={<Fuso />} />
         <Route path="/brands/fuso/:model" element={<FusoModel />} />
+        <Route path="/brands/geely" element={<Geely />} />
+        <Route path="/brands/geely/:model" element={<GeelyModel />} />
         <Route path="/brands/:slug" element={<Brand />} />
         <Route path="/brands/:slug/:model" element={<BMWModel />} />
       </Routes>

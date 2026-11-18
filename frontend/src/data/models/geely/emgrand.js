@@ -1,0 +1,47 @@
+export default {
+    brandName: 'Geely',
+    backTo: '/brands/geely',
+    name: 'Geely Emgrand',
+    images: ['Geely-Emgrand.jpg'],
+    carScale: 1.0,
+    carTop: 'mt-6 md:mt-8',
+    carBottom: 'mb-4',
+    noShadow: true,
+    noBlend: true,
+    brochure: '#',
+    overview: `As dynamic as it is, the Emgrand offers the kind of legroom and comfort you wouldn’t expect from a sub-compact sedan. And yet here it is, ready for you to be enjoyed.`,
+    specs: [
+        {
+            name: 'EMGRAND S',
+            rows: [
+                ['Engine', 'Inline-4, 16-valve DOHC, with D-CVVT'],
+                ['Displacement', '1498 cc'],
+                ['Transmission', '5-Speed Manual'],
+                ['Horsepower', '102hp @ 5,600rpm'],
+                ['Torque', '142Nm @ 4,400-4,800rpm'],
+                ['Emission Standard', 'Euro VI b'],
+                ['Suspension', 'McPherson Strut | Torsion Beam'],
+                ['Brakes', 'Ventilated Disc | Drum'],
+                ['Colors', 'Proud Teal, Dark Blue, Gold, Gray, Red, White'],
+            ],
+        },
+    ],
+    variants: [
+        {
+            name: 'EMGRAND COMFORT AND PREMIUM',
+            rows: [
+                ['Engine', 'Inline-4, 16-valve DOHC, with D-CVVT'],
+                ['Displacement', '1498 cc'],
+                ['Transmission', 'Continuously Variable Transmission'],
+                ['Manual Mode', '8-speed Tiptronic'],
+                ['Horsepower', '102hp @ 5,600rpm'],
+                ['Torque', '142Nm @ 4,400-4,800rpm'],
+                ['Emission Standard', 'Euro VI b'],
+                ['Drive Modes', 'Eco, Comfort, Sport'],
+                ['Suspension', 'McPherson Strut | Torsion Beam'],
+                ['Brakes', 'Ventilated Disc | Solid Disc'],
+                ['Colors', 'Proud Teal, Dark Blue, Gold, Gray, Red, White'],
+            ],
+        },
+    ],
+}

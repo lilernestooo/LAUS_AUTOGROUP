@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import logo from '../assets/logo/LAG_Black_Logo.png'
+import logo from '../assets/logo/eagle-logo.png'
 
 const MIN_FIRST = 1200 // first visit / refresh: minimum time (ms)
 const MIN_NAV = 700 // page switch: minimum time (ms)
@@ -68,16 +68,14 @@ export default function PageLoader() {
     <div
       role="status"
       aria-label="Loading"
-      className={`fixed inset-0 z-[300] flex items-center justify-center transition-all duration-700 ease-out ${
-        leaving
+      className={`fixed inset-0 z-[300] flex items-center justify-center transition-all duration-700 ease-out ${leaving
           ? 'pointer-events-none bg-white/0 opacity-0 backdrop-blur-none'
           : 'bg-white/70 opacity-100 backdrop-blur-xl'
-      }`}
+        }`}
     >
       <div
-        className={`flex flex-col items-center transition-all duration-700 ease-out ${
-          leaving ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
-        }`}
+        className={`flex flex-col items-center transition-all duration-700 ease-out ${leaving ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
+          }`}
       >
         {/* spinning logo */}
         <div className="[perspective:800px]">
