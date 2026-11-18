@@ -1,0 +1,72 @@
+export default {
+    brandName: 'Geely',
+    backTo: '/brands/geely',
+    name: 'Geely Okavango',
+    images: ['geely-okavango-orange.png'],
+    carScale: 1.3,
+    carTop: 'mt-0',
+    carBottom: 'mb-0',
+    noShadow: true,
+    brochure: '#',
+    overview: `The Okavango is Geely's seven-seater midsize crossover, named after the Okavango Delta in Botswana. It combines the roomy cabin of an MPV with the confident stance of an SUV, so the whole family can travel in comfort. A turbocharged 1.5L engine with a 48-volt mild-hybrid system and a 7-speed dual clutch transmission power it, and the long list of comfort and safety features makes it a practical choice for everyday driving and long trips.`,
+    specs: [
+        {
+            name: 'OKAVANGO',
+            groups: [
+                {
+                    title: null,
+                    rows: [
+                        ['Engine', 'G-Power 1.5L 3-Cylinder, Turbocharged, with Dual VVT'],
+                        ['Hybrid System', '48V Mild Hybrid'],
+                        ['Displacement', '1477 cc'],
+                        ['Transmission', '7-Speed Wet Dual Clutch Transmission'],
+                        ['Horsepower', '190hp @ 5,500rpm'],
+                        ['Torque', '300Nm @ 1,500-4,000rpm'],
+                        ['Drivetrain', 'Front-Wheel Drive (FWD)'],
+                        ['Drive Mode Selector', 'Eco, Comfort, Sport'],
+                        ['Fuel Type', 'Gasoline'],
+                        ['Fuel Tank Capacity', '52L'],
+                        ['Suspension', 'Independent McPherson Strut | Torsion Beam'],
+                        ['Brakes', 'Ventilated Disc | Solid Disc'],
+                        ['Parking Brake', 'Electronic Parking Brake with Auto Brake Hold'],
+                        ['Wheels and Tires', '215/60R17 (Comfort) | 225/55R18 (Urban and above)'],
+                    ],
+                },
+                {
+                    title: 'Exterior',
+                    rows: [
+                        ['Exterior Dimensions', '4,835 x 1,900 x 1,785mm'],
+                        ['Wheelbase', '2,815mm'],
+                        ['Ground Clearance', '194mm'],
+                        ['Headlamps', 'Full LED'],
+                        ['Daytime Running Lights', 'LED'],
+                        ['Rear Combination Lamps', 'Full LED'],
+                    ],
+                },
+                {
+                    title: 'Interior',
+                    rows: [
+                        ['Seating Capacity', '7'],
+                        ['Third Row Seats', '50/50 Split with Recline'],
+                        ['Multimedia Screen', '10.25-inch with QDLink'],
+                        ['Air Conditioning', '3-Zone Automatic Climate Control with Third Row Vents'],
+                        ['Cargo Volume (3rd Row Up)', '257L'],
+                        ['Cargo Volume (3rd Row Down)', '1,200L'],
+                        ['Cargo Volume (2nd and 3rd Row Down)', '2,050L'],
+                    ],
+                },
+                {
+                    title: 'Safety',
+                    rows: [
+                        ['Airbags', 'Driver and Front Passenger (Side and Curtain Airbags on Urban trims)'],
+                        ['Driver Aids', 'ABS with EBD, Brake Assist, Hill Start Assist, Hill Descent Control'],
+                        ['Child Seat Anchors', 'ISOFIX on Second Row Seats'],
+                        ['Parking Aids', 'Rear Parking Sensors, Rear Camera (360-degree Camera on Urban trims)'],
+                        ['Other Safety', 'Tire Pressure Monitoring, Engine Immobilizer'],
+                    ],
+                },
+            ],
+        },
+    ],
+    variants: [],
+}
