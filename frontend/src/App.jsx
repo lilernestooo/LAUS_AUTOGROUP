@@ -27,6 +27,8 @@ import Geely from './pages/auto_brand/Geely'
 import GeelyModel from './pages/auto_brand/GeelyModel'
 import Haima from './pages/auto_brand/Haima'
 import HaimaModel from './pages/auto_brand/HaimaModel'
+import HyundaiPassenger from './pages/auto_brand/HyundaiPassenger'
+import HyundaiTrucks from './pages/auto_brand/HyundaiTrucks'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -94,6 +96,8 @@ export default function App() {
         <Route path="/brands/geely/:model" element={<GeelyModel />} />
         <Route path="/brands/haima" element={<Haima />} />
         <Route path="/brands/haima/:model" element={<HaimaModel />} />
+        <Route path="/brands/hyundai-passenger-cars" element={<HyundaiPassenger />} />
+        <Route path="/brands/hyundai-trucks-and-buses" element={<HyundaiTrucks />} />
         <Route path="/brands/:slug" element={<Brand />} />
         <Route path="/brands/:slug/:model" element={<BMWModel />} />
       </Routes>
