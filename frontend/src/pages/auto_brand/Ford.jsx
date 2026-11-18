@@ -61,7 +61,7 @@ const brand = {
         { label: 'Service:', numbers: ['+63 918 854 2986'] },
       ],
       facebook: 'https://www.facebook.com/fordcabanatuanofficial/',
-      fbHeight: 190,
+      fbHeight: 330,
     },
     {
       name: 'Ford Clark',
@@ -100,7 +100,7 @@ const brand = {
         { label: 'Service:', numbers: ['+63 918 854 2398'] },
       ],
       facebook: 'https://www.facebook.com/FordIsabelaPage/',
-      fbHeight: 190,
+      fbHeight: 330,
     },
     {
       name: 'Ford Libis',
@@ -112,7 +112,7 @@ const brand = {
         { label: 'Parts:', numbers: ['+63 918 8542 239'] },
       ],
       facebook: 'https://www.facebook.com/OfficialFordLibisPage/',
-      fbHeight: 190,
+      fbHeight: 330,
     },
     {
       name: 'Ford Metro Baguio',
@@ -124,7 +124,7 @@ const brand = {
         { label: 'Service:', numbers: ['+63 918 854 2213'] },
       ],
       facebook: 'https://www.facebook.com/fordmetrobaguio/',
-      fbHeight: 190,
+      fbHeight: 330,
     },
     {
       name: 'Ford Pampanga',
@@ -135,7 +135,7 @@ const brand = {
         { label: 'Service:', numbers: ['0918 854 2947', '0918 854 2402', '0918 854 2767'] },
       ],
       facebook: 'https://www.facebook.com/fordpampangalausgroup/',
-      fbHeight: 190,
+      fbHeight: 330,
     },
     {
       name: 'Ford Subic',
@@ -146,7 +146,7 @@ const brand = {
         { label: 'Service:', numbers: ['+63 918 854 2271', '+63 998 587 8211'] },
       ],
       facebook: 'https://www.facebook.com/FordSubicPage/',
-      fbHeight: 190,
+      fbHeight: 150,
     },
     {
       name: 'Ford Tarlac',
@@ -157,7 +157,7 @@ const brand = {
         { label: 'Service:', numbers: ['+63 918 854 2452', '+63 918 854 2362'] },
       ],
       facebook: 'https://www.facebook.com/FordTarlacPage/',
-      fbHeight: 330,
+      fbHeight: 150,
     },
   ],
 }
@@ -244,7 +244,7 @@ function DealerBlock({ dealer, first }) {
           <FacebookPage
             href={dealer.facebook}
             title={`${dealer.name} Facebook Page`}
-            height={dealer.fbHeight || 190}
+            height={340}
             hideCover={dealer.hideCover}
           />
         </div>

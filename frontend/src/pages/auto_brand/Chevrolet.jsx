@@ -63,6 +63,7 @@ const brand = {
         followers: '2,665',
         href: 'https://www.facebook.com/ChevroletBaguio/?ref=embed_page',
         logo: 'fb-baguio.jpg',
+        height: 360,
       },
     },
     {
@@ -79,6 +80,7 @@ const brand = {
         followers: '5,246',
         href: 'https://www.facebook.com/ChevroletDagupanOfficial/?ref=embed_page',
         logo: 'fb-dagupan.jpg',
+        height: 360,
       },
     },
     {
@@ -95,6 +97,7 @@ const brand = {
         followers: '3,562',
         href: 'https://www.facebook.com/chevroletilocosnorte/?ref=embed_page',
         logo: 'fb-ilocos.jpg',
+        height: 360,
       },
     },
     {
@@ -111,6 +114,7 @@ const brand = {
         followers: '5,225',
         href: 'https://www.facebook.com/chevroletpampanga/?ref=embed_page',
         logo: 'fb-pampanga.jpg',
+        height: 360,
       },
     },
   ],
@@ -195,7 +199,11 @@ function DealerBlock({ dealer, first }) {
       {/* facebook card */}
       <Reveal direction="up" delay={150}>
         <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
-          <FacebookPage href={dealer.facebook.href} title={dealer.facebook.name} />
+          <FacebookPage
+            href={dealer.facebook.href}
+            title={dealer.facebook.name}
+            height={dealer.facebook.height || 340}
+          />
         </div>
       </Reveal>
     </div>
@@ -281,17 +289,15 @@ export default function Chevrolet() {
                           type="button"
                           onClick={() => setActive(c)}
                           aria-pressed={active === c}
-                          className={`flex w-full cursor-pointer items-center justify-between gap-3 border-b border-l-4 border-b-white/20 px-5 py-4 text-left text-sm whitespace-nowrap transition-all duration-300 md:whitespace-normal ${
-                            active === c
-                              ? 'border-l-lag-red bg-lag-red text-white'
-                              : 'border-l-transparent bg-[#2b2b2b] text-white hover:border-l-lag-red hover:bg-neutral-700 hover:pl-7'
-                          }`}
+                          className={`flex w-full cursor-pointer items-center justify-between gap-3 border-b border-l-4 border-b-white/20 px-5 py-4 text-left text-sm whitespace-nowrap transition-all duration-300 md:whitespace-normal ${active === c
+                            ? 'border-l-lag-red bg-lag-red text-white'
+                            : 'border-l-transparent bg-[#2b2b2b] text-white hover:border-l-lag-red hover:bg-neutral-700 hover:pl-7'
+                            }`}
                         >
                           <span>{c}</span>
                           <span
-                            className={`rounded-full px-2 py-0.5 text-[11px] ${
-                              active === c ? 'bg-white/25' : 'bg-white/10 text-neutral-300'
-                            }`}
+                            className={`rounded-full px-2 py-0.5 text-[11px] ${active === c ? 'bg-white/25' : 'bg-white/10 text-neutral-300'
+                              }`}
                           >
                             {countOf(c)}
                           </span>
@@ -352,13 +358,13 @@ export default function Chevrolet() {
           </div>
 
           {/* ================= SIDEBAR: 4 DEALERS ================= */}
-        <aside className="lg:col-span-3 lg:border-l lg:border-neutral-200 lg:pl-8">
-        <div className="lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:overflow-x-hidden lg:overflow-y-auto lg:py-1 lg:pr-3 [scrollbar-color:#b5b5b5_#e5e5e5] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-neutral-400 [&::-webkit-scrollbar-thumb:hover]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-neutral-200">
-            {brand.dealers.map((d, i) => (
-            <DealerBlock key={d.name} dealer={d} first={i === 0} />
-            ))}
-        </div>
-        </aside>
+          <aside className="lg:col-span-3 lg:border-l lg:border-neutral-200 lg:pl-8">
+            <div className="lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:overflow-x-hidden lg:overflow-y-auto lg:py-1 lg:pr-3 [scrollbar-color:#b5b5b5_#e5e5e5] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-neutral-400 [&::-webkit-scrollbar-thumb:hover]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-neutral-200">
+              {brand.dealers.map((d, i) => (
+                <DealerBlock key={d.name} dealer={d} first={i === 0} />
+              ))}
+            </div>
+          </aside>
         </div>
       </section>
     </main>

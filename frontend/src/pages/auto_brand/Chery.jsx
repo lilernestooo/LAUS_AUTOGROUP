@@ -51,6 +51,7 @@ const brand = {
     facebook: {
       name: 'Chery Bacolor Pampanga',
       href: 'https://www.facebook.com/CheryBacolorPampanga/',
+      height: 360,
     },
   },
 }
@@ -235,7 +236,11 @@ export default function Chery() {
               {/* real facebook page view */}
               <Reveal direction="up" delay={150}>
                 <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-[0_6px_24px_-10px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
-                <FacebookPage href={dealer.facebook.href} title={dealer.facebook.name} />
+                  <FacebookPage
+                    href={dealer.facebook.href}
+                    title={dealer.facebook.name}
+                    height={dealer.facebook.height || 340}
+                  />
                 </div>
               </Reveal>
             </div>

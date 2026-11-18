@@ -13,7 +13,7 @@ const links = [
     sub: [
       { label: 'BMW', to: '/brands/bmw' }, { label: 'Carmix', to: '/brands/carmix' }, { label: 'Changhe', to: '/brands/changhe' }, { label: 'Chevrolet', to: '/brands/chevrolet' }, { label: 'Chery', to: '/brands/chery' }, { label: 'Ford', to: '/brands/ford' }, { label: 'Foton', to: '/brands/foton' }, { label: 'FUSO', to: '/brands/fuso' },
       { label: 'Geely', to: '/brands/geely' },
-      'Haima',
+      { label: 'Haima', to: '/brands/haima' },
       { label: 'Hyundai', children: ['Passenger Cars', 'Trucks and Buses'] }, // edit these
       'Jeep', 'Kia', 'Mazda', 'MINI', 'Mitsubishi', 'Peugeot',
       'Piaggio APE', 'Suzuki', 'Volkswagen',
