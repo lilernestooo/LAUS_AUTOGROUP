@@ -14,7 +14,7 @@ const links = [
       { label: 'BMW', to: '/brands/bmw' }, { label: 'Carmix', to: '/brands/carmix' }, { label: 'Changhe', to: '/brands/changhe' }, { label: 'Chevrolet', to: '/brands/chevrolet' }, { label: 'Chery', to: '/brands/chery' }, { label: 'Ford', to: '/brands/ford' }, { label: 'Foton', to: '/brands/foton' }, { label: 'FUSO', to: '/brands/fuso' },
       { label: 'Geely', to: '/brands/geely' },
       { label: 'Haima', to: '/brands/haima' },
-      { label: 'Hyundai', children: ['Passenger Cars', 'Trucks and Buses'] }, // edit these
+      { label: 'Hyundai', children: [{ label: 'Passenger Cars', to: '/brands/hyundai-passenger-cars' }, { label: 'Trucks and Buses', to: '/brands/hyundai-trucks-and-buses' }] },
       'Jeep', 'Kia', 'Mazda', 'MINI', 'Mitsubishi', 'Peugeot',
       'Piaggio APE', 'Suzuki', 'Volkswagen',
     ],
@@ -72,17 +72,20 @@ function DropItem({ item, onNavigate }) {
       </button>
       {expanded && (
         <ul className="bg-neutral-950">
-          {data.children.map((c) => (
-            <li key={c}>
-              <a
-                href="#"
-                onClick={onNavigate}
-                className="block border-b border-neutral-800 py-2.5 pr-4 pl-8 text-[13px] text-neutral-300 transition-colors hover:bg-lag-red hover:text-white"
-              >
-                {c}
-              </a>
-            </li>
-          ))}
+          {data.children.map((c) => {
+            const child = typeof c === 'string' ? { label: c } : c
+            return (
+              <li key={child.label}>
+                <A
+                  to={child.to}
+                  onClick={onNavigate}
+                  className="block border-b border-neutral-800 py-2.5 pr-4 pl-8 text-[13px] text-neutral-300 transition-colors hover:bg-lag-red hover:text-white"
+                >
+                  {child.label}
+                </A>
+              </li>
+            )
+          })}
         </ul>
       )}
     </li>

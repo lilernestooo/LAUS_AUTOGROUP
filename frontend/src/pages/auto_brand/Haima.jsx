@@ -165,7 +165,7 @@ function DealerBlock({ dealer, first }) {
 
 /* ---------- THE PAGE ---------- */
 export default function Haima() {
-    const [active, setActive] = useState(ALL)
+    const [active, setActive] = useState(brand.categories[0])
     const logo = getHaimaImg(brand.logo)
 
     const shown = active === ALL ? brand.models : brand.models.filter((m) => m.category === active)
@@ -236,7 +236,7 @@ export default function Haima() {
                                         All Models
                                     </div>
                                     <ul className="flex overflow-x-auto md:block md:overflow-visible">
-                                        {[ALL, ...brand.categories].map((c) => (
+                                        {brand.categories.map((c) => (
                                             <li key={c} className="shrink-0 md:shrink">
                                                 <button
                                                     type="button"
