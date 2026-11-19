@@ -21,15 +21,15 @@ const brand = {
     privacyHref: '#', // replace with the real Data Privacy Notice link
     // add slug: 'h100' to a model once its detail page and data file exist
     models: [
-        { name: 'H100', image: 'Hyundai_H100_Thumbnail.jpg' },
-        { name: 'Accent', image: 'Hyundai_Accent_Thumbnail-244x146.jpg' },
-        { name: 'iOniq', image: 'Hyundai_iOniq_Thumbnail-244x146.jpg' },
-        { name: 'Creta', image: 'Hyundai_Creta_Thumbnail.jpg' },
-        { name: 'Santa Fe', image: 'Hyundai_Santafe_Thumbnail-244x146.jpg' },
-        { name: 'Staria', image: 'Hyundai_Staria_Thumbnail-244x146.jpg' },
-        { name: 'Tucson', image: 'Hyundai_Tucson_Thumbnail-244x146.jpg' },
-        { name: 'Venue', image: 'Hyundai_Venue_Thumbnail-244x146.jpg' },
-        { name: 'Stargazer', image: 'Stargazer-Thumbnail-244x146.jpg' },
+        { name: 'H100', slug: 'h100', image: 'Hyundai_H100_Thumbnail.jpg' },
+        { name: 'Accent', slug: 'accent', image: 'Hyundai_Accent_Thumbnail-244x146.jpg' },
+        { name: 'iOniq', slug: 'ioniq', image: 'Hyundai_iOniq_Thumbnail-244x146.jpg' },
+        { name: 'Creta', slug: 'creta', image: 'Hyundai_Creta_Thumbnail.jpg' },
+        { name: 'Santa Fe', slug: 'santa-fe', image: 'Hyundai_Santafe_Thumbnail-244x146.jpg' },
+        { name: 'Staria', slug: 'staria', image: 'Hyundai_Staria_Thumbnail-244x146.jpg' },
+        { name: 'Tucson', slug: 'tucson', image: 'Hyundai_Tucson_Thumbnail-244x146.jpg' },
+        { name: 'Venue', slug: 'venue', image: 'Hyundai_Venue_Thumbnail-244x146.jpg' },
+        { name: 'Stargazer', slug: 'stargazer', image: 'Stargazer-Thumbnail-244x146.jpg' },
     ],
     /* facebook: live Facebook page URL
        fbHeight: rendered height (360 = full card with a two-line name, 340 = full card,

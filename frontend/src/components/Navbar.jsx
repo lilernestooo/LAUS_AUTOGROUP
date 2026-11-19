@@ -15,7 +15,7 @@ const links = [
       { label: 'Geely', to: '/brands/geely' },
       { label: 'Haima', to: '/brands/haima' },
       { label: 'Hyundai', children: [{ label: 'Passenger Cars', to: '/brands/hyundai-passenger-cars' }, { label: 'Trucks and Buses', to: '/brands/hyundai-trucks-and-buses' }] },
-      'Jeep', 'Kia', 'Mazda', 'MINI', 'Mitsubishi', 'Peugeot',
+      { label: 'Jeep', to: '/brands/jeep' }, 'Kia', 'Mazda', 'MINI', 'Mitsubishi', 'Peugeot',
       'Piaggio APE', 'Suzuki', 'Volkswagen',
     ],
   },
@@ -48,6 +48,7 @@ function A({ to = '#', children, ...props }) {
 function DropItem({ item, onNavigate }) {
   const [expanded, setExpanded] = useState(false)
   const data = typeof item === 'string' ? { label: item } : item
+  const isDesktop = () => window.innerWidth >= 1024
 
   if (!data.children) {
     return (
@@ -60,13 +61,17 @@ function DropItem({ item, onNavigate }) {
   }
 
   return (
-    <li>
+    <li
+      onMouseEnter={() => isDesktop() && setExpanded(true)}
+      onMouseLeave={() => isDesktop() && setExpanded(false)}
+    >
       <button
-        onClick={() => setExpanded(!expanded)}
-        className={`${itemClass} flex w-full cursor-pointer items-center justify-between text-left`}
+        onClick={() => (isDesktop() ? setExpanded(true) : setExpanded(!expanded))}
+        className={`${itemClass} flex w-full cursor-pointer items-center justify-between text-left ${expanded ? 'border-l-lag-red bg-neutral-800 text-white' : ''
+          }`}
       >
         {data.label}
-        <span className={`text-[10px] transition-transform duration-200 ${expanded ? 'rotate-90' : ''}`}>
+        <span className={`text-base transition-transform duration-200 ${expanded ? 'rotate-90' : ''}`}>
           ▸
         </span>
       </button>
@@ -169,7 +174,7 @@ export default function Navbar() {
                     {l.label}
                     {l.sub && (
                       <span
-                        className={`text-[10px] transition-transform duration-200 lg:group-hover:rotate-180 ${openIdx === idx ? 'rotate-180' : ''
+                        className={`text-base transition-transform duration-200 lg:group-hover:rotate-180 ${openIdx === idx ? 'rotate-180' : ''
                           }`}
                       >
                         ▾
