@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import logo from '../assets/logo/LAG_WhiteRed_Logo.png'
 
-/* ---------- MENU DATA ----------
-   `to` starts with "/" for real pages. Anything without it stays a "#" placeholder.
-   sub items can be a string, { label, to }, or { label, children: [...] } for a nested group */
 const links = [
   { label: 'Home', to: '/' },
   { label: 'About Us', to: '/about', sub: [{ label: 'Awards & Recognitions', to: '/awards' }] },
@@ -15,7 +12,7 @@ const links = [
       { label: 'Geely', to: '/brands/geely' },
       { label: 'Haima', to: '/brands/haima' },
       { label: 'Hyundai', children: [{ label: 'Passenger Cars', to: '/brands/hyundai-passenger-cars' }, { label: 'Trucks and Buses', to: '/brands/hyundai-trucks-and-buses' }] },
-      { label: 'Jeep', to: '/brands/jeep' }, 'Kia', 'Mazda', 'MINI', 'Mitsubishi', 'Peugeot',
+      { label: 'Jeep', to: '/brands/jeep' }, { label: 'Kia', to: '/brands/kia' }, { label: 'Mazda', to: '/brands/mazda' }, { label: 'MINI', to: '/brands/mini' }, 'Mitsubishi', 'Peugeot',
       'Piaggio APE', 'Suzuki', 'Volkswagen',
     ],
   },
@@ -24,7 +21,6 @@ const links = [
   { label: 'Contact Us', sub: ['Find a Dealer', 'Careers'] },
 ]
 
-/* thin white scrollbar (matches the footer) */
 const scrollbar =
   '[scrollbar-color:#fff_#171717] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-track]:bg-neutral-900'
 

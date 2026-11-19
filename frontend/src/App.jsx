@@ -32,6 +32,9 @@ import HyundaiTrucks from './pages/auto_brand/HyundaiTrucks'
 import HyundaiPassengerModel from './pages/auto_brand/HyundaiPassengerModel'
 import Jeep from './pages/auto_brand/Jeep'
 import JeepModel from './pages/auto_brand/JeepModel'
+import Kia from './pages/auto_brand/Kia'
+import Mazda from './pages/auto_brand/Mazda'
+import Mini from './pages/auto_brand/Mini'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -104,6 +107,9 @@ export default function App() {
         <Route path="/brands/hyundai-trucks-and-buses" element={<HyundaiTrucks />} />
         <Route path="/brands/jeep" element={<Jeep />} />
         <Route path="/brands/jeep/:model" element={<JeepModel />} />
+        <Route path="/brands/kia" element={<Kia />} />
+        <Route path="/brands/mazda" element={<Mazda />} />
+        <Route path="/brands/mini" element={<Mini />} />
         <Route path="/brands/:slug" element={<Brand />} />
         <Route path="/brands/:slug/:model" element={<BMWModel />} />
       </Routes>
