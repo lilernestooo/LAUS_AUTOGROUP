@@ -24,15 +24,15 @@ const brand = {
     // add slug: 'swift' to a model once its detail page and data file exist
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/suzuki/)
     models: [
-        { name: 'Ertiga Hybrid', category: 'Compact MPV', image: 'Suzuki_Ertiga-Hybrid_Thumbnail.jpg' },
-        { name: 'Swift', category: 'Sub Compact', image: 'Suzuki_Swift_Thumbnail.jpg' },
-        { name: 'Dzire', category: 'Sub Compact', image: 'Suzuki_Dzire_Thumbnail.jpg' },
-        { name: 'Super Carry Truck', category: 'Mini Compact', image: 'Suzuki_Super-Carry-Truck_Thumbnail.jpg' },
-        { name: 'Celerio', category: 'Mini Compact', image: 'Suzuki_Celerio_Thumbnail.jpg' },
-        { name: 'Ertiga', category: 'Compact MPV', image: 'Suzuki_Ertiga_Thumbnail.jpg' },
-        { name: 'Jimny', category: 'Mini Compact', image: 'Suzuki_Jimny_Thumbnail.jpg' },
-        { name: 'Ciaz', category: 'Sub Compact', image: 'Suzuki_Ciaz_Thumbnail.jpg' },
-        { name: 'APV', category: 'Compact MPV', image: 'Suzuki_APV_Thumbnail.jpg' },
+        { name: 'Ertiga Hybrid', category: 'Compact MPV', image: 'Ertiga-Hybrid_Thumbnail.jpg' },
+        { name: 'Swift', category: 'Sub Compact', image: 'Suzuki_Swift_Thumbnail-246x146.jpg' },
+        { name: 'Dzire', category: 'Sub Compact', image: 'Suzuki_Dzire_Thumbnail-246x146.jpg' },
+        { name: 'Super Carry Truck', category: 'Mini Compact', image: 'Suzuki_SuperCarryTruck_Thumbnail.jpg' },
+        { name: 'Celerio', category: 'Mini Compact', image: 'Suzuki_Celerio_Thumbnail-246x146.jpg' },
+        { name: 'Ertiga', category: 'Compact MPV', image: 'Suzuki_Ertiga_Thumbnail-246x146.jpg' },
+        { name: 'Jimny', category: 'Mini Compact', image: 'Suzuki_Jimny_Thumbnail-246x146.jpg' },
+        { name: 'Ciaz', category: 'Sub Compact', image: 'Suzuki_Ciaz_Thumbnail-246x146.jpg' },
+        { name: 'APV', category: 'Compact MPV', image: 'Suzuki_APV_Thumbnail-246x146.jpg' },
     ],
     /* facebook: live Facebook page URL
        fbHeight: rendered height (360 = full card with a two-line name, 340 = full card,

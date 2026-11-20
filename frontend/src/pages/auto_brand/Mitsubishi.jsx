@@ -24,14 +24,14 @@ const brand = {
     // add slug: 'mirage-g4' to a model once its detail page and data file exist
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/carworld/)
     models: [
-        { name: 'Mirage G4', category: 'Sedan', image: 'Mitsubishi_Mirage-G4_Thumbnail.jpg' },
-        { name: 'Triton', category: 'Commercial', image: 'Mitsubishi_Triton_Thumbnail.jpg' },
-        { name: 'Strada', category: 'Commercial', image: 'Mitsubishi_Strada_Thumbnail.jpg' },
-        { name: 'Xpander', category: 'SUV', image: 'Mitsubishi_Xpander_Thumbnail.jpg' },
-        { name: 'Montero Sport', category: 'SUV', image: 'Mitsubishi_Montero-Sport_Thumbnail.jpg' },
-        { name: 'L300', category: 'Commercial', image: 'Mitsubishi_L300_Thumbnail.jpg' },
-        { name: 'XFORCE', category: 'SUV', image: 'Mitsubishi_Xforce_Thumbnail.jpg' },
-        { name: 'Versa Van', category: 'Commercial', image: 'Mitsubishi_Versa-Van_Thumbnail.jpg' },
+        { name: 'Mirage G4', category: 'Sedan', image: 'Mitsubishi_MirageG4_Thumbnail.png' },
+        { name: 'Triton', category: 'Commercial', image: 'Mitsubishi_Triton_Thumbnail-1-260x114.png' },
+        { name: 'Strada', category: 'Commercial', image: 'Mitsubishi_Strada_Thumbnail-260x114.png' },
+        { name: 'Xpander', category: 'SUV', image: 'Mitsubishi_Xpander_Thumbnail.png' },
+        { name: 'Montero Sport', category: 'SUV', image: 'Mitsubishi_Montero_Thumbnail-260x114.png' },
+        { name: 'L300', category: 'Commercial', image: 'Mitsubishi_L300_Thumbnail-260x114.png' },
+        { name: 'XFORCE', category: 'SUV', image: 'Mitsubishi_xforce_Thumbnail-260x114.png' },
+        { name: 'Versa Van', category: 'Commercial', image: 'versavan-260x114.png' },
     ],
     /* facebook: live Facebook page URL
        fbHeight: rendered height (380 = full card with a three-line name, 360 = two-line name,

@@ -29,7 +29,7 @@ const brand = {
         { name: 'Crafter', category: 'Van', image: 'Volkswagen_Crafter_Thumbnail.jpg' },
         { name: 'Touran', category: 'MPV', image: 'Volkswagen_Touran_Thumbnail.jpg' },
         { name: 'TCross', category: 'SUV', image: 'Volkswagen_TCross_Thumbnail.jpg' },
-        { name: 'Multivan Combi', category: 'Van', image: 'Volkswagen_Multivan-Combi_Thumbnail.jpg' },
+        { name: 'Multivan Combi', category: 'Van', image: 'Volkswagen_Multivan-Kombi_Thumbnail.jpg' },
     ],
     /* facebook: live Facebook page URL (leave it out and no Facebook card is shown)
        fbHeight: rendered height (360 = full card with a two-line name, 340 = full card,

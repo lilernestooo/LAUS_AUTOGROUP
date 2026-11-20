@@ -25,10 +25,10 @@ const brand = {
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/mini/)
     models: [
         { name: 'MINI 3-DOOR', category: '3-Door', image: 'Mini_3-Door_Thumbnail.jpg' },
-        { name: 'MINI 5-DOOR', category: '5-Door', image: 'Mini_5-Door_Thumbnail.jpg' },
-        { name: 'MINI CLUBMAN', category: 'Clubman', image: 'Mini_Clubman_Thumbnail.jpg' },
+        { name: 'MINI 5-DOOR', category: '5-Door', image: 'MINI_5-Door_Thumbnail-260x98.jpg' },
+        { name: 'MINI CLUBMAN', category: 'Clubman', image: 'MINI_Clubman_Thumbnail-260x98.jpg' },
         { name: 'MINI CONVERTIBLE', category: 'Convertible', image: 'Mini_Convertible_Thumbnail.jpg' },
-        { name: 'MINI COUNTRYMAN', category: 'Countryman', image: 'Mini_Countryman_Thumbnail.jpg' },
+        { name: 'MINI COUNTRYMAN', category: 'Countryman', image: 'MINI_Countryman_Thumbnail-260x98.jpg' },
     ],
     /* facebook: live Facebook page URL (leave it out and no Facebook card is shown)
        fbHeight: rendered height (360 = full card with a two-line name, 340 = full card,
