@@ -26,14 +26,14 @@ const brand = {
     // category can be one name or a list when a model belongs to several (e.g. Sedan and Hatch)
     models: [
         { name: 'Mazda2', category: ['Sedan', 'Hatch'], image: 'Mazda_Mazda2_Thumbnail.jpg' },
-        { name: 'Mazda3', category: ['Sedan', 'Hatch'], image: 'Mazda_Mazda3_Thumbnail.jpg' },
-        { name: 'Mazda6', category: 'Sedan', image: 'Mazda_Mazda6_Thumbnail.jpg' },
-        { name: 'Mazda CX-5', category: 'SUV', image: 'Mazda_CX-5_Thumbnail.jpg' },
-        { name: 'MAZDA CX-8', category: 'SUV', image: 'Mazda_CX-8_Thumbnail.jpg' },
-        { name: 'MAZDA CX-9', category: 'SUV', image: 'Mazda_CX-9_Thumbnail.jpg' },
-        { name: 'MAZDA CX-30', category: 'SUV', image: 'Mazda_CX-30_Thumbnail.jpg' },
-        { name: 'Mazda MX-5', category: 'Convertible', image: 'Mazda_MX-5_Thumbnail.jpg' },
-        { name: 'Mazda BT-50', category: 'Dual Cab', image: 'Mazda_BT-50_Thumbnail.jpg' },
+        { name: 'Mazda3', category: ['Sedan', 'Hatch'], image: 'Mazda_Mazda3_Thumbnail-260x103.jpg' },
+        { name: 'Mazda6', category: 'Sedan', image: 'Mazda_Mazda6_Thumbnail-260x103.jpg' },
+        { name: 'Mazda CX-5', category: 'SUV', image: 'Mazda_MazdaCX5_Thumbnail.jpg' },
+        { name: 'MAZDA CX-8', category: 'SUV', image: 'cx8-300x118.jpg' },
+        { name: 'MAZDA CX-9', category: 'SUV', image: 'cx9-1-300x118.jpg' },
+        { name: 'MAZDA CX-30', category: 'SUV', image: 'cx30-300x118.jpg' },
+        { name: 'Mazda MX-5', category: 'Convertible', image: 'Mazda_MX5_Thumbnail-260x103.jpg' },
+        { name: 'Mazda BT-50', category: 'Dual Cab', image: 'Mazda_MazdaBT-50_Thumbnail-260x103.jpg' },
     ],
     /* facebook: live Facebook page URL
        fbHeight: rendered height (360 = full card with a two-line name, 340 = full card,
