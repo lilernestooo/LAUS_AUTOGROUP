@@ -113,7 +113,7 @@ export default function Chery() {
           <div className="min-w-0 lg:col-span-9 lg:pr-10">
             {/* brand logo */}
             <Reveal direction="zoom">
-              <div className="flex h-44 items-center justify-center border-2 border-neutral-300 bg-[#fcfcfc] md:h-56">
+              <div className="flex h-44 items-center justify-center border-2 border-neutral-300 bg-[#cecece] md:h-56">
                 {logo ? (
                   <img
                     src={logo}
