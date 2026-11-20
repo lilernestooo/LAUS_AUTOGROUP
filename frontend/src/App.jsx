@@ -35,6 +35,10 @@ import JeepModel from './pages/auto_brand/JeepModel'
 import Kia from './pages/auto_brand/Kia'
 import Mazda from './pages/auto_brand/Mazda'
 import Mini from './pages/auto_brand/Mini'
+import Mitsubishi from './pages/auto_brand/Mitsubishi'
+import Peugeot from './pages/auto_brand/Peugeot'
+import Suzuki from './pages/auto_brand/Suzuki'
+import Volkswagen from './pages/auto_brand/Volkswagen'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -110,8 +114,12 @@ export default function App() {
         <Route path="/brands/kia" element={<Kia />} />
         <Route path="/brands/mazda" element={<Mazda />} />
         <Route path="/brands/mini" element={<Mini />} />
+        <Route path="/brands/mitsubishi" element={<Mitsubishi />} />
         <Route path="/brands/:slug" element={<Brand />} />
         <Route path="/brands/:slug/:model" element={<BMWModel />} />
+        <Route path="/brands/peugeot" element={<Peugeot />} />
+        <Route path="/brands/suzuki" element={<Suzuki />} />
+        <Route path="/brands/volkswagen" element={<Volkswagen />} />
       </Routes>
 
       <Footer />

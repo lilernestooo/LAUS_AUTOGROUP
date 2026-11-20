@@ -24,12 +24,12 @@ const brand = {
     // add slug: 'sonet' to a model once its detail page and data file exist
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/kia/)
     models: [
-        { name: 'Sonet', category: 'Compact SUV', image: 'Kia_Sonet_Thumbnail.jpg' },
+        { name: 'Sonet', category: 'Compact SUV', image: 'Sonet-Thumbnail.png' },
         { name: 'Carnival', category: 'Multi-Purpose Vehicle', image: 'Kia_Carnival_Thumbnail.jpg' },
         { name: 'Sorento', category: 'Compact SUV', image: 'Kia_Sorento_Thumbnail.jpg' },
         { name: 'Soluto', category: 'Sedan', image: 'Kia_Soluto_Thumbnail.jpg' },
         { name: 'Stonic', category: 'Compact SUV', image: 'Kia_Stonic_Thumbnail.jpg' },
-        { name: 'K2500', category: 'Mini Van', image: 'Kia_K2500_Thumbnail.jpg' },
+        { name: 'K2500', category: 'Mini Van', image: 'k2500.jpg' },
         { name: 'Sportage', category: 'Compact SUV', image: 'Kia_Sportage_Thumbnail.jpg' },
         { name: 'Forte', category: 'Sedan', image: 'Kia_Forte_Thumbnail.jpg' },
         { name: 'Stinger', category: 'Sedan', image: 'Kia_Stinger_Thumbnail.jpg' },
@@ -249,7 +249,7 @@ export default function Kia() {
                     <div className="min-w-0 lg:col-span-9 lg:pr-10">
                         {/* brand logo */}
                         <Reveal direction="zoom">
-                            <div className="flex h-44 items-center justify-center border-2 border-neutral-300 bg-[#fcfcfc] md:h-56">
+                            <div className="flex h-44 items-center justify-center border-2 border-neutral-300 bg-[#cecece] md:h-56">
                                 {logo ? (
                                     <img
                                         src={logo}

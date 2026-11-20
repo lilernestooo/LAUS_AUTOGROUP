@@ -117,7 +117,7 @@ export default function Changhe() {
           <div className="min-w-0 lg:col-span-9 lg:pr-10">
             {/* logo banner */}
             <Reveal direction="zoom">
-              <div className="flex h-44 items-center justify-center border-2 border-neutral-300 bg-[#fcfcfc] md:h-56">
+              <div className="flex h-44 items-center justify-center border-2 border-neutral-300 bg-[#cecece] md:h-56">
                 {logo ? (
                   <img
                     src={logo}
