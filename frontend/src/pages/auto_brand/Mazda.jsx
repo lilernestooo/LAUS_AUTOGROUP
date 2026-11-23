@@ -25,9 +25,9 @@ const brand = {
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/mazda/)
     // category can be one name or a list when a model belongs to several (e.g. Sedan and Hatch)
     models: [
-        { name: 'Mazda2', category: ['Sedan', 'Hatch'], image: 'Mazda_Mazda2_Thumbnail.jpg' },
-        { name: 'Mazda3', category: ['Sedan', 'Hatch'], image: 'Mazda_Mazda3_Thumbnail-260x103.jpg' },
-        { name: 'Mazda6', category: 'Sedan', image: 'Mazda_Mazda6_Thumbnail-260x103.jpg' },
+        { name: 'Mazda2', slug: 'mazda2', category: ['Sedan', 'Hatch'], image: 'Mazda_Mazda2_Thumbnail.jpg' },
+        { name: 'Mazda3', slug: 'mazda3', category: ['Sedan', 'Hatch'], image: 'Mazda_Mazda3_Thumbnail-260x103.jpg' },
+        { name: 'Mazda6', slug: 'mazda6', category: 'Sedan', image: 'Mazda_Mazda6_Thumbnail-260x103.jpg' },
         { name: 'Mazda CX-5', category: 'SUV', image: 'Mazda_MazdaCX5_Thumbnail.jpg' },
         { name: 'MAZDA CX-8', category: 'SUV', image: 'cx8-300x118.jpg' },
         { name: 'MAZDA CX-9', category: 'SUV', image: 'cx9-1-300x118.jpg' },

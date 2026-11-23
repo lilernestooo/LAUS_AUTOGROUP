@@ -24,16 +24,16 @@ const brand = {
     // add slug: 'sonet' to a model once its detail page and data file exist
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/kia/)
     models: [
-        { name: 'Sonet', category: 'Compact SUV', image: 'Sonet-Thumbnail.png' },
-        { name: 'Carnival', category: 'Multi-Purpose Vehicle', image: 'Kia_Carnival_Thumbnail.jpg' },
-        { name: 'Sorento', category: 'Compact SUV', image: 'Kia_Sorento_Thumbnail.jpg' },
-        { name: 'Soluto', category: 'Sedan', image: 'Kia_Soluto_Thumbnail.jpg' },
-        { name: 'Stonic', category: 'Compact SUV', image: 'Kia_Stonic_Thumbnail.jpg' },
-        { name: 'K2500', category: 'Mini Van', image: 'k2500.jpg' },
-        { name: 'Sportage', category: 'Compact SUV', image: 'Kia_Sportage_Thumbnail.jpg' },
-        { name: 'Forte', category: 'Sedan', image: 'Kia_Forte_Thumbnail.jpg' },
-        { name: 'Stinger', category: 'Sedan', image: 'Kia_Stinger_Thumbnail.jpg' },
-        { name: 'Seltos', category: 'Compact SUV', image: 'Kia_Seltos_Thumbnail.jpg' },
+        { name: 'Sonet', slug: 'sonet', category: 'Compact SUV', image: 'Sonet-Thumbnail.png' },
+        { name: 'Carnival', slug: 'carnival', category: 'Multi-Purpose Vehicle', image: 'Kia_Carnival_Thumbnail.jpg' },
+        { name: 'Sorento', slug: 'sorento', category: 'Compact SUV', image: 'Kia_Sorento_Thumbnail.jpg' },
+        { name: 'Soluto', slug: 'soluto', category: 'Sedan', image: 'Kia_Soluto_Thumbnail.jpg' },
+        { name: 'Stonic', slug: 'stonic', category: 'Compact SUV', image: 'Kia_Stonic_Thumbnail.jpg' },
+        { name: 'K2500', slug: 'k2500', category: 'Mini Van', image: 'k2500.jpg' },
+        { name: 'Sportage', slug: 'sportage', category: 'Compact SUV', image: 'Kia_Sportage_Thumbnail.jpg' },
+        { name: 'Forte', slug: 'forte', category: 'Sedan', image: 'Kia_Forte_Thumbnail.jpg' },
+        { name: 'Stinger', slug: 'stinger', category: 'Sedan', image: 'Kia_Stinger_Thumbnail.jpg' },
+        { name: 'Seltos', slug: 'seltos', category: 'Compact SUV', image: 'Kia_Seltos_Thumbnail.jpg' },
     ],
     /* facebook: live Facebook page URL
        fbHeight: rendered height (360 = full card with a two-line name, 340 = full card,
