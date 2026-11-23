@@ -33,7 +33,9 @@ import HyundaiPassengerModel from './pages/auto_brand/HyundaiPassengerModel'
 import Jeep from './pages/auto_brand/Jeep'
 import JeepModel from './pages/auto_brand/JeepModel'
 import Kia from './pages/auto_brand/Kia'
+import KiaModel from './pages/auto_brand/KiaModel'
 import Mazda from './pages/auto_brand/Mazda'
+import MazdaModel from './pages/auto_brand/MazdaModel'
 import Mini from './pages/auto_brand/Mini'
 import Mitsubishi from './pages/auto_brand/Mitsubishi'
 import Peugeot from './pages/auto_brand/Peugeot'
@@ -112,7 +114,9 @@ export default function App() {
         <Route path="/brands/jeep" element={<Jeep />} />
         <Route path="/brands/jeep/:model" element={<JeepModel />} />
         <Route path="/brands/kia" element={<Kia />} />
+        <Route path="/brands/kia/:model" element={<KiaModel />} />
         <Route path="/brands/mazda" element={<Mazda />} />
+        <Route path="/brands/mazda/:model" element={<MazdaModel />} />
         <Route path="/brands/mini" element={<Mini />} />
         <Route path="/brands/mitsubishi" element={<Mitsubishi />} />
         <Route path="/brands/:slug" element={<Brand />} />
