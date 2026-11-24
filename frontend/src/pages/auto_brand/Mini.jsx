@@ -24,11 +24,11 @@ const brand = {
     // add slug: 'mini-3-door' to a model once its detail page and data file exist
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/mini/)
     models: [
-        { name: 'MINI 3-DOOR', category: '3-Door', image: 'Mini_3-Door_Thumbnail.jpg' },
-        { name: 'MINI 5-DOOR', category: '5-Door', image: 'MINI_5-Door_Thumbnail-260x98.jpg' },
-        { name: 'MINI CLUBMAN', category: 'Clubman', image: 'MINI_Clubman_Thumbnail-260x98.jpg' },
-        { name: 'MINI CONVERTIBLE', category: 'Convertible', image: 'Mini_Convertible_Thumbnail.jpg' },
-        { name: 'MINI COUNTRYMAN', category: 'Countryman', image: 'MINI_Countryman_Thumbnail-260x98.jpg' },
+        { name: 'MINI 3-DOOR', slug: 'mini-3-door', category: '3-Door', image: 'Mini_3-Door_Thumbnail.jpg' },
+        { name: 'MINI 5-DOOR', slug: 'mini-5-door', category: '5-Door', image: 'MINI_5-Door_Thumbnail-260x98.jpg' },
+        { name: 'MINI CLUBMAN', slug: 'mini-clubman', category: 'Clubman', image: 'MINI_Clubman_Thumbnail-260x98.jpg' },
+        { name: 'MINI CONVERTIBLE', slug: 'mini-convertible', category: 'Convertible', image: 'Mini_Convertible_Thumbnail.jpg' },
+        { name: 'MINI COUNTRYMAN', slug: 'mini-countryman', category: 'Countryman', image: 'MINI_Countryman_Thumbnail-260x98.jpg' },
     ],
     /* facebook: live Facebook page URL (leave it out and no Facebook card is shown)
        fbHeight: rendered height (360 = full card with a two-line name, 340 = full card,
