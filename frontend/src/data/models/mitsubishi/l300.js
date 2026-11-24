@@ -1,0 +1,35 @@
+export default {
+    brandName: 'Mitsubishi',
+    backTo: '/brands/mitsubishi',
+    name: 'L300',
+    images: ['L300.png'],
+    carScale: 1.3,
+    carTop: '-mt-0',
+    carBottom: '-mb-6 md:-mb-14',
+    noShadow: true,
+    brochure: '#',
+    overview:
+        'Mitsubishi L300\n\nMake a wise investment for your business! For many decades, no workhorse has been as reliable and versatile as the Mitsubishi L300.',
+    specs: [
+        {
+            rows: [
+                ['Engine', '98'],
+                ['Engine Type', 'In-Line 4'],
+                ['Engine Displacement', '2.2L'],
+                ['Horsepower', '98 hp'],
+                ['Torque', '200 Nm'],
+                ['Fuel Tank Capacity', '55 L'],
+                ['Transmission', 'Manual'],
+                ['Front/Rear Brakes', 'Disc / Drum'],
+                ['Front/Rear Suspension', 'Independent Double Wishbones / Live Axle w/ Leaf Springs'],
+                ['Wheels', '14-inch Steel'],
+                ['Tires', '185R14C-8PR'],
+                ['Layout', 'Rear-Wheel Drive – RWD'],
+                ['Exterior Dimensions', '4260 x 1695 x 1895 mm'],
+                ['Ground Clearance', '195 mm'],
+                ['Seating Capacity', '17'],
+            ],
+        },
+    ],
+    variants: [],
+}

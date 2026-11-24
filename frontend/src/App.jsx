@@ -41,6 +41,7 @@ import MiniModel from './pages/auto_brand/MiniModel'
 import Mitsubishi from './pages/auto_brand/Mitsubishi'
 import MitsubishiModel from './pages/auto_brand/MitsubishiModel'
 import Peugeot from './pages/auto_brand/Peugeot'
+import PeugeotModel from './pages/auto_brand/PeugeotModel'
 import Suzuki from './pages/auto_brand/Suzuki'
 import Volkswagen from './pages/auto_brand/Volkswagen'
 
@@ -126,6 +127,7 @@ export default function App() {
         <Route path="/brands/:slug" element={<Brand />} />
         <Route path="/brands/:slug/:model" element={<BMWModel />} />
         <Route path="/brands/peugeot" element={<Peugeot />} />
+        <Route path="/brands/peugeot/:model" element={<PeugeotModel />} />
         <Route path="/brands/suzuki" element={<Suzuki />} />
         <Route path="/brands/volkswagen" element={<Volkswagen />} />
       </Routes>
