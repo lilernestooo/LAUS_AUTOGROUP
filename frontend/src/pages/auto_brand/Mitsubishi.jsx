@@ -24,14 +24,14 @@ const brand = {
     // add slug: 'mirage-g4' to a model once its detail page and data file exist
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/carworld/)
     models: [
-        { name: 'Mirage G4', category: 'Sedan', image: 'Mitsubishi_MirageG4_Thumbnail.png' },
-        { name: 'Triton', category: 'Commercial', image: 'Mitsubishi_Triton_Thumbnail-1-260x114.png' },
-        { name: 'Strada', category: 'Commercial', image: 'Mitsubishi_Strada_Thumbnail-260x114.png' },
-        { name: 'Xpander', category: 'SUV', image: 'Mitsubishi_Xpander_Thumbnail.png' },
-        { name: 'Montero Sport', category: 'SUV', image: 'Mitsubishi_Montero_Thumbnail-260x114.png' },
-        { name: 'L300', category: 'Commercial', image: 'Mitsubishi_L300_Thumbnail-260x114.png' },
-        { name: 'XFORCE', category: 'SUV', image: 'Mitsubishi_xforce_Thumbnail-260x114.png' },
-        { name: 'Versa Van', category: 'Commercial', image: 'versavan-260x114.png' },
+        { name: 'Mirage G4', slug: 'mirage-g4', category: 'Sedan', image: 'Mitsubishi_MirageG4_Thumbnail.png' },
+        { name: 'Triton', slug: 'triton', category: 'Commercial', image: 'Mitsubishi_Triton_Thumbnail-1-260x114.png' },
+        { name: 'Strada', slug: 'strada', category: 'Commercial', image: 'Mitsubishi_Strada_Thumbnail-260x114.png' },
+        { name: 'Xpander', slug: 'xpander', category: 'SUV', image: 'Mitsubishi_Xpander_Thumbnail.png' },
+        { name: 'Montero Sport', slug: 'montero-sport', category: 'SUV', image: 'Mitsubishi_Montero_Thumbnail-260x114.png' },
+        { name: 'L300', slug: 'l300', category: 'Commercial', image: 'Mitsubishi_L300_Thumbnail-260x114.png' },
+        { name: 'XFORCE', slug: 'xforce', category: 'SUV', image: 'Mitsubishi_xforce_Thumbnail-260x114.png' },
+        { name: 'Versa Van', slug: 'versa-van', category: 'Commercial', image: 'versavan-260x114.png' },
     ],
     /* facebook: live Facebook page URL
        fbHeight: rendered height (380 = full card with a three-line name, 360 = two-line name,

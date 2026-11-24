@@ -24,10 +24,10 @@ const brand = {
     // add slug: 'peugeot-3008' to a model once its detail page and data file exist
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/peugeot/)
     models: [
-        { name: 'Peugeot 3008', category: 'SUV', image: 'Peugeot_3008_Thumbnail.jpg' },
-        { name: 'Peugeot 5008', category: 'SUV', image: 'Peugeot_5008_Thumbnail.jpg' },
-        { name: 'Peugeot Traveller', category: 'TRAVELLER', image: 'Peugeot_Traveller_Thumbnail.jpg' },
-        { name: 'Peugeot 2008', category: 'SUV', image: 'Peugeot_2008_Thumbnail.jpg' },
+        { name: 'Peugeot 3008', slug: 'peugeot-3008', category: 'SUV', image: 'Peugeot_3008_Thumbnail.jpg' },
+        { name: 'Peugeot 5008', slug: 'peugeot-5008', category: 'SUV', image: 'Peugeot_5008_Thumbnail.jpg' },
+        { name: 'Peugeot Traveller', slug: 'peugeot-traveller', category: 'TRAVELLER', image: 'Peugeot_Traveller_Thumbnail.jpg' },
+        { name: 'Peugeot 2008', slug: 'peugeot-2008', category: 'SUV', image: 'Peugeot_2008_Thumbnail.jpg' },
     ],
     /* facebook: live Facebook page URL (leave it out and no Facebook card is shown)
        fbHeight: rendered height (360 = full card with a two-line name, 340 = full card,
