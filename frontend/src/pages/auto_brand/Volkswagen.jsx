@@ -24,12 +24,12 @@ const brand = {
     // add slug: 'lavida' to a model once its detail page and data file exist
     // (the thumbnail file names are placeholders: replace them with the real names in src/assets/volkswagen/)
     models: [
-        { name: 'Lavida', category: 'Sedan', image: 'Volkswagen_Lavida_Thumbnail.jpg' },
-        { name: 'Santana', category: 'Sedan', image: 'Volkswagen_Santana_Thumbnail.jpg' },
-        { name: 'Crafter', category: 'Van', image: 'Volkswagen_Crafter_Thumbnail.jpg' },
-        { name: 'Touran', category: 'MPV', image: 'Volkswagen_Touran_Thumbnail.jpg' },
-        { name: 'TCross', category: 'SUV', image: 'Volkswagen_TCross_Thumbnail.jpg' },
-        { name: 'Multivan Combi', category: 'Van', image: 'Volkswagen_Multivan-Kombi_Thumbnail.jpg' },
+        { name: 'Lavida', slug: 'lavida', category: 'Sedan', image: 'Volkswagen_Lavida_Thumbnail.jpg' },
+        { name: 'Santana', slug: 'santana', category: 'Sedan', image: 'Volkswagen_Santana_Thumbnail.jpg' },
+        { name: 'Crafter', slug: 'crafter', category: 'Van', image: 'Volkswagen_Crafter_Thumbnail.jpg' },
+        { name: 'Touran', slug: 'touran', category: 'MPV', image: 'Volkswagen_Touran_Thumbnail.jpg' },
+        { name: 'TCross', slug: 't-cross', category: 'SUV', image: 'Volkswagen_TCross_Thumbnail.jpg' },
+        { name: 'Multivan Combi', slug: 'multivan-kombi', category: 'Van', image: 'Volkswagen_Multivan-Kombi_Thumbnail.jpg' },
     ],
     /* facebook: live Facebook page URL (leave it out and no Facebook card is shown)
        fbHeight: rendered height (360 = full card with a two-line name, 340 = full card,

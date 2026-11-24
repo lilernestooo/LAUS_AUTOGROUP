@@ -1,0 +1,33 @@
+export default {
+    brandName: 'Volkswagen',
+    backTo: '/brands/volkswagen',
+    name: 'Volkswagen Lavida',
+    images: ['VOLKSWAGEN-lavida-min.png'],
+    carScale: 1.3,
+    carTop: 'mt-0',
+    carBottom: '-mb-12 md:-mb-20',
+    noShadow: true,
+    brochure: '#',
+    overview: 'Lavida',
+    specs: [
+        {
+            title: 'Specifications',
+            rows: [
+                ['Body Type', 'Sedan'],
+                ['Fuel Option', 'Gasoline'],
+                ['Engine Disp.', '1.4'],
+                ['No. of Doors', '4'],
+                ['Horsepower', '128'],
+                ['Dimensions', '4605 x 1765 x 1460'],
+                ['Colors', ''],
+                ['Seating Capacity', '5'],
+                ['Transmission', 'Dual Clutch'],
+                ['Drivetrain', 'FWD'],
+                ['Engine Type', 'inline-4 turbo'],
+                ['Torque (Nm)', '225'],
+                ['Paint Finish', 'Glossy,Metallic'],
+            ],
+        },
+    ],
+    variants: [],
+}
