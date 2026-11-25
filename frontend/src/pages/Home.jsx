@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { fetchPosts } from '../api/newsApi'
 import logo from '../assets/logo/LAG_WhiteRed_Logo.png'
 import logoColor from '../assets/logo/LAG_Color_Logo.png'
 import mitsubishi from '../assets/brand/mitsubishi.png'
@@ -99,14 +101,8 @@ const bikes = [
   { name: 'Peugeot Motocycles', src: peugeot_motor }, { name: 'CFMOTO', src: cf_moto }, { name: 'Piaggio Ape', src: ape },
 ]
 
-const news = [
-  { title: 'The Drive that Haunts your Dreams', date: 'October 9, 2026', src: null, text: 'Ready to chase the thrill of your next drive? Make every journey unforgettable with Mitsubishi Carworld’s exciting lineup with exclusive deals to make your next […]' },
-  { title: 'Build Your Way Up. Drive Suzuki All the Way', date: 'October 9, 2026', src: null, text: 'Low payout, big way out! Make every journey more exciting with Suzuki’s incredible deals designed to help you achieve your driving goals without breaking the […]' },
-  { title: 'Spooktacular Deals. Bigger Savings in Your Sight.', date: 'October 8, 2026', src: null, text: 'No tricks, just massive treats! Get ready for a thrilling driving experience with Haima’s great cash discounts on the Haima V70 and S7 MT! Whether […]' },
-]
-
 const offerImage = null // e.g. offer1
-const videoImage = null // e.g. videoThumb
+const videoId = 'SlZxLW1_GfQ' // YouTube video ID (from https://youtu.be/SlZxLW1_GfQ)
 const partnersBackground = bg_partners // e.g. a garage photo
 
 const partners = [
@@ -313,9 +309,8 @@ function Hero() {
             onClick={() => goTo(idx)}
             aria-label={`Go to banner ${idx + 1}`}
             aria-current={idx === active}
-            className={`h-12 w-[52px] cursor-pointer overflow-hidden border-2 transition duration-200 hover:-translate-y-1 hover:opacity-100 ${
-              idx === active ? '-translate-y-1 border-white opacity-100' : 'border-neutral-500 opacity-70'
-            }`}
+            className={`h-12 w-[52px] cursor-pointer overflow-hidden border-2 transition duration-200 hover:-translate-y-1 hover:opacity-100 ${idx === active ? '-translate-y-1 border-white opacity-100' : 'border-neutral-500 opacity-70'
+              }`}
           >
             <img src={src} alt="" draggable="false" className="h-full w-full object-cover" />
           </button>
@@ -365,11 +360,10 @@ function BrandGrid({ items, cols }) {
         <Reveal key={b.name} direction="zoom" delay={idx * 70} className="flex w-full justify-center">
           <a
             href="#"
-            className={`block transition duration-300 hover:scale-110 ${
-              b.dark
-                ? 'h-[110px] w-[110px] rounded-full bg-black p-1.5 md:h-[125px] md:w-[125px]'
-                : 'h-[90px] w-full max-w-[160px] md:h-[120px] md:max-w-[200px]'
-            }`}
+            className={`block transition duration-300 hover:scale-110 ${b.dark
+              ? 'h-[110px] w-[110px] rounded-full bg-black p-1.5 md:h-[125px] md:w-[125px]'
+              : 'h-[90px] w-full max-w-[160px] md:h-[120px] md:max-w-[200px]'
+              }`}
           >
             <Photo src={b.src} alt={b.name} label={`LOGO – ${b.name}`} fit="contain" />
           </a>
@@ -398,26 +392,89 @@ function Brands() {
 const heading = 'mb-3.5 text-[26px] font-normal text-lag-title'
 const lead = 'mb-5 text-sm [&>a]:text-lag-red'
 
+// helpers for the news preview (database text is shown as plain text, never as HTML)
+const plain = (s) => (s || '').replace(/<[^>]*>/g, '')
+const shorten = (s, n = 115) => {
+  const t = plain(s).replace(/\s*\[…\]\s*$/, '').trim()
+  return t.length > n ? `${t.slice(0, n).trimEnd()} […]` : t
+}
+const formatDate = (s) =>
+  s ? new Date(s.replace(' ', 'T')).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''
+
+/* YouTube player: shows the thumbnail first, loads the video only after the click */
+function VideoPlayer({ id, title = 'LausAutoGroup video' }) {
+  const [playing, setPlaying] = useState(false)
+
+  if (playing) {
+    return (
+      <div className="h-[210px] overflow-hidden rounded bg-black">
+        <iframe
+          className="h-full w-full"
+          src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+    )
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={() => setPlaying(true)}
+      aria-label={`Play video: ${title}`}
+      className="group relative block h-[210px] w-full cursor-pointer overflow-hidden rounded"
+    >
+      <Photo src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`} alt={title} label="VIDEO THUMBNAIL" size="372 x 210 px" />
+      <div className="absolute top-1/2 left-1/2 h-12 w-[68px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-red-600 transition group-hover:scale-115">
+        <div className="absolute top-3.5 left-[27px] h-0 w-0 border-y-[10px] border-l-[18px] border-y-transparent border-l-white" />
+      </div>
+    </button>
+  )
+}
+
 function Highlights() {
+  const [news, setNews] = useState([])
+  const [newsState, setNewsState] = useState('loading') // loading | ok | error
+
+  // the 3 newest published posts, loaded every time the home page opens
+  useEffect(() => {
+    let alive = true
+    fetchPosts({ page: 1, limit: 3 })
+      .then((res) => {
+        if (!alive) return
+        setNews(res.data)
+        setNewsState('ok')
+      })
+      .catch(() => alive && setNewsState('error'))
+    return () => {
+      alive = false
+    }
+  }, [])
+
   return (
     <section className={`${container} grid items-start gap-10 pt-[60px] pb-[70px] lg:grid-cols-3`}>
       {/* NEWS */}
       <div>
-        <p className={lead}>Check out the latest news. <a href="#">View More</a></p>
+        <p className={lead}>Check out the latest news. <Link to="/news">View More</Link></p>
         <h2 className={heading}>NEWS</h2>
+
+        {newsState === 'loading' && <p className="text-sm text-neutral-400">Loading news…</p>}
+        {newsState === 'error' && <p className="text-sm text-neutral-400">News is unavailable right now.</p>}
+        {newsState === 'ok' && news.length === 0 && <p className="text-sm text-neutral-400">No news yet.</p>}
+
         {news.map((n, idx) => (
-          <Reveal as="article" key={n.title} direction="right" delay={idx * 150} className="mb-[30px] grid grid-cols-[115px_1fr] gap-3">
-            <div className="h-[85px] overflow-hidden border-r-[3px] border-lag-red">
-              <Photo src={n.src} label={`NEWS ${idx + 1}`} size="230 x 170" />
-            </div>
+          <Reveal as="article" key={n.post_id} direction="right" delay={idx * 150} className="mb-[30px] grid grid-cols-[115px_1fr] gap-3">
+            <Link to={`/news?post=${n.post_id}`} className="block h-[85px] overflow-hidden border-r-[3px] border-lag-red">
+              <Photo src={n.hero_image_link} alt={n.post_title} label={`NEWS ${idx + 1}`} size="230 x 170" />
+            </Link>
             <div>
-              <h4 className="cursor-pointer border-b border-neutral-200 pb-2 text-base leading-normal font-bold text-neutral-900 transition-colors hover:text-lag-red">
-                {n.title}
+              <h4 className="border-b border-neutral-200 pb-2 text-base leading-normal font-bold text-neutral-900 transition-colors hover:text-lag-red">
+                <Link to={`/news?post=${n.post_id}`}>{n.post_title}</Link>
               </h4>
-              <div className="my-2 text-[13px] text-neutral-400">
-                ◔ {n.date} &nbsp; ◌ <span className="text-lag-red">0</span>
-              </div>
-              <p className="text-sm leading-[1.8] text-neutral-500">{n.text}</p>
+              <div className="my-2 text-[13px] text-neutral-400">◔ {formatDate(n.post_date)}</div>
+              <p className="text-sm leading-[1.8] text-neutral-500">{shorten(n.post_excerpt)}</p>
             </div>
           </Reveal>
         ))}
@@ -437,13 +494,8 @@ function Highlights() {
       {/* VIDEOS */}
       <Reveal direction="left" delay={300}>
         <h2 className={heading}>VIDEOS</h2>
-        <p className={lead}>Watch all our videos and tvc’s by clicking. <a href="#">View More</a></p>
-        <a href="#" className="group relative block h-[210px] overflow-hidden rounded">
-          <Photo src={videoImage} label="VIDEO THUMBNAIL" size="372 x 210 px" />
-          <div className="absolute top-1/2 left-1/2 h-12 w-[68px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-red-600 transition group-hover:scale-115">
-            <div className="absolute top-3.5 left-[27px] h-0 w-0 border-y-[10px] border-l-[18px] border-y-transparent border-l-white" />
-          </div>
-        </a>
+        <p className={lead}>Watch all our videos and tvc’s by clicking. <a href="https://www.youtube.com/channel/UCCGMDt_JtTPbLmJkH5pJrKA/videos" target="_blank" rel="noreferrer">View More</a></p>
+        <VideoPlayer id={videoId} title="LausAutoGroup video" />
       </Reveal>
     </section>
   )

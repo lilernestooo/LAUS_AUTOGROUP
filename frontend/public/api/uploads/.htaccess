@@ -1,0 +1,5 @@
+# uploads folder: images only, never run PHP from here
+<FilesMatch "\.(php|phtml|php3|php4|php5|phps|phar)$">
+    Require all denied
+</FilesMatch>
+Options -Indexes

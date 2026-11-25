@@ -18,7 +18,11 @@ const links = [
     ],
   },
   { label: 'Auto Partners', to: '/auto-partners' },
-  { label: 'News and Events', sub: ['Latest News', 'Special Offers'] },
+  {
+    label: 'News and Events',
+    to: '/news',
+    sub: [{ label: 'Latest News', to: '/news' }, 'Special Offers'],
+  },
   { label: 'Contact Us', sub: ['Find a Dealer', 'Careers'] },
 ]
 

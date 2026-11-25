@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Reveal from '../../components/Reveal'
 import FacebookPage from '../../components/FacebookPage'
@@ -53,7 +54,7 @@ const brand = {
 const telHref = (n) => `tel:${n.replace(/[^+\d]/g, '')}`
 
 /* ---------- MODEL CARD ---------- */
-function ModelCard({ model, to }) {
+function ModelCard({ model, to, onNoPage }) {
     const src = getHyundaiImg(model.image)
 
     const card = (
@@ -86,7 +87,13 @@ function ModelCard({ model, to }) {
             {card}
         </Link>
     ) : (
-        card
+        <button
+            type="button"
+            onClick={() => onNoPage(model)}
+            className="block w-full cursor-pointer text-left outline-none focus-visible:ring-2 focus-visible:ring-lag-red"
+        >
+            {card}
+        </button>
     )
 }
 
@@ -144,6 +151,14 @@ function DealerBlock({ dealer, first }) {
 /* ---------- THE PAGE ---------- */
 export default function HyundaiTrucks() {
     const logo = getHyundaiImg(brand.logo)
+    const [notice, setNotice] = useState(null) // model name whose page isn't ready yet
+
+    // the message closes by itself after 4 seconds
+    useEffect(() => {
+        if (!notice) return
+        const t = setTimeout(() => setNotice(null), 4000)
+        return () => clearTimeout(t)
+    }, [notice])
 
     return (
         <main className="overflow-x-clip">
@@ -214,6 +229,7 @@ export default function HyundaiTrucks() {
                                                 <ModelCard
                                                     model={m}
                                                     to={m.slug ? `/brands/hyundai-trucks-and-buses/${m.slug}` : null}
+                                                    onNoPage={(mod) => setNotice(mod.name)}
                                                 />
                                             </Reveal>
                                         ))}
@@ -262,6 +278,26 @@ export default function HyundaiTrucks() {
                     </aside>
                 </div>
             </section>
+            {/* message for cards that have no detail page yet */}
+            {notice && (
+                <div
+                    role="status"
+                    className="fixed bottom-6 left-1/2 z-[200] flex w-[92%] max-w-md -translate-x-1/2 items-start gap-3 border-l-4 border-lag-red bg-[#23252e] px-5 py-4 text-sm text-white shadow-2xl"
+                >
+                    <p className="flex-1 leading-6">
+                        <span className="font-bold">{notice}</span> details are coming soon. Please contact one of our
+                        dealers for more information.
+                    </p>
+                    <button
+                        type="button"
+                        onClick={() => setNotice(null)}
+                        aria-label="Close message"
+                        className="cursor-pointer text-xl leading-none text-white/70 hover:text-white"
+                    >
+                        ×
+                    </button>
+                </div>
+            )}
         </main>
     )
 }
