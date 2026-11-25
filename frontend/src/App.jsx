@@ -46,6 +46,8 @@ import Suzuki from './pages/auto_brand/Suzuki'
 import SuzukiModel from './pages/auto_brand/SuzukiModel'
 import Volkswagen from './pages/auto_brand/Volkswagen'
 import VolkswagenModel from './pages/auto_brand/VolkswagenModel'
+import NewsPage from './pages/NewsPage'
+import AdminPage from './pages/AdminPage'
 
 // Jumps to the top on page change, or to the section if the link has a #hash
 function ScrollToTop() {
@@ -134,6 +136,8 @@ export default function App() {
         <Route path="/brands/suzuki/:model" element={<SuzukiModel />} />
         <Route path="/brands/volkswagen" element={<Volkswagen />} />
         <Route path="/brands/volkswagen/:model" element={<VolkswagenModel />} />
+        <Route path="/news" element={<NewsPage />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
 
       <Footer />
