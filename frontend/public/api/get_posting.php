@@ -23,7 +23,6 @@ if (!empty($_GET['post_id']) || !empty($_GET['post_name'])) {
     $post = $stmt->get_result()->fetch_assoc();
     if (!$post || ($post['post_status'] !== 'publish' && !$admin)) fail('Post not found.', 404);
     unset($post['post_comments']); // comments are served only by get_comments.php (approved ones only)
-    unset($post['post_comments']); // comments are served only by get_comments.php (approved ones only)
     respond(['success' => true, 'data' => $post]);
 }
 

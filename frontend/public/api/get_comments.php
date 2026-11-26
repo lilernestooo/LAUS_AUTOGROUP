@@ -27,6 +27,7 @@ if (!empty($_GET['post_id'])) {
             'comment_id'   => $c['id'],
             'post_id'      => $post_id,
             'author_name'  => $c['name'],
+            'author_url'   => $c['url'] ?? '',
             'comment_text' => $c['text'],
             'created_date' => $c['date'],
         ];
@@ -50,6 +51,7 @@ while ($row = $res->fetch_assoc()) {
             'post_id'      => (int)$row['post_id'],
             'post_title'   => $row['post_title'],
             'author_name'  => $c['name'],
+            'author_email' => $c['email'] ?? '',
             'comment_text' => $c['text'],
             'status'       => $c['status'],
             'created_date' => $c['date'],
