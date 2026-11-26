@@ -59,14 +59,11 @@ export const fetchGallery = (post_id, auth = false) => request('get_gallery.php'
 
 /* ---------- Comments ---------- */
 export const fetchComments = (post_id) => request('get_comments.php', { params: { post_id } });
-export const addComment = (post_id, author_name, comment_text, website = '') =>
-    request('post_comments.php', { method: 'POST', body: { action: 'add', post_id, author_name, comment_text, website } });
-export const fetchAllComments = (status = 'pending') => request('get_comments.php', { params: { status }, auth: true });
-export const approveComment = (post_id, comment_id) =>
-    request('post_comments.php', { method: 'POST', auth: true, body: { action: 'approve', post_id, comment_id } });
-export const deleteComment = (post_id, comment_id) =>
-    request('post_comments.php', { method: 'POST', auth: true, body: { action: 'delete', post_id, comment_id } });
-
+export const addComment = (post_id, f) =>
+    request('post_comments.php', { method: 'POST', body: { action: 'add', post_id: Number(post_id), author_name: f.name, author_email: f.email, author_url: f.url, comment_text: f.text, website: f.trap } });
+export const fetchPendingComments = (status = 'pending') => request('get_comments.php', { params: { status }, auth: true });
+export const approveComment = (post_id, comment_id) => request('post_comments.php', { method: 'POST', auth: true, body: { action: 'approve', post_id, comment_id } });
+export const deleteComment = (post_id, comment_id) => request('post_comments.php', { method: 'POST', auth: true, body: { action: 'delete', post_id, comment_id } });
 /* ---------- Auth ---------- */
 export const login = (username, password) => request('post_login.php', { method: 'POST', body: { username, password } });
 export const logout = () => request('post_logout.php', { method: 'POST', auth: true });

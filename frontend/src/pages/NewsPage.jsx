@@ -224,24 +224,23 @@ function Lightbox({ images, start = 0, onClose }) {
     );
 }
 
-/* ---------- Related posts: same category first, then the latest posts to fill 3 cards ---------- */
+/* ---------- Related posts: same category only, shown as cards ---------- */
 function RelatedPosts({ post, onOpen }) {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
         let alive = true;
-        const get = (category) =>
-            fetchPosts({ page: 1, limit: 4, category }).then((r) =>
-                r.data.filter((p) => String(p.post_id) !== String(post.post_id))
-            );
+        setItems([]);
 
-        get(post.post_category)
-            .then((same) =>
-                same.length >= 3 || !post.post_category
-                    ? same
-                    : get('').then((all) => [...same, ...all.filter((a) => !same.some((s) => s.post_id === a.post_id))])
-            )
-            .then((list) => alive && setItems(list.slice(0, 3)))
+        // posts without a category have nothing to be related to
+        if (!post.post_category) return;
+
+        // same category only, and never the post that is open
+        fetchPosts({ page: 1, limit: 4, category: post.post_category })
+            .then((r) => {
+                const same = r.data.filter((p) => String(p.post_id) !== String(post.post_id));
+                if (alive) setItems(same.slice(0, 3));
+            })
             .catch(() => { /* related posts are optional */ });
 
         return () => { alive = false; };
@@ -252,29 +251,70 @@ function RelatedPosts({ post, onOpen }) {
     return (
         <section className="mt-14 border-t border-neutral-200 pt-8">
             <Reveal direction="right">
-                <h2 className="mb-6 text-2xl font-normal text-[#111]">Related posts</h2>
+                <h2 className="text-2xl font-normal text-[#111]">Related posts</h2>
+                <div className="mt-3 mb-8 h-1 w-16 rounded bg-[#c00]" />
             </Reveal>
+
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                 {items.map((p, i) => (
-                    <Reveal key={p.post_id} direction="up" delay={i * 120}>
-                        <div className="group">
-                            <button type="button" onClick={() => onOpen(p)} className="relative block w-full cursor-pointer overflow-hidden bg-white shadow-sm ring-1 ring-black/5">
-                                <Shine />
+                    <Reveal key={p.post_id} direction="up" delay={i * 120} className="h-full">
+                        <article className="group flex h-full flex-col overflow-hidden bg-white shadow-[0_2px_10px_rgba(0,0,0,0.08)] ring-1 ring-black/5 transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.3)]">
+                            {/* photo */}
+                            <button
+                                type="button"
+                                onClick={() => onOpen(p)}
+                                aria-label={p.post_title}
+                                className="relative block w-full cursor-pointer overflow-hidden bg-gray-200"
+                            >
                                 {p.hero_image_link ? (
                                     <img
-                                        className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
+                                        className="aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-105"
                                         src={p.hero_image_link}
                                         alt={p.post_title}
                                         loading="lazy"
                                     />
                                 ) : (
-                                    <div className="aspect-[4/3] w-full bg-gray-200" />
+                                    <div className="aspect-[16/10] w-full bg-gray-200" />
                                 )}
+                                <Shine />
+                                {post.post_category && (
+                                    <span className="absolute top-3 left-3 z-10 bg-[#c00] px-2.5 py-1 text-[10px] font-bold tracking-[0.15em] text-white uppercase">
+                                        {post.post_category}
+                                    </span>
+                                )}
+                                {/* red line that grows on hover */}
+                                <span className="absolute inset-x-0 bottom-0 z-10 h-1 origin-left scale-x-0 bg-[#c00] transition-transform duration-500 group-hover:scale-x-100" />
                             </button>
-                            <div className="mt-3 text-xs text-[#888]">{formatDate(p.post_date)}</div>
-                            <h3 className="mt-1 mb-3 text-lg leading-snug font-normal text-[#111]">{p.post_title}</h3>
-                            <button className={btn} onClick={() => onOpen(p)}>Read more</button>
-                        </div>
+
+                            {/* text */}
+                            <div className="flex flex-1 flex-col p-5">
+                                <div className="flex items-center gap-1.5 text-xs text-[#888]">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <circle cx="12" cy="12" r="9" />
+                                        <path d="M12 7v5l3 2" />
+                                    </svg>
+                                    {formatDate(p.post_date)}
+                                </div>
+
+                                <h3 className="mt-2 line-clamp-2 text-lg leading-snug font-normal text-[#111] transition-colors duration-300 group-hover:text-[#c00]">
+                                    {p.post_title}
+                                </h3>
+
+                                <button
+                                    type="button"
+                                    onClick={() => onOpen(p)}
+                                    className="mt-auto inline-flex cursor-pointer items-center gap-2 pt-5 text-sm font-medium text-[#c00]"
+                                >
+                                    <span className="relative">
+                                        Read more
+                                        <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-[#c00] transition-transform duration-300 group-hover:scale-x-100" />
+                                    </span>
+                                    <svg className="transition-transform duration-300 group-hover:translate-x-1.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M5 12h14M13 6l6 6-6 6" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </article>
                     </Reveal>
                 ))}
             </div>
@@ -282,14 +322,16 @@ function RelatedPosts({ post, onOpen }) {
     );
 }
 
-/* ---------- Comments: approved ones are listed, new ones wait for admin approval ---------- */
+const SAVED = 'lgc_comment_author';
+
 function CommentSection({ postId }) {
     const [list, setList] = useState([]);
-    const [name, setName] = useState('');
-    const [text, setText] = useState('');
-    const [trap, setTrap] = useState(''); // hidden field: only bots fill it in
+    const saved = (() => { try { return JSON.parse(localStorage.getItem(SAVED)) || {}; } catch { return {}; } })();
+    const [f, setF] = useState({ name: saved.n || '', email: saved.e || '', url: saved.u || '', text: '', trap: '' });
+    const [remember, setRemember] = useState(!!saved.n);
     const [busy, setBusy] = useState(false);
     const [msg, setMsg] = useState(null);
+    const set = (k) => (e) => setF((x) => ({ ...x, [k]: e.target.value }));
 
     useEffect(() => {
         let alive = true;
@@ -302,12 +344,15 @@ function CommentSection({ postId }) {
     const submit = async (e) => {
         e.preventDefault();
         setMsg(null);
-        if (!name.trim() || !text.trim()) return setMsg({ ok: false, text: 'Please enter your name and a comment.' });
         setBusy(true);
         try {
-            const r = await addComment(postId, name.trim(), text.trim(), trap);
+            const r = await addComment(postId, { ...f, name: f.name.trim(), email: f.email.trim(), url: f.url.trim(), text: f.text.trim() });
+            try {
+                if (remember) localStorage.setItem(SAVED, JSON.stringify({ n: f.name, e: f.email, u: f.url }));
+                else localStorage.removeItem(SAVED);
+            } catch { /* storage blocked */ }
             setMsg({ ok: true, text: r.message });
-            setText('');
+            setF((x) => ({ ...x, text: '' }));
         } catch (err) {
             setMsg({ ok: false, text: err.message });
         } finally {
@@ -316,6 +361,7 @@ function CommentSection({ postId }) {
     };
 
     const input = 'w-full border border-[#e5e5e5] bg-white px-3 py-2.5 text-sm text-[#444] focus:border-[#c00] focus:outline-none';
+    const lab = 'mb-1 block text-sm font-bold text-[#555]';
 
     return (
         <section className="mt-12 border-t border-neutral-200 pt-8">
@@ -328,7 +374,11 @@ function CommentSection({ postId }) {
                         {list.map((c) => (
                             <li key={c.comment_id} className="border-l-4 border-[#c00] bg-white p-4 shadow-sm">
                                 <div className="mb-1 text-sm">
-                                    <span className="font-bold text-[#111]">{c.author_name}</span>
+                                    <span className="font-bold text-[#111]">
+                                        {c.author_url
+                                            ? <a href={c.author_url} target="_blank" rel="noopener noreferrer nofollow" className="hover:text-[#c00]">{c.author_name}</a>
+                                            : c.author_name}
+                                    </span>
                                     <span className="ml-3 text-[#888]">{formatDate(c.created_date)}</span>
                                 </div>
                                 <p className="text-[15px] leading-[1.7] whitespace-pre-line">{c.comment_text}</p>
@@ -339,32 +389,41 @@ function CommentSection({ postId }) {
             )}
 
             <Reveal direction="up">
-                <h2 className="mb-4 text-2xl font-normal text-[#111]">Leave a Reply</h2>
+                <h2 className="mb-2 text-2xl font-normal text-[#111]">Leave a Reply</h2>
+                <p className="mb-5 text-sm text-[#555]">Your email address will not be published. Required fields are marked *</p>
                 {msg && (
                     <div className={`mb-4 px-3.5 py-2.5 text-sm ${msg.ok ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                         {msg.text}
                     </div>
                 )}
-                <form onSubmit={submit} className="space-y-4">
-                    <label className="block text-sm font-bold text-[#555]">
-                        Name <span className="text-[#c00]">*</span>
-                        <input className={`${input} mt-1 font-normal`} value={name} maxLength={80} onChange={(e) => setName(e.target.value)} autoComplete="name" />
-                    </label>
-                    <label className="block text-sm font-bold text-[#555]">
-                        Comment <span className="text-[#c00]">*</span>
-                        <textarea className={`${input} mt-1 font-normal`} rows="5" maxLength={2000} value={text} onChange={(e) => setText(e.target.value)} />
-                    </label>
+                <form onSubmit={submit}>
+                    <label className={lab}>Comment *</label>
+                    <textarea className={`${input} mb-5`} rows="6" required maxLength={2000} value={f.text} onChange={set('text')} />
+
+                    <div className="grid gap-5 md:grid-cols-3">
+                        <div>
+                            <label className={lab}>Name *</label>
+                            <input className={input} required maxLength={80} value={f.name} onChange={set('name')} autoComplete="name" />
+                        </div>
+                        <div>
+                            <label className={lab}>Email *</label>
+                            <input className={input} type="email" required maxLength={150} value={f.email} onChange={set('email')} autoComplete="email" />
+                        </div>
+                        <div>
+                            <label className={lab}>Website</label>
+                            <input className={input} maxLength={200} value={f.url} onChange={set('url')} placeholder="https://" autoComplete="url" />
+                        </div>
+                    </div>
+
                     {/* hidden trap field for bots */}
-                    <input
-                        type="text"
-                        tabIndex={-1}
-                        autoComplete="off"
-                        aria-hidden="true"
-                        value={trap}
-                        onChange={(e) => setTrap(e.target.value)}
-                        className="absolute -left-[9999px] h-0 w-0 opacity-0"
-                    />
-                    <div className="text-right">
+                    <input type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" value={f.trap} onChange={set('trap')} className="absolute -left-[9999px] h-0 w-0 opacity-0" />
+
+                    <label className="mt-5 flex items-center gap-2 text-sm font-bold text-[#555]">
+                        <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
+                        Save my name, email, and website in this browser for the next time I comment.
+                    </label>
+
+                    <div className="mt-5 text-right">
                         <button className={`${btn} disabled:opacity-50`} disabled={busy}>
                             {busy ? 'Sending…' : 'Post Comment'}
                         </button>

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import * as api from '../api/newsApi';
 
 const EMPTY = {
@@ -204,7 +205,7 @@ function Dashboard({ admin, onLogout }) {
             </header>
 
             {showPw && <ChangePassword onDone={(t) => { setShowPw(false); setMsg({ type: 'ok', text: t }); }} handle={handle} />}
-            {msg && <div className={msg.type === 'ok' ? ui.ok : ui.err}>{msg.text}</div>}
+            <Toast msg={msg} onClose={() => setMsg(null)} />
 
             {/* ---------- Editor ---------- */}
             <form className={ui.card} onSubmit={save}>
@@ -345,7 +346,7 @@ function CommentsModeration({ handle }) {
 
     const load = useCallback(async () => {
         setLoading(true);
-        try { setItems((await api.fetchAllComments(status)).data); }
+        try { setItems((await api.fetchPendingComments(status)).data); }
         catch (e) { handle(e); }
         finally { setLoading(false); }
     }, [status, handle]);
@@ -386,6 +387,7 @@ function CommentsModeration({ handle }) {
                     <li key={`${c.post_id}-${c.comment_id}`} className="rounded border border-gray-200 p-3 text-sm">
                         <div className="mb-1 flex flex-wrap items-center gap-2 text-xs text-gray-500">
                             <span className="font-semibold text-gray-800">{c.author_name}</span>
+                            {c.author_email && <span>({c.author_email})</span>}
                             <span>on “{c.post_title || `post #${c.post_id}`}”</span>
                             <span>{c.created_date}</span>
                             <span className={`rounded-full px-2 py-0.5 ${c.status === 'approved' ? pill.publish : pill.draft}`}>{c.status}</span>
@@ -401,6 +403,39 @@ function CommentsModeration({ handle }) {
                 ))}
             </ul>
         </div>
+    );
+}
+
+/* ================= Pop-up message (toast) ================= */
+function Toast({ msg, onClose }) {
+    const [shown, setShown] = useState(false);
+
+    // slide in, then close by itself (a new message restarts the timer)
+    useEffect(() => {
+        if (!msg) return;
+        setShown(false);
+        const raf = requestAnimationFrame(() => setShown(true));
+        const timer = setTimeout(onClose, msg.type === 'ok' ? 4000 : 6000);
+        return () => { cancelAnimationFrame(raf); clearTimeout(timer); };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [msg]);
+
+    if (!msg) return null;
+    const ok = msg.type === 'ok';
+
+    return createPortal(
+        <div
+            role="status"
+            aria-live="polite"
+            className={`fixed top-5 right-5 z-[400] flex w-[360px] max-w-[calc(100vw-2.5rem)] items-start gap-3 rounded-md border-l-4 bg-white p-4 shadow-2xl ring-1 ring-black/5 transition-all duration-300 ${ok ? 'border-green-600' : 'border-[#c00]'} ${shown ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`}
+        >
+            <span className={`mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full text-sm font-bold text-white ${ok ? 'bg-green-600' : 'bg-[#c00]'}`}>
+                {ok ? '✓' : '!'}
+            </span>
+            <p className="flex-1 text-sm leading-snug text-gray-800">{msg.text}</p>
+            <button type="button" onClick={onClose} aria-label="Close" className="cursor-pointer text-xl leading-none text-gray-400 hover:text-gray-700">×</button>
+        </div>,
+        document.body
     );
 }
 

@@ -36,10 +36,14 @@ switch ($action) {
 
         $post_id = (int)($in['post_id'] ?? 0);
         $name    = trim((string)($in['author_name'] ?? ''));
+        $email   = trim((string)($in['author_email'] ?? ''));
+        $url     = trim((string)($in['author_url'] ?? ''));
         $text    = trim((string)($in['comment_text'] ?? ''));
 
         if ($post_id <= 0)                           fail('post_id is required.');
         if ($name === '' || mb_strlen($name) > 80)   fail('Please enter your name (up to 80 characters).');
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 150) fail('Please enter a valid email address.');
+        if ($url !== '' && (!preg_match('~^https?://~i', $url) || mb_strlen($url) > 200)) fail('Website must start with http:// or https://');
         if ($text === '' || mb_strlen($text) > 2000) fail('Please enter a comment (up to 2000 characters).');
 
         $ip = substr((string)($_SERVER['REMOTE_ADDR'] ?? ''), 0, 45);
@@ -72,6 +76,8 @@ switch ($action) {
         $list[] = [
             'id'     => $next,
             'name'   => $name,
+            'email'  => $email,
+            'url'    => $url,
             'text'   => $text,
             'status' => 'pending',
             'ip'     => $ip,
