@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as api from '../api/newsApi';
 
@@ -76,6 +76,7 @@ function Dashboard({ admin, onLogout }) {
     const [posts, setPosts] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [total, setTotal] = useState(0);
     const [form, setForm] = useState(EMPTY);
     const [gallery, setGallery] = useState([]);
     const [newImg, setNewImg] = useState('');
@@ -83,6 +84,14 @@ function Dashboard({ admin, onLogout }) {
     const [busy, setBusy] = useState(false);
     const [showPw, setShowPw] = useState(false);
     const [uploading, setUploading] = useState(false);
+
+    const logoutRef = useRef(onLogout);
+    logoutRef.current = onLogout;
+
+    const handle = useCallback((e) => {
+        if (e.status === 401) { api.clearSession(); logoutRef.current(); }   // token expired or invalid
+        else setMsg({ type: 'error', text: e.message });
+    }, []);
 
     const uploadHero = async ([file]) => {
         setUploading(true); setMsg(null);
@@ -103,19 +112,14 @@ function Dashboard({ admin, onLogout }) {
         } catch (e) { handle(e); } finally { setUploading(false); }
     };
 
-    const handle = useCallback((e) => {
-        if (e.status === 401) { api.clearSession(); onLogout(); }   // token expired or invalid
-        else setMsg({ type: 'error', text: e.message });
-    }, [onLogout]);
-
     const loadPosts = useCallback(async (p = 1) => {
         try {
             const r = await api.fetchPosts({ page: p, limit: 10, status: 'all' }, true);
-            setPosts(r.data); setPage(r.page); setTotalPages(r.total_pages);
+            setPosts(r.data); setPage(r.page); setTotalPages(r.total_pages); setTotal(r.total);
         } catch (e) { handle(e); }
     }, [handle]);
 
-    useEffect(() => { loadPosts(1); }, [loadPosts]);
+    useEffect(() => { loadPosts(1); }, []);
 
     const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -294,47 +298,134 @@ function Dashboard({ admin, onLogout }) {
             <CommentsModeration handle={handle} />
 
             {/* ---------- Posts table ---------- */}
-            <div className={ui.card}>
-                <h2 className={ui.h2}>All posts</h2>
-                <div className="overflow-x-auto">
-                    <table className="w-full border-collapse text-sm">
-                        <thead>
-                            <tr className="text-left text-xs uppercase text-gray-500">
-                                <th className="border-b border-gray-200 p-2">ID</th>
-                                <th className="border-b border-gray-200 p-2">Title</th>
-                                <th className="border-b border-gray-200 p-2">Category</th>
-                                <th className="border-b border-gray-200 p-2">Status</th>
-                                <th className="border-b border-gray-200 p-2">Date</th>
-                                <th className="border-b border-gray-200 p-2" />
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {posts.map((p) => (
-                                <tr key={p.post_id}>
-                                    <td className="border-b border-gray-100 p-2">{p.post_id}</td>
-                                    <td className="border-b border-gray-100 p-2">{p.post_title}</td>
-                                    <td className="border-b border-gray-100 p-2">{p.post_category}</td>
-                                    <td className="border-b border-gray-100 p-2">
-                                        <span className={`rounded-full px-2 py-0.5 text-xs ${pill[p.post_status] || 'bg-gray-100'}`}>{p.post_status}</span>
+            <PostsTable
+                posts={posts}
+                page={page}
+                totalPages={totalPages}
+                total={total}
+                limit={10}
+                editingId={form.post_id}
+                onEdit={edit}
+                onDelete={remove}
+                onPage={loadPosts}
+            />
+        </div>
+    );
+}
+
+/* ================= Posts table ================= */
+const fmtDate = (s) =>
+    s ? new Date(s.replace(' ', 'T')).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+
+function PostsTable({ posts, page, totalPages, total, limit, editingId, onEdit, onDelete, onPage }) {
+    const from = total === 0 ? 0 : (page - 1) * limit + 1;
+    const to = Math.min(page * limit, total);
+    const th = 'border-b border-gray-200 bg-gray-50 px-3 py-2.5 text-left text-xs font-semibold tracking-wider text-gray-500 uppercase';
+
+    return (
+        <div className={ui.card}>
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                <h2 className="text-lg font-semibold">All posts</h2>
+                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-600">{total} {total === 1 ? 'post' : 'posts'}</span>
+            </div>
+
+            <div className="overflow-x-auto rounded border border-gray-200">
+                <table className="w-full min-w-[640px] border-collapse text-sm">
+                    <thead>
+                        <tr>
+                            <th className={`${th} w-14`}>ID</th>
+                            <th className={th}>Title</th>
+                            <th className={th}>Category</th>
+                            <th className={th}>Status</th>
+                            <th className={th}>Date</th>
+                            <th className={`${th} text-right`}>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {posts.map((p, i) => {
+                            const editing = String(editingId) === String(p.post_id);
+                            return (
+                                <tr
+                                    key={p.post_id}
+                                    className={`border-b border-gray-100 transition-colors last:border-b-0 hover:bg-red-50/40 ${editing ? 'bg-red-50' : i % 2 ? 'bg-gray-50/50' : 'bg-white'}`}
+                                >
+                                    <td className="px-3 py-3 text-gray-500">{p.post_id}</td>
+                                    <td className="max-w-[320px] px-3 py-3">
+                                        <div className="truncate font-medium text-gray-900" title={p.post_title}>{p.post_title}</div>
+                                        {editing && <div className="text-xs text-[#c00]">Editing now</div>}
                                     </td>
-                                    <td className="border-b border-gray-100 p-2">{(p.post_date || '').slice(0, 10)}</td>
-                                    <td className="whitespace-nowrap border-b border-gray-100 p-2">
-                                        <button className={ui.link} onClick={() => edit(p.post_id)}>Edit</button>
-                                        <button className={`${ui.link} !text-red-700`} onClick={() => remove(p)}>Delete</button>
+                                    <td className="px-3 py-3">
+                                        {p.post_category
+                                            ? <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700">{p.post_category}</span>
+                                            : <span className="text-gray-400">—</span>}
+                                    </td>
+                                    <td className="px-3 py-3">
+                                        <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${pill[p.post_status] || 'bg-gray-100 text-gray-700'}`}>{p.post_status}</span>
+                                    </td>
+                                    <td className="whitespace-nowrap px-3 py-3 text-gray-600">{fmtDate(p.post_date)}</td>
+                                    <td className="whitespace-nowrap px-3 py-3 text-right">
+                                        <button type="button" onClick={() => onEdit(p.post_id)} className="mr-1.5 cursor-pointer rounded border border-gray-300 bg-white px-3 py-1 text-xs font-medium text-gray-700 hover:border-gray-400 hover:bg-gray-100">Edit</button>
+                                        <button type="button" onClick={() => onDelete(p)} className="cursor-pointer rounded border border-red-200 bg-white px-3 py-1 text-xs font-medium text-red-700 hover:bg-red-50">Delete</button>
                                     </td>
                                 </tr>
-                            ))}
-                            {posts.length === 0 && <tr><td colSpan="6" className="p-3 text-gray-500">No posts yet.</td></tr>}
-                        </tbody>
-                    </table>
-                </div>
-                <div className="mt-3.5 flex items-center justify-center gap-3 text-sm">
-                    <button className={ui.ghost} disabled={page <= 1} onClick={() => loadPosts(page - 1)}>← Prev</button>
-                    <span>Page {page} of {totalPages}</span>
-                    <button className={ui.ghost} disabled={page >= totalPages} onClick={() => loadPosts(page + 1)}>Next →</button>
-                </div>
+                            );
+                        })}
+                        {posts.length === 0 && (
+                            <tr><td colSpan="6" className="px-3 py-10 text-center text-gray-500">No posts yet.</td></tr>
+                        )}
+                    </tbody>
+                </table>
             </div>
+
+            {totalPages > 0 && (
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                    <p className="text-xs text-gray-500">Showing {from}–{to} of {total}</p>
+                    <Pagination page={page} totalPages={totalPages} onPage={onPage} />
+                </div>
+            )}
         </div>
+    );
+}
+
+/* ================= Pagination: 1 2 … 5 6 7 … 12 ================= */
+function pageList(cur, total) {
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+    const nums = [...new Set([1, total, cur - 1, cur, cur + 1])].filter((n) => n >= 1 && n <= total).sort((a, b) => a - b);
+    const out = [];
+    nums.forEach((n, i) => {
+        if (i && n - nums[i - 1] > 1) out.push(`gap-${n}`);
+        out.push(n);
+    });
+    return out;
+}
+
+function Pagination({ page, totalPages, onPage }) {
+    const base = 'grid h-9 min-w-9 place-items-center rounded border px-2.5 text-sm transition-colors';
+    const idle = 'cursor-pointer border-gray-300 bg-white text-gray-700 hover:bg-gray-100';
+    const off = 'cursor-default border-gray-200 bg-gray-50 text-gray-300';
+
+    return (
+        <nav aria-label="Pagination" className="flex items-center gap-1.5">
+            <button type="button" className={`${base} ${page <= 1 ? off : idle}`} disabled={page <= 1} onClick={() => onPage(page - 1)}>← Prev</button>
+
+            {pageList(page, totalPages).map((p) =>
+                typeof p === 'string' ? (
+                    <span key={p} className="px-1 text-gray-400">…</span>
+                ) : (
+                    <button
+                        key={p}
+                        type="button"
+                        aria-current={p === page ? 'page' : undefined}
+                        onClick={() => p !== page && onPage(p)}
+                        className={`${base} ${p === page ? 'cursor-default border-[#c00] bg-[#c00] font-semibold text-white' : idle}`}
+                    >
+                        {p}
+                    </button>
+                )
+            )}
+
+            <button type="button" className={`${base} ${page >= totalPages ? off : idle}`} disabled={page >= totalPages} onClick={() => onPage(page + 1)}>Next →</button>
+        </nav>
     );
 }
 
