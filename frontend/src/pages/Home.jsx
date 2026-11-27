@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import useAutoRefresh from '../hooks/useAutoRefresh'
 import { Link } from 'react-router-dom'
 import { fetchPosts } from '../api/newsApi'
 import logo from '../assets/logo/LAG_WhiteRed_Logo.png'
@@ -439,19 +440,17 @@ function Highlights() {
   const [newsState, setNewsState] = useState('loading') // loading | ok | error
 
   // the 3 newest published posts, loaded every time the home page opens
-  useEffect(() => {
-    let alive = true
+  const loadNews = useCallback(() => {
     fetchPosts({ page: 1, limit: 3 })
       .then((res) => {
-        if (!alive) return
         setNews(res.data)
         setNewsState('ok')
       })
-      .catch(() => alive && setNewsState('error'))
-    return () => {
-      alive = false
-    }
+      .catch(() => setNewsState((s) => (s === 'ok' ? 'ok' : 'error'))) // keep showing the old news if a refresh fails
   }, [])
+
+  useEffect(() => { loadNews() }, [loadNews])
+  useAutoRefresh(loadNews)
 
   return (
     <section className={`${container} grid items-start gap-10 pt-[60px] pb-[70px] lg:grid-cols-3`}>

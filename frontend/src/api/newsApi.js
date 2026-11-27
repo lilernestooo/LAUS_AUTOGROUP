@@ -24,6 +24,8 @@ export const CATEGORIES = [
     'OMODA & JAECO', 'Peugeot', 'SUZUKI', 'TIRECITY', 'TRIUMPH', 'Uncategorized', 'VESPA', 'VOLKSWAGEN',
 ];
 
+const channel = (() => { try { return new BroadcastChannel('lgc-news'); } catch { return null; } })();
+
 async function request(file, { method = 'GET', params, body, auth = false } = {}) {
     const url = new URL(`${BASE}/${file}`, window.location.origin);
     if (params) {
@@ -49,6 +51,7 @@ async function request(file, { method = 'GET', params, body, auth = false } = {}
         err.status = res.status;
         throw err;
     }
+    if (method === 'POST' && auth && channel) channel.postMessage('changed');
     return data;
 }
 

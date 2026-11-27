@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as api from '../api/newsApi';
+import useAutoRefresh from '../hooks/useAutoRefresh';
 
 const EMPTY = {
     post_id: '', post_title: '', post_name: '', post_category: '', post_status: 'draft', comment_status: 'open',
@@ -119,7 +120,8 @@ function Dashboard({ admin, onLogout }) {
         } catch (e) { handle(e); }
     }, [handle]);
 
-    useEffect(() => { loadPosts(1); }, []);
+    useEffect(() => { loadPosts(1); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    useAutoRefresh(() => loadPosts(page), 30000); // stays on the page you are viewing
 
     const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -443,6 +445,7 @@ function CommentsModeration({ handle }) {
     }, [status, handle]);
 
     useEffect(() => { load(); }, [load]);
+    useAutoRefresh(load, 15000); // new pending comments show up by themselves
 
     const approve = async (c) => {
         try { await api.approveComment(c.post_id, c.comment_id); load(); } catch (e) { handle(e); }
