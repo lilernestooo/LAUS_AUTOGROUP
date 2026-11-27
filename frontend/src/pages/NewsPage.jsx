@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useSearchParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import Reveal from '../components/Reveal';
+import useAutoRefresh from '../hooks/useAutoRefresh';
 import { CATEGORIES, addComment, fetchComments, fetchGallery, fetchPost, fetchPosts } from '../api/newsApi';
 
 const PAGE_SIZE = 5;
@@ -341,6 +342,9 @@ function CommentSection({ postId }) {
         return () => { alive = false; };
     }, [postId]);
 
+    // newly approved comments appear without reloading (what the visitor is typing is not touched)
+    useAutoRefresh(() => fetchComments(postId).then((r) => setList(r.data)).catch(() => {}));
+
     const submit = async (e) => {
         e.preventDefault();
         setMsg(null);
@@ -487,6 +491,24 @@ export default function NewsPage() {
 
     const openPost = (p) => setParams({ post: p.post_id });
     const closePost = () => setParams({});
+
+    // quiet refresh: no "Loading…", keeps the posts already loaded with "Load more"
+    const refreshList = () => {
+        if (loading) return;
+        fetchPosts({ page: 1, limit: Math.min(50, page * PAGE_SIZE), category })
+            .then((res) => {
+                setPosts(res.data);
+                setTotalPages(Math.ceil(res.total / PAGE_SIZE));
+            })
+            .catch(() => { /* try again next time */ });
+    };
+
+    const refreshDetail = () =>
+        Promise.all([fetchPost(postId), fetchGallery(postId)])
+            .then(([d, g]) => setDetail((cur) => (cur && !cur.loading ? { ...cur, post: d.data, gallery: g.data } : cur)))
+            .catch(() => { /* try again next time */ });
+
+    useAutoRefresh(() => (postId ? refreshDetail() : refreshList()));
 
     /* ---------- Single post view ---------- */
     if (detail) {
