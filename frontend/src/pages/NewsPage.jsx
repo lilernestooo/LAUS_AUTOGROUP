@@ -28,6 +28,9 @@ const btn =
     'cursor-pointer border-2 border-[#c00] bg-white bg-[linear-gradient(#c00,#c00)] bg-[length:0%_100%] bg-left bg-no-repeat ' +
     'px-5 py-3.5 text-sm font-medium text-[#c00] transition-[background-size,color] duration-500 ease-out ' +
     'hover:bg-[length:100%_100%] hover:text-white';
+// one title style for the open post, the post list and the related cards
+const title = 'font-semibold tracking-tight text-[#111]';
+
 // styles for the HTML inside a post (Tailwind resets them, so they are added back here)
 const richText =
     'text-[15px] leading-[1.8] [&_a]:text-[#c00] [&_a]:underline [&_b]:font-bold [&_strong]:font-bold ' +
@@ -252,7 +255,7 @@ function RelatedPosts({ post, onOpen }) {
     return (
         <section className="mt-14 border-t border-neutral-200 pt-8">
             <Reveal direction="right">
-                <h2 className="text-2xl font-normal text-[#111]">Related posts</h2>
+                <h2 className={`${title} text-2xl`}>Related posts</h2>
                 <div className="mt-3 mb-8 h-1 w-16 rounded bg-[#c00]" />
             </Reveal>
 
@@ -297,7 +300,7 @@ function RelatedPosts({ post, onOpen }) {
                                     {formatDate(p.post_date)}
                                 </div>
 
-                                <h3 className="mt-2 line-clamp-2 text-lg leading-snug font-normal text-[#111] transition-colors duration-300 group-hover:text-[#c00]">
+                                <h3 className={`${title} mt-2 line-clamp-2 text-lg leading-snug transition-colors duration-300 group-hover:text-[#c00]`}>
                                     {p.post_title}
                                 </h3>
 
@@ -371,9 +374,10 @@ function CommentSection({ postId }) {
         <section className="mt-12 border-t border-neutral-200 pt-8">
             {list.length > 0 && (
                 <Reveal direction="up">
-                    <h2 className="mb-5 text-2xl font-normal text-[#111]">
+                    <h2 className={`${title} text-2xl`}>
                         {list.length} {list.length === 1 ? 'Comment' : 'Comments'}
                     </h2>
+                    <div className="mt-3 mb-6 h-1 w-16 rounded bg-[#c00]" />
                     <ul className="mb-10 space-y-5">
                         {list.map((c) => (
                             <li key={c.comment_id} className="border-l-4 border-[#c00] bg-white p-4 shadow-sm">
@@ -393,7 +397,8 @@ function CommentSection({ postId }) {
             )}
 
             <Reveal direction="up">
-                <h2 className="mb-2 text-2xl font-normal text-[#111]">Leave a Reply</h2>
+                <h2 className={`${title} text-2xl`}>Leave a Reply</h2>
+                <div className="mt-3 mb-4 h-1 w-16 rounded bg-[#c00]" />
                 <p className="mb-5 text-sm text-[#555]">Your email address will not be published. Required fields are marked *</p>
                 {msg && (
                     <div className={`mb-4 px-3.5 py-2.5 text-sm ${msg.ok ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -539,23 +544,28 @@ export default function NewsPage() {
                     // key: the reveal effects replay when you open a different post
                     <div key={postId}>
                         <Reveal direction="down">
-                            <header className="mb-8 border-b border-neutral-200 pb-6">
-                                {post.post_category && (
-                                    <span className="mb-4 inline-block bg-[#c00] px-3 py-1 text-[11px] font-bold tracking-[0.2em] text-white uppercase">
-                                        {post.post_category}
-                                    </span>
-                                )}
-                                <h1 className="max-w-4xl text-3xl leading-tight font-normal text-balance text-[#111] md:text-5xl">
+                            <header className="mb-6 border-b border-neutral-200 pb-5">
+                                {/* category and date on one line */}
+                                <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                                    {post.post_category && (
+                                        <span className="inline-block bg-[#c00] px-3 py-1 text-[11px] font-bold tracking-[0.2em] text-white uppercase">
+                                            {post.post_category}
+                                        </span>
+                                    )}
+                                    <div className="flex items-center gap-1.5 text-sm text-[#777]">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <circle cx="12" cy="12" r="9" />
+                                            <path d="M12 7v5l3 2" />
+                                        </svg>
+                                        <time dateTime={(post.post_date || '').slice(0, 10)}>{formatDate(post.post_date)}</time>
+                                    </div>
+                                </div>
+
+                                <h1 className={`${title} text-2xl leading-snug md:text-[34px] md:leading-[1.25]`}>
                                     {post.post_title}
                                 </h1>
-                                <div className="mt-4 h-1 w-16 rounded bg-[#c00]" />
-                                <div className="mt-4 flex items-center gap-2 text-sm text-[#777]">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <circle cx="12" cy="12" r="9" />
-                                        <path d="M12 7v5l3 2" />
-                                    </svg>
-                                    <time dateTime={(post.post_date || '').slice(0, 10)}>{formatDate(post.post_date)}</time>
-                                </div>
+
+                                <div className="mt-4 h-[3px] w-14 rounded bg-[#c00]" />
                             </header>
                         </Reveal>
 
@@ -602,18 +612,22 @@ export default function NewsPage() {
     return (
         <div className="mx-auto max-w-[1200px] px-5 pb-16 pt-6 text-[#444]">
             <Reveal direction="down">
-                <h1 className="border-b border-[#111] pb-3.5 text-[26px] font-normal text-[#111] md:text-[32px]">
+                <h1 className={`${title} border-b border-[#111] pb-3.5 text-[26px] md:text-[32px]`}>
                     Latest News and Events
                 </h1>
             </Reveal>
 
             <Reveal direction="up" delay={100}>
-                <div className="my-7 flex flex-wrap justify-center gap-x-1.5 gap-y-1">
+                <div className="my-7 flex flex-wrap justify-center gap-2">
                     {['', ...CATEGORIES].map((c) => (
                         <button
                             key={c || 'all'}
+                            type="button"
                             onClick={() => setCategory(c)}
-                            className={`cursor-pointer rounded-full px-3.5 py-1.5 text-[15px] ${category === c ? 'bg-[#ececec] text-[#444]' : 'text-[#6b7c88] hover:text-[#111]'
+                            aria-pressed={category === c}
+                            className={`cursor-pointer rounded-full border px-4 py-1.5 text-[13px] font-medium tracking-wide transition-all duration-300 ${category === c
+                                ? 'border-[#c00] bg-[#c00] text-white shadow-md shadow-[#c00]/30'
+                                : 'border-neutral-300 bg-white text-[#6b7c88] hover:border-[#c00] hover:text-[#c00]'
                                 }`}
                         >
                             {c || 'All'}
@@ -648,7 +662,7 @@ export default function NewsPage() {
                         )
                         : <div className="aspect-video w-full bg-gray-200" />}
                     <div>
-                        <h2 className="mb-[18px] text-[22px] font-normal text-[#111]">{p.post_title}</h2>
+                        <h2 className={`${title} mb-[18px] text-[22px] leading-snug`}>{p.post_title}</h2>
                         <div className="mb-[18px] text-sm text-[#555]">{formatDate(p.post_date)}</div>
                         <p className="mb-[18px] text-sm leading-[1.8]">{plain(p.post_excerpt)}</p>
                         <button className={btn} onClick={() => openPost(p)}>View More</button>

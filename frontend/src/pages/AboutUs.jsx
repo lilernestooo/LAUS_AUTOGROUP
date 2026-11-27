@@ -2,6 +2,8 @@ import Reveal from '../components/Reveal'
 import brandsImg from '../assets/about/LAG-LOGO.png'
 import dealerMap from '../assets/about/Dealership-Map-5-19-2026.jpg'
 
+const titleStyle = 'font-semibold tracking-tight text-[#111]'
+
 function SectionTitle({ eyebrow, title }) {
   return (
     <div className="mb-10 text-center">
@@ -9,7 +11,7 @@ function SectionTitle({ eyebrow, title }) {
         <span className="text-xs font-bold uppercase tracking-[0.3em] text-lag-red">
           {eyebrow}
         </span>
-        <h2 className="mt-2 text-3xl font-bold text-lag-dark md:text-4xl">
+        <h2 className={`${titleStyle} mt-2 text-3xl md:text-4xl`}>
           {title}
         </h2>
         <div className="mx-auto mt-4 h-1 w-16 rounded bg-lag-red" />
@@ -26,7 +28,7 @@ export default function AboutUs() {
         <div className="mx-auto max-w-6xl px-6">
           {/* Title + date */}
           <Reveal direction="down">
-            <h1 className="text-3xl font-normal text-[#222] md:text-4xl">
+            <h1 className={`${titleStyle} text-3xl md:text-4xl`}>
               LausAutoGroup
             </h1>
             <p className="mt-4 text-sm text-[#666]">August 2022</p>

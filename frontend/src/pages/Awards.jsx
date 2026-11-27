@@ -8,6 +8,9 @@ const images = import.meta.glob('../assets/awards/**/*.{jpg,jpeg,png,webp}', {
 })
 const getImg = (name) => images[`../assets/awards/${name}`]
 
+// same title style as the News, Auto Partners, About and Home pages
+const titleStyle = 'font-semibold tracking-tight text-[#111]'
+
 /* ---------- DATA ----------
    To add 2020 later, add a "2020: [ ... ]" block below with the same fields.
    The year tabs are created automatically from the keys. */
@@ -252,11 +255,7 @@ function AwardCard({ item, side }) {
 
       {item.title && (
         <div className={item.image ? 'px-5 py-5' : 'px-5 pt-6 pb-1'}>
-          <h3
-            className={`text-left text-lg leading-8 text-[#222] md:text-xl ${
-              item.image ? '' : 'font-bold'
-            }`}
-          >
+          <h3 className={`${titleStyle} text-left text-lg leading-8 md:text-xl`}>
             {item.title}
           </h3>
           {!item.image && (
@@ -418,7 +417,7 @@ export default function Awards() {
               <span className="text-xs font-bold tracking-[0.3em] text-lag-red uppercase">
                 About Us
               </span>
-              <h1 className="mt-2 text-3xl font-normal text-[#222] md:text-5xl">
+              <h1 className={`${titleStyle} mt-2 text-3xl md:text-5xl`}>
                 Awards &amp; Recognitions
               </h1>
               <div className="mx-auto mt-4 h-1 w-16 rounded bg-lag-red" />

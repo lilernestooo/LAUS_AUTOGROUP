@@ -8,6 +8,9 @@ const images = import.meta.glob('../assets/autopartners/*.{jpg,jpeg,png,webp}', 
 })
 const getImg = (name) => images[`../assets/autopartners/${name}`]
 
+// same title style as the News page
+const title = 'font-semibold tracking-tight text-[#111]'
+
 /* ---------- DATA ----------
    href is optional. Without it the logo is a plain, non-clickable image. */
 const partners = [
@@ -76,7 +79,7 @@ export default function AutoPartners() {
 
         <div className="relative mx-auto max-w-6xl px-6">
           <Reveal direction="down">
-            <h1 className="text-3xl font-normal text-[#222] md:text-4xl">Auto Partners</h1>
+            <h1 className={`${title} text-3xl md:text-4xl`}>Auto Partners</h1>
             {/* red bar: stretches while the card below is hovered */}
             <div
               className={`mt-5 mb-12 h-1 rounded bg-lag-red transition-all duration-700 ease-out md:mb-16 ${
@@ -109,7 +112,7 @@ export default function AutoPartners() {
 
         <div className="mx-auto max-w-6xl px-6">
           <Reveal direction="right">
-            <h2 className="text-3xl font-normal text-lag-title md:text-4xl">
+            <h2 className={`${title} text-3xl md:text-4xl`}>
               The LausGroup of Companies
             </h2>
             <div className="mt-4 mb-8 h-1 w-16 rounded bg-lag-red" />

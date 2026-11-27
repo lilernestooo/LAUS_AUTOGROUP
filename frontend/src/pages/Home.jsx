@@ -116,7 +116,7 @@ const container = 'mx-auto w-[92%] max-w-[1180px]'
 
 /* ---------- HERO / BANNER CAROUSEL ----------
    - Slides move side by side (true carousel, infinite loop)
-   - Autoplay every 5s, pauses on hover / while dragging / when tab is hidden
+   - Autoplay every 5s, keeps running on hover; pauses only while dragging / when tab is hidden
    - Swipe or mouse-drag to change slides
    - Arrow keys work when the carousel is focused
    - Arrows, thumbnails (md+) and dots (mobile)
@@ -241,8 +241,6 @@ function Hero() {
       aria-label="Featured banners"
       tabIndex={0}
       onKeyDown={onKeyDown}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
@@ -390,7 +388,9 @@ function Brands() {
 }
 
 /* ---------- NEWS / OFFERS / VIDEOS ---------- */
-const heading = 'mb-3.5 text-[26px] font-normal text-lag-title'
+// same title style as the News, Auto Partners and About pages
+const titleStyle = 'font-semibold tracking-tight text-[#111]'
+const heading = `${titleStyle} mb-3.5 text-[26px]`
 const lead = 'mb-5 text-sm [&>a]:text-lag-red'
 
 // helpers for the news preview (database text is shown as plain text, never as HTML)
@@ -469,7 +469,7 @@ function Highlights() {
               <Photo src={n.hero_image_link} alt={n.post_title} label={`NEWS ${idx + 1}`} size="230 x 170" />
             </Link>
             <div>
-              <h4 className="border-b border-neutral-200 pb-2 text-base leading-normal font-bold text-neutral-900 transition-colors hover:text-lag-red">
+              <h4 className={`${titleStyle} border-b border-neutral-200 pb-2 text-base leading-normal transition-colors hover:text-lag-red`}>
                 <Link to={`/news?post=${n.post_id}`}>{n.post_title}</Link>
               </h4>
               <div className="my-2 text-[13px] text-neutral-400">◔ {formatDate(n.post_date)}</div>
@@ -510,7 +510,7 @@ function Partners() {
       <div className="bg-black/60 pt-10 pb-[60px] text-center text-white">
         <div className={container}>
           <Reveal>
-            <h2 className="mb-10 text-[26px] font-normal">Auto Partners</h2>
+            <h2 className="mb-10 text-[26px] font-semibold tracking-tight">Auto Partners</h2>
           </Reveal>
 
           <div className="grid gap-10 md:grid-cols-3">
@@ -598,7 +598,7 @@ function About() {
         {/* ---------- COLUMN 1: text + stats ---------- */}
         <Reveal direction="right" className="group min-w-0">
 
-          <h2 className="relative mb-7 block w-fit text-[34px] leading-tight font-normal text-black">
+          <h2 className={`${titleStyle} relative mb-7 block w-fit text-[34px] leading-tight`}>
             The LausAutoGroup
             <span className="absolute -bottom-2 left-0 h-[3px] w-full origin-left scale-x-[.25] bg-lag-red transition-transform duration-500 group-hover:scale-x-100" />
           </h2>
@@ -636,7 +636,7 @@ function About() {
         {/* ---------- COLUMN 2: DPO/DPS card ---------- */}
         <Reveal direction="up" delay={150} className="min-w-0">
           <div className="border-t-4 border-lag-red bg-white p-5 shadow-lg shadow-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
-            <h3 className="mb-1.5 text-2xl font-normal text-black">DPO/DPS</h3>
+            <h3 className={`${titleStyle} mb-1.5 text-2xl`}>DPO/DPS</h3>
             <p className="mb-4 text-[13px] leading-relaxed text-neutral-500">
               DATA PROTECTION OFFICER AND DATA PROCESSING SYSTEM
             </p>
